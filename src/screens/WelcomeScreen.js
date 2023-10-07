@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native'
 import React from 'react'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { LinearGradient } from 'expo-linear-gradient'
@@ -11,6 +11,10 @@ export default function WelcomeScreen() {
 
   return (
     <View className="flex-1 flex justify-end">
+
+      {/* <StatusBar
+      hidden={true}
+      /> */}
       
       {/* background image */}
       <Image 
