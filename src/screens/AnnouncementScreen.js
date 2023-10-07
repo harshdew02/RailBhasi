@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, Platform, TextInput } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image,StatusBar, Platform, TextInput } from 'react-native'
 import React, {useState} from 'react'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 // import { MagnifyingGlassIcon } from 'react-native-heroicons/outline'
