@@ -66,6 +66,6 @@ let apiURL = `https://demo-api.models.ai4bharat.org/inference/translation/v2`;
       let res = JSON.parse(response);
       let output = res["output"][0]["target"];
       console.log(output);
-      getAudio(output,"te",'male');
+      getAudio(output,"hi",'female');
     }).catch(error => console.log("error", error));
 }

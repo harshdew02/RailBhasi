@@ -41,7 +41,7 @@ export const ASROutputE = (asrInput) => {
       .then(result => {
         var apiResponse = JSON.parse(result);
         let input = apiResponse.output[0].source;
-        getTranslation(input, "en", "te");
+        getTranslation(input, "en", "hi");
       })
       .catch(error => console.log("error", error));
 }

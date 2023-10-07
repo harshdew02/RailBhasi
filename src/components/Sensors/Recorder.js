@@ -4,7 +4,6 @@ import fs from 'react-native-fs';
 
 export default class Recorder extends Component {
 
-    sound = null;
     state = {
       audioFile: '',
       recording: false,
