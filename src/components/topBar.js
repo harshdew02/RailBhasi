@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, Platform, TextInput } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, Platform, TextInput,StatusBar } from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
@@ -12,7 +12,10 @@ export default function TopBar({heading}) {
 
   return (
 
-    <View className={"mx-0 pt-6 flex-row justify-between items-center px-4 mb-0 bg-[#16247d]"} style={{height: wp(24)}}>
+    <View className={"mx-0 pt-1 flex-row justify-between items-center px-4 mb-0 bg-[#16247d]"} style={{height: wp(16)}}>
+            <StatusBar
+            backgroundColor="#16247d"
+            />
 
     <TouchableOpacity
             onPress={()=> navigation.goBack()}
