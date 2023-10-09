@@ -12,23 +12,15 @@ export default function TopBar({heading}) {
 
   return (
 
-    <View className={"mx-0 pt-1 flex-row justify-between items-center px-4 mb-0 bg-[#16247d]"} style={{height: wp(16)}}>
+    <View className={"mx-0 pt-1 flex-row justify-start items-center px-4 mb-0 bg-[#16247d]"} style={{height: wp(16)}}>
             <StatusBar
             backgroundColor="#16247d"
             />
-
-    <TouchableOpacity
-            onPress={()=> navigation.goBack()}
-            className="p-2 rounded-full "
-            style={{}}
-    >
-            <ChevronLeftIcon size={wp(7)} strokeWidth={4} color="white" />
-    </TouchableOpacity>
-
-      <Text style={{fontSize: wp(5)}} className=" text-white">{heading}</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.openDrawer()}>
         <Image source={require('../../assets/images/avatar.png')} style={{height: wp(12), width: wp(12)}} />
       </TouchableOpacity>
+      <Text style={{fontSize: wp(5)}} className=" text-white pl-6">{heading}</Text>
+
     </View>
 
   )

@@ -12,11 +12,9 @@ import { ChevronLeftIcon } from 'react-native-heroicons/outline';
 import TopBar from '../components/topBar';
 // import { BottomTabBar } from '@react-navigation/bottom-tabs';
 
-
 // const ios = Platform.OS=='ios';
 // const topMargin = ios? 'mt-3': 'mt-10';
 const topMargin = 'mt-10'
-
 
 export default function AnnouncementScreen() {
 
@@ -25,16 +23,14 @@ export default function AnnouncementScreen() {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <TopBar heading={"Get Announcement"} />
-      <ScrollView showsVerticalScrollIndicator={false} className={"space-y-6"}>
+
         {/* categories */}
         <View className="mb-1">
           <Categories />
         </View>
-        {/* destinations */}
-        <View>
-          {/* <Destinations /> */}
-        </View>
-      </ScrollView>
+      {/* <ScrollView showsVerticalScrollIndicator={false} className={"space-y-6"}>
+  
+      </ScrollView> */}
         
     </SafeAreaView>
   )
