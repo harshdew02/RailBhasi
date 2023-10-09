@@ -40,6 +40,7 @@ export default function RightDrawer() {
             {/* bvv */}
             <Drawer.Navigator
                 screenOptions={{
+                    headerShown: false,
                     drawerStyle: {
                         backgroundColor: '#fff',
                     },
