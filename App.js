@@ -13,9 +13,7 @@ hidden={hidden}
 
 // const hidden = true;
 
-
 export default function App() {
-
   return (
     <>
     {/* <StatusBar
