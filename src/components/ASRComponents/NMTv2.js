@@ -1,5 +1,9 @@
-import {getAudio} from './TTS';
+let out;
 export const getTranslation = (inputString, sLang, tLang) => {
+
+  
+  if(sLang == tLang)
+    return inputString;
 
   const languageScriptParser = (input) => {
     let lang = input;
@@ -48,12 +52,15 @@ export const getTranslation = (inputString, sLang, tLang) => {
   })
 
   makeReq(payload,myHeaders);
+  return out;
 };
 
-async function makeReq(payload,myHeaders){
+
+
+function makeReq(payload,myHeaders){
 let apiURL = `https://demo-api.models.ai4bharat.org/inference/translation/v2`;
   
-    await fetch(apiURL, {
+    fetch(apiURL, {
     method: 'POST',
     body: payload,
     headers: myHeaders,
@@ -65,7 +72,6 @@ let apiURL = `https://demo-api.models.ai4bharat.org/inference/translation/v2`;
     .then((response)=> {
       let res = JSON.parse(response);
       let output = res["output"][0]["target"];
-      console.log(output);
-      getAudio(output,"hi",'female');
+      out = output;
     }).catch(error => console.log("error", error));
 }
