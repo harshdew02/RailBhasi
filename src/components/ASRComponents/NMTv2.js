@@ -1,21 +1,17 @@
-let out;
-export const getTranslation = (inputString, sLang, tLang) => {
+export const getTranslation = async (inputString, sLang, tLang) => {
+  if (sLang == tLang) return inputString;
 
-  
-  if(sLang == tLang)
-    return inputString;
-
-  const languageScriptParser = (input) => {
+  const languageScriptParser = input => {
     let lang = input;
-    if (lang.includes('_')) {
-      lang = lang.split('_')[0];
+    if (lang.includes("_")) {
+      lang = lang.split("_")[0];
     }
     return lang;
   };
 
-  const isLanguageScriptCodePresent = (input) => {
+  const isLanguageScriptCodePresent = input => {
     let lang = input;
-    if (lang.includes('_')) {
+    if (lang.includes("_")) {
       return true;
     }
     return false;
@@ -28,50 +24,40 @@ export const getTranslation = (inputString, sLang, tLang) => {
     controlConfig: {
       dataTracking: true,
     },
-    input: [{source: inputString}],
+    input: [{ source: inputString }],
 
     config: {
-      serviceId: '',
+      serviceId: "",
       language: {
         sourceLanguage: languageScriptParser(sLang),
         targetLanguage: languageScriptParser(tLang),
 
-        targetScriptCode: isLanguageScriptCodePresent(
-          tLang,
-        )
-          ? tLang.split('_')[1]
+        targetScriptCode: isLanguageScriptCodePresent(tLang)
+          ? tLang.split("_")[1]
           : null,
-      
-        sourceScriptCode: isLanguageScriptCodePresent(
-          sLang,
-        )
-          ? sLang.split('_')[1]
+
+        sourceScriptCode: isLanguageScriptCodePresent(sLang)
+          ? sLang.split("_")[1]
           : null,
       },
     },
-  })
+  });
 
-  makeReq(payload,myHeaders);
-  return out;
-};
-
-
-
-function makeReq(payload,myHeaders){
-let apiURL = `https://demo-api.models.ai4bharat.org/inference/translation/v2`;
-  
-    fetch(apiURL, {
-    method: 'POST',
+  let apiURL = `https://demo-api.models.ai4bharat.org/inference/translation/v2`;
+  const myRes = await fetch(apiURL, {
+    method: "POST",
     body: payload,
     headers: myHeaders,
-    
   })
-    .then((response)=> {
+    .then(response => {
       return response.text();
     })
-    .then((response)=> {
+    .then(response => {
       let res = JSON.parse(response);
-      let output = res["output"][0]["target"];
-      out = output;
-    }).catch(error => console.log("error", error));
-}
+      return res["output"][0]["target"];
+    })
+    .catch(error => console.log("error", error));
+
+  // console.log("outside fetch", myRes);
+  return myRes;
+};

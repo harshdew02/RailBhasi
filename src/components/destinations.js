@@ -10,30 +10,29 @@ import { useNavigation } from "@react-navigation/native";
 import { getTranslation } from "./ASRComponents/NMTv2";
 
 export default function Destinations({ language }) {
+  const [trainData, setTrainData] = useState([]);
+  const [cnt, setCnt] = useState(0);
   const navigation = useNavigation();
-  console.log(language);
-
-  let obj = {
-    xarr: "",
-    xnos: "",
-    xtrain: "",
-    xdep: "",
-  };
-  let vect = [];
 
   //use effect will be applied here as language changes
   //get the desired language information from nearStation via props
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
   useEffect(() => {
-    destinationData.map(async (item, index) => {
-      obj.xarr = await getTranslation("Arr: " + item.arr, "en", language);
-      obj.xnos = await getTranslation("Train no:" + item.nos, "en", language);
-      obj.xtrain = await getTranslation(item.train, "en", language);
-      obj.xdep = await getTranslation("Dep: " + item.dep, "en", language);
-    });
-    console.log(obj);
-    vect.push(obj);
+    const fetchData = async item => {
+      const obj = {
+        arr: await getTranslation("Arr: " + item.arr, "en", language),
+        nos: await getTranslation("Train no:" + item.nos, "en", language),
+        train: await getTranslation(item.train, "en", language),
+        name: await getTranslation(item.name, "en", "hi"),
+        dep: await getTranslation("Dep: " + item.dep, "en", language),
+      };
 
+      setTrainData(prev => (prev ? [...prev, obj] : [obj]));
+    };
+
+    destinationData.map((item, index) => {
+      fetchData(item);
+    });
   }, [language]);
 
   return (
@@ -41,7 +40,7 @@ export default function Destinations({ language }) {
       className="mx-0 mt-2 px-2"
       style={{ height: hp(68), width: wp(100) }}
     >
-      {vect.map((item, index) => {
+      {trainData.map((item, index) => {
         return (
           <DestinationCard
             navigation={navigation}
@@ -71,7 +70,7 @@ const DestinationCard = ({ item, navigation, langu }) => {
           {item.nos}
         </Text>
         <Text style={{ fontSize: wp(5) }} className="text-white  font-semibold">
-          {getTranslation("Hii I am anuj", "en", "hi")}
+          {item.name}
         </Text>
       </View>
 
