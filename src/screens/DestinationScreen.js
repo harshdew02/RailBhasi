@@ -7,12 +7,10 @@ import { ChevronLeftIcon } from 'react-native-heroicons/outline';
 import { ClockIcon, HeartIcon, MapPinIcon, SunIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../theme';
-import { getTranslation } from '../components/ASRComponents/NMTv2';
-
 const ios = Platform.OS == 'ios';
 const topMargin = ios? '': 'mt-10';
 
-export default function DestinationScreen({props, language}) {
+export default function DestinationScreen(props) {
     const item = props.route.params;
     const navigation = useNavigation();
     const [isFavourite, toggleFavourite] = useState(false);
@@ -52,8 +50,8 @@ export default function DestinationScreen({props, language}) {
                         PF: {item?.platform}
                     </Text>
                 </View>
-                <Text style={{fontSize: wp(3.7)}} className="text-neutral-700 tracking-wide mb-2">{getTranslation(`May I have your attention please train no ${item.nos} ${item.train} from ${item.from} to ${item.to} is arriving on platform no {item.platform}.`,'en',language)}</Text>
-                <Text style={{fontSize: wp(3.7)}} className="text-neutral-700 tracking-wide mb-2">{getTranslation(`This train will arrive on ${item.arr} and will depart after ${item.stop} at ${item.dep}.`,'en',language)}</Text>
+                <Text style={{fontSize: wp(3.7)}} className="text-neutral-700 tracking-wide mb-2">{item.type1}</Text>
+                <Text style={{fontSize: wp(3.7)}} className="text-neutral-700 tracking-wide mb-2">{item.type2}</Text>
                 <View className="flex-row justify-between mx-1">
                     <View className="flex-row space-x-2 items-start">
                         <ClockIcon size={wp(7)} color="skyblue" />
