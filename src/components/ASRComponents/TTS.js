@@ -45,10 +45,10 @@ export const getAudio = (inputString, Language, Voice) => {
                 if(error) {
                     // console.log('Failed to load the source');
                 }
-                console.log(error);
-            });
-            sound.play((success) => {
-                console.log(success);
+                else
+                {
+                sound.play((success) => {
+                console.log("Message2: " + success);
                 if(success){
                     console.log('new sound played');
                 }
@@ -57,6 +57,10 @@ export const getAudio = (inputString, Language, Voice) => {
                     console.log('no sound played');
                 }
             });
+                console.log("Message1: " + error);
+          }
+            });
+            
 
         });
 

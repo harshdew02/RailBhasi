@@ -1,26 +1,34 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import {stationListEN} from '../constants'
-
-const data = [
-  { label: 'Raipur (R)', value: '1' },
-  { label: 'Item 2', value: '2' },
-  { label: 'Item 3', value: '3' },
-  { label: 'Item 4', value: '4' },
-  { label: 'Item 5', value: '5' },
-  { label: 'Item 6', value: '6' },
-  { label: 'Item 7', value: '7' },
-  { label: 'Item 8', value: '8' },
-];
-
-
+import React, { useState } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { stationListEN } from "../constants";
 
 const DropdownComponent = () => {
   const [value, setValue] = useState(null);
+  let hardCode = null;
+  if(value === 104)
+    hardCode = 'BSP';
+  else if(value === 4306)
+    hardCode = 'SRWN';
+  else if(value === 168)
+    hardCode = 'NDLS';
 
-  const renderItem = item => {
+  const url =
+    `https://api.railwayapi.site/api/v1/trains/12834`;
+  const options = {
+    method: "GET",
+  };
+
+  try {
+    fetch(url, options).then((result) => {
+      // console.log(result);
+    });
+  } catch (error) {
+    // console.error(error);
+  }
+
+  const renderItem = (item) => {
     return (
       <View style={styles.item}>
         <Text style={styles.textItem}>{item.label}</Text>
@@ -52,7 +60,7 @@ const DropdownComponent = () => {
       placeholder="Select item"
       searchPlaceholder="Search..."
       value={value}
-      onChange={item => {
+      onChange={(item) => {
         setValue(item.value);
       }}
       renderLeftIcon={() => (
@@ -69,12 +77,12 @@ const styles = StyleSheet.create({
   dropdown: {
     margin: 2,
     height: 50,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 12,
-    borderColor: 'red',
-    borderStyle: 'solid',
+    borderColor: "red",
+    borderStyle: "solid",
     padding: 12,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 1,
@@ -88,9 +96,9 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 17,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   textItem: {
     flex: 1,
