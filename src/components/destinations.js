@@ -23,14 +23,14 @@ export default function Destinations({ language }) {
       setTrainData([]);
 
       const obj = {
-        nos: await getTranslation("Train no:" + item.nos, "en", language),
+        nos: "Train no: " + item.nos,
         train: await getTranslation(item.train, "en", language),
-        type1: await getTranslation(`Passengers please pay attention train no ${item.nos} ${item.train} from ${item.from} to ${item.to} is arriving on platform no ${item.platform}.`,'en',language),
-        type2: await getTranslation(`This train will arrive on ${item.arr} and will depart after ${item.stop} at ${item.dep}.`,'en',language),
+        type1: await getTranslation(`Passengers please pay attention train number ${item.nos} ${item.train} from ${item.from} to ${item.to} is arriving on platform number ${item.platform}.`,'en',language),
+        type2: await getTranslation(`This train will arrive on ${item.arr} and will depart after ${item.stop} minutes at ${item.dep}.`,'en',language),
         arr: item.arr,
         dep: item.dep,
         platform: item.platform,
-        stop: item.stop,
+        stop: item.stop + ' min',
         langu: language,
         image: item.image,
       };
