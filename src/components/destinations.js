@@ -26,11 +26,11 @@ export default function Destinations({ language }) {
         nos: "Train no: " + item.nos,
         train: await getTranslation(item.train, "en", language),
         type1: await getTranslation(`Passengers please pay attention train number ${item.nos} ${item.train} from ${item.from} to ${item.to} is arriving on platform number ${item.platform}.`,'en',language),
-        type2: await getTranslation(`This train will arrive on ${item.arr} and will depart after ${item.stop} at ${item.dep}.`,'en',language),
+        type2: await getTranslation(`This train will arrive on ${item.arr} and will depart after ${item.stop} minutes at ${item.dep}.`,'en',language),
         arr: item.arr,
         dep: item.dep,
         platform: item.platform,
-        stop: item.stop,
+        stop: item.stop + ' min',
         langu: language,
         image: item.image,
       };
@@ -96,7 +96,7 @@ const DestinationCard = ({ item, navigation }) => {
         </View>
         <TouchableOpacity
           onPress={() => {toggleFavourite(!isFavourite)
-            getAudio(item.type1 + item.type2, 'en','female')
+            getAudio(item.type1 + item.type2, item.langu,'female')
           }}
           style={{ backgroundColor: "rgba(255,255,255,0.4)" }}
           className="rounded-full p-3"
