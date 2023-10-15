@@ -21,12 +21,12 @@ export default function Destinations({ language }) {
   useEffect(() => {
     const fetchData = async item => {
       setTrainData([]);
-
+      let trains = getTranslation(item.train,'en','hi');
       const obj = {
         nos: "Train no: " + item.nos,
-        train: await getTranslation(item.train, "en", language),
-        type1: await getTranslation(`Passengers please pay attention train number ${item.nos} ${item.train} from ${item.from} to ${item.to} is arriving on platform number ${item.platform}.`,'en',language),
-        type2: await getTranslation(`This train will arrive on ${item.arr} and will depart after ${item.stop} minutes at ${item.dep}.`,'en',language),
+        train: ,
+        type1: ,
+        type2:,
         arr: item.arr,
         dep: item.dep,
         platform: item.platform,
