@@ -21,7 +21,7 @@ export const categoriesData = [
 
 export let destinationData = [
   {
-    train: "Howrah - Ahmedabad SF Express",
+    train: "Howrah - Ahmedabad superfast Express",
     from: "Howrah",
     to: "Ahmedabad",
     arr: "15:50",
@@ -29,18 +29,8 @@ export let destinationData = [
     stop: "5",
     nos: "12834",
     platform: "4",
-    image: require("../../assets/images/hotel.png"),
-  },
-  {
-    train: "South Bihar Express",
-    from: "Rajendra Nagar Terminal",
-    to: "Durg Jn.",
-    arr: "17:50",
-    dep: "18:00",
-    stop: "10",
-    nos: "13287",
-    platform: "1",
-    image: require("../../assets/images/hotel.png"),
+    late_hour:'',
+    late_min:'45',
   }
 ];
 
