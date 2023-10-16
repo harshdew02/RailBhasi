@@ -21,7 +21,7 @@ export const categoriesData = [
 
 export let destinationData = [
   {
-    train: "Howrah - Ahmedabad SF Express",
+    train: "Howrah - Ahmedabad superfast Express",
     from: "Howrah",
     to: "Ahmedabad",
     arr: "15:50",

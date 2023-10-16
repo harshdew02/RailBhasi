@@ -72,24 +72,112 @@ const TRANSLATION = {
   ur: "Urdu",
 };
 
+const LANGUAGE_SELECTION = (code) => {
+  let index = -1;
+  switch (code) {
+    case 'en':
+      index = 1;
+      break;
+    case 'hi':
+      index = 0;
+      break;
+    case 'as':
+      index = 2;
+      break;
+    case 'bn':
+      index = 3;
+      break;
+    case 'brx':
+      index = 4;
+      break;
+    case 'doi':
+      index = 5;
+      break;
+    case 'gom':
+      index = 6;
+      break;
+    case 'gu':
+      index = 7;
+      break;
+    case 'kn':
+      index = 8;
+      break;
+    case 'ks':
+      index = 9;
+      break;
+    case 'ks_Deva':
+      index = 10;
+      break;
+    case 'mai':
+      index = 11;
+      break;
+    case 'ml':
+      index = 12;
+      break;
+    case 'mni':
+      index = 13;
+      break;
+    case 'mni_Beng':
+      index = 14;
+      break;
+    case 'mr':
+      index = 15;
+      break;
+    case 'ne':
+      index = 16;
+      break;
+    case 'or':
+      index = 17;
+      break;
+    case 'pa':
+      index = 18;
+      break;
+    case 'sa':
+      index = 19;
+      break;
+    case 'sat':
+      index = 20;
+      break;
+    case 'sd':
+      index = 21;
+      break;
+    case 'sd_Deva':
+      index = 22;
+      break;
+    case 'ta':
+      index = 23;
+      break;
+    case 'te':
+      index = 24;
+      break;
+    case 'ur':
+      index = 25;
+      break;
+    default:
+      index = 1;
+      break;
+  }
+  return index;
+}
+
 const PREDEFINED_ANNOUNCEMENT = [
   {
-    origination: 'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (no), (origin) से चलकर (destination) को जाने वाली, (train name) कुछ ही देर मे प्लेटफॉर्म संख्या (no) से चलने वाली है | ',
-    arriving: 'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (no), (origin) से चलकर (destination) को जाने वाली, (train name) कुछ ही देर मे प्लेटफॉर्म संख्या (no) पर आ रही है |',
-    arrived:'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (no), (origin) से चलकर (destination) को जाने वाली, (train name) प्लेटफॉर्म संख्या (no) पर खड़ी है| ',
-    late:'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (no), (origin) से चलकर (destination) को जाने वाली, (train name) अपने निर्धारित समय से (5 ) घंटे और (25 ) मिनट की देरी से चल रह है, इसके यहा (20:00 ) बजे, प्लेटफॉर्म क्रमांक (4 ) पर, आने की संभावना है|  ',
-    ontime:'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (no), (origin) से चलकर (destination) को जाने वाली, (train name) अपने निर्धारित समय से चल रह है, इसके यहा (20:00 ) बजे, प्लेटफॉर्म क्रमांक (4 ) पर,  आने की संभावना है| ',
-    additional:'यह ट्रेन (15: 50) पर आएगी और (15:55) मिनट के बाद (5) पर प्रस्थान करेगी|',
-    custom:'ट्रेन संख्या (13287) (साउथ बिहार एक्सप्रेस) (30) मिनट की देरी से चल रही है । यह (टाटानगर जंक्शन) पर प्लेटफार्म संख्या (1) पर (20:30) बजे पहुंचेगी और यहाँ (15) मिनट के लिए ठहरेगी',
+    origination: 'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (train_no), (origin) से चलकर (destination) को जाने वाली, (train_name) कुछ ही देर मे प्लेटफॉर्म संख्या (PF) से चलने वाली है | ',
+    arriving: 'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (train_no), (origin) से चलकर (destination) को जाने वाली, (train_name) कुछ ही देर मे प्लेटफॉर्म संख्या (PF) पर आ रही है |',
+    arrived:'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (train_no), (origin) से चलकर (destination) को जाने वाली, (train_name) प्लेटफॉर्म संख्या (PF) पर खड़ी है| ',
+    late:'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (train_no), (origin) से चलकर (destination) को जाने वाली, (train_name) अपने निर्धारित समय से (ghante) घंटे और (mintu) मिनट की देरी से चल रह है, इसके यहा (intime) बजे, प्लेटफॉर्म क्रमांक (PF) पर, आने की संभावना है|  ',
+    ontime:'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (train_no), (origin) से चलकर (destination) को जाने वाली, (train_name) अपने निर्धारित समय से चल रही है, इसके यहा (intime) बजे, प्लेटफॉर्म क्रमांक (PF) पर, आने की संभावना है| ',
+    additional:'यह ट्रेन (intime) पर आएगी और (stop) मिनट के बाद (outtime) पर प्रस्थान करेगी|',
+    custom:'ट्रेन संख्या (train_no) (train_name) (late_time) मिनट की देरी से चल रही है । यह (next_station) पर प्लेटफार्म संख्या (PF) पर (intime) बजे पहुंचेगी और यहाँ (stop) मिनट के लिए ठहरेगी',
   },
   {
-    origination: 'May I have your attention please, train number (12497) from (New Delhi) to (Amritsar), (Shan-e-Punjab express) is about to depart from platform number (14).',
-    arriving: 'May I have your attention please, train number (12497) from (New Delhi) to (Amritsar), (Shan-e-Punjab express) is arriving on platform number (8) shortly.',
-    arrived:'May I have your attention please, train number (12497) from (New Delhi) to (Amritsar), (Shan-e-Punjab express) just arrived on platform number (8).',
-    late:'May I have your attention please, train number (12497) from (New Delhi) to (Amritsar), (Shan-e-Punjab express), is running late by (5) hours and (25) minutes from its scheduled time, and is expected to arrive at (20:00) on platform number (4). ',
-    ontime:'May I have your attention please, train number (12497) from (New Delhi) to (Amritsar), (Shan-e-Punjab express), is running as scheduled, this train will reach platform number (5) at its scheduled time at (17:00).',
-    additional:'This train will arrive on (15:50) and will depart after (5) minutes at (15:55).',
-    custom:'Train number (13287), the (South Bihar Express), is currently delayed by (30) minutes. It is expected to arrive at (Tatanagar Junction) on platform number (1) at (19:00) with a (15) minutes scheduled halt.',
+    origination: 'May I have your attention please, train number (train_no) from (origin) to (destination), (train_name) is about to depart from platform number (PF).',
+    arriving: 'May I have your attention please, train number (train_no) from (origin) to (destination), (train_name) is arriving on platform number (PF) shortly.',
+    arrived:'May I have your attention please, train number (train_no) from (origin) to (destination), (train_name) just arrived on platform number (PF).',
+    late:'May I have your attention please, train number (train_no) from (origin) to (destination), (train_name), is running late by (ghante) hours and (mintu) minutes from its scheduled time, and is expected to arrive at (intime) on platform number (PF). ',
+    ontime:'May I have your attention please, train number (train_no) from (origin) to (destination), (train_name), is running as scheduled, this train will reach platform number (PF) at its scheduled time at (intime).',
+    additional:'This train will arrive on (intime) and will depart after (stop) minutes at (outtime).',
+    custom:'Train number (train_no), the (train_name), is currently delayed by (late_time) minutes. It is expected to arrive at (Tatanagar Junction) on platform number (PF) at (intime) with a (stop) minutes scheduled halt.',
   },
   {
     additional:
@@ -477,10 +565,10 @@ const ASR_LANGUAGE_CONFIGS = {
 };
 
 export {
-  ASR_STREAMING_URLS,
-  ASR_REST_URLS,
   ASR_LANGUAGE_CONFIGS,
   SPEECH_TO_TEXT,
   TEXT_TO_SPEECH,
   TRANSLATION,
+  PREDEFINED_ANNOUNCEMENT,
+  LANGUAGE_SELECTION,
 };
