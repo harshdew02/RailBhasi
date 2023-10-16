@@ -4,7 +4,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { stationListEN } from "../constants";
 
-const DropdownComponent = () => {
+const DropdownComponent = ({setStation}) => {
   const [value, setValue] = useState(null);
   let hardCode = null;
   if(value === 104)
@@ -62,6 +62,7 @@ const DropdownComponent = () => {
       value={value}
       onChange={(item) => {
         setValue(item.value);
+        setStation(item.value);
       }}
       renderLeftIcon={() => (
         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />

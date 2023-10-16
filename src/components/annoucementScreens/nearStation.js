@@ -10,11 +10,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function NearStation() {
   //use effect for first time rendering only
   const [lang, setLang] = React.useState('en');
+  const [station, setStation] = React.useState("");
   return (
     <SafeAreaView>
       <View className="flex-row items-center mx-2 justify-between">
         <View style={{ width: wp(70) }}>
-          <DropdownComponent />
+          <DropdownComponent  setStation={setStation}/>
         </View>
         <View className="flex-row justify-start mx-1" style={{ width: wp(30) }}>
           <TouchableOpacity className="p-3 mr-1 rounded-xl bg-blue-500" onPress={() => {  }} mode='elevated' dark={true}>
@@ -29,7 +30,7 @@ export default function NearStation() {
       </View>
       <View>
          {/*Access the data from index.js here then pass it to the destinations using props*/}
-        <Destinations language = {lang} />
+        <Destinations language = {lang} station={station} />
       </View>
       <TouchableOpacity className={`flex items-center rounded-3xl space-y-1 p-3 bg-blue-100`} style={{ width: wp(26), height: wp(20) }} >
         <Text className="text-neutral-700 font-medium" style={{ fontSize: wp(5), color: 'rgba(0,0,0,0.6)' }}>Mic</Text>
