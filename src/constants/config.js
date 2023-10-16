@@ -72,6 +72,37 @@ const TRANSLATION = {
   ur: "Urdu",
 };
 
+const TYPE_SELECTION = (time, late, origin, station) => {
+  //calculation part here
+  let computed_time;
+  let api_time;
+  let time = computed_time - api_time;
+
+  if(origin == station)
+    return 'origination';
+
+  if(time <= 5){
+    return 'arrived';
+  }
+  else if(time > 5 && time <= 25){
+    return 'arriving';
+  }
+  else if(time > 25)
+  {
+    if(late > 0)
+      return 'late';
+    else
+      return 'ontime';
+  }
+  else
+  {
+    if(late > 0)
+      return 'custom';
+    else
+      return 'custom_ontime';
+  }
+}
+
 const LANGUAGE_SELECTION = (code) => {
   let index = -1;
   switch (code) {
@@ -168,7 +199,8 @@ const PREDEFINED_ANNOUNCEMENT = [
     late:'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (train_no), (origin) से चलकर (destination) को जाने वाली, (train_name) अपने निर्धारित समय से (ghante) घंटे और (mintu) मिनट की देरी से चल रह है, इसके यहा (intime) बजे, प्लेटफॉर्म क्रमांक (PF) पर, आने की संभावना है|  ',
     ontime:'यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (train_no), (origin) से चलकर (destination) को जाने वाली, (train_name) अपने निर्धारित समय से चल रही है, इसके यहा (intime) बजे, प्लेटफॉर्म क्रमांक (PF) पर, आने की संभावना है| ',
     additional:'यह ट्रेन (intime) पर आएगी और (stop) मिनट के बाद (outtime) पर प्रस्थान करेगी|',
-    custom:'ट्रेन संख्या (train_no) (train_name) (late_time) मिनट की देरी से चल रही है । यह (next_station) पर प्लेटफार्म संख्या (PF) पर (intime) बजे पहुंचेगी और यहाँ (stop) मिनट के लिए ठहरेगी',
+    custom:'ट्रेन संख्या (train_no) (train_name) (ghante) घंटे और (mintu) मिनट की देरी से चल रही है । यह (next_station) पर प्लेटफार्म संख्या (PF) पर (intime) बजे पहुंचेगी और यहाँ (stop) मिनट के लिए ठहरेगी',
+    custom_ontime:'ट्रेन संख्या (train_no) (train_name) अपने निर्धारित समय से चल रही है । यह (next_station) पर प्लेटफार्म संख्या (PF) पर (intime) बजे पहुंचेगी और यहाँ (stop) मिनट के लिए ठहरेगी'
   },
   {
     origination: 'May I have your attention please, train number (train_no) from (origin) to (destination), (train_name) is about to depart from platform number (PF).',
@@ -571,4 +603,5 @@ export {
   TRANSLATION,
   PREDEFINED_ANNOUNCEMENT,
   LANGUAGE_SELECTION,
+  TYPE_SELECTION,
 };

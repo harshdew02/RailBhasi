@@ -8,10 +8,14 @@ import {
 import { HeartIcon, SpeakerWaveIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
 import { getTranslation } from "./ASRComponents/NMTv2";
-import { getAudio } from './ASRComponents/TTS';
-import { PREDEFINED_ANNOUNCEMENT, LANGUAGE_SELECTION } from "../constants/config";
+import { getAudio } from "./ASRComponents/TTS";
+import {
+  PREDEFINED_ANNOUNCEMENT,
+  LANGUAGE_SELECTION,
+  TYPE_SELECTION
+} from "../constants/config";
 
-export default function Destinations({ language }) {
+export default function Destinations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
   const [cnt, setCnt] = useState(0);
   const navigation = useNavigation();
@@ -21,15 +25,54 @@ export default function Destinations({ language }) {
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
   useEffect(() => {
     let index = LANGUAGE_SELECTION(language);
-    const fetchData = async item => {
-      
+    const fetchData = async (item) => {
       setTrainData([]);
-      let trains = await getTranslation(item.train,'en',language);
-      let from = await getTranslation(item.from,'en',language);
-      let to = await getTranslation(item.to,'en',language);
+      let type = TYPE_SELECTION(item.arr,[item.late_hour, item.late_min], item.from, station)
+      let trains = await getTranslation(item.train, "en", language);
+      let from = await getTranslation(item.from, "en", language);
+      let to = await getTranslation(item.to, "en", language);
+      let message;
+
+      switch (type) {
+        case 'origination':
+          message = PREDEFINED_ANNOUNCEMENT[index].origination;
+          break;
+        case 'arrived':
+          message = PREDEFINED_ANNOUNCEMENT[index].arrived;
+          break;
+        case 'arriving':
+          message = PREDEFINED_ANNOUNCEMENT[index].arriving;
+          break;
+        case 'late':
+          message = PREDEFINED_ANNOUNCEMENT[index].late;
+          break;
+        case 'ontime':
+          message = PREDEFINED_ANNOUNCEMENT[index].ontime;
+          break;
+        case 'custom':
+          message = PREDEFINED_ANNOUNCEMENT[index].custom;
+          break;
+        default:
+          message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
+          break;
+      }
       
-      let message = PREDEFINED_ANNOUNCEMENT[index].ontime.replace('(train_no)',item.nos).replace('(origin)',from).replace('(destination)',to).replace('(train_name)',trains).replace('(PF)',item.platform).replace('(intime)',item.arr);
-      let message1 = PREDEFINED_ANNOUNCEMENT[index].additional.replace('(intime)',item.arr).replace('(outtime)',item.dep).replace('(stop)',item.stop);
+      message
+        .replace("(train_no)", item.nos)
+        .replace("(origin)", from)
+        .replace("(destination)", to)
+        .replace("(train_name)", trains)
+        .replace("(PF)", item.platform)
+        .replace("(intime)", item.arr)
+        .replace("(outtime)", item.dep)
+        .replace("(stop)",item.stop)
+        .replace("(ghante)",item.late_hour)
+        .replace("(mintu)",item.late_min);
+        
+      let message1 = PREDEFINED_ANNOUNCEMENT[index].additional
+        .replace("(intime)", item.arr)
+        .replace("(outtime)", item.dep)
+        .replace("(stop)", item.stop);
 
       const obj = {
         nos: "Train no: " + item.nos,
@@ -39,18 +82,18 @@ export default function Destinations({ language }) {
         arr: item.arr,
         dep: item.dep,
         platform: item.platform,
-        stop: item.stop + ' min',
+        stop: item.stop + " min",
         langu: language,
         image: item.image,
       };
 
-      setTrainData(prev => (prev ? [...prev, obj] : [obj]));
+      setTrainData((prev) => (prev ? [...prev, obj] : [obj]));
     };
 
     destinationData.map((item, index) => {
       fetchData(item);
     });
-  }, [language]);
+  }, [language, station]);
 
   return (
     <ScrollView
@@ -104,8 +147,9 @@ const DestinationCard = ({ item, navigation }) => {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => {toggleFavourite(!isFavourite)
-            getAudio(item.type1 + item.type2, item.langu,'female')
+          onPress={() => {
+            toggleFavourite(!isFavourite);
+            getAudio(item.type1 + item.type2, item.langu, "female");
           }}
           style={{ backgroundColor: "rgba(255,255,255,0.4)" }}
           className="rounded-full p-3"
