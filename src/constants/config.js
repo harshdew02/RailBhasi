@@ -72,10 +72,9 @@ const TRANSLATION = {
   ur: "Urdu",
 };
 
-const TYPE_SELECTION = (time, late, origin, station) => {
+const TYPE_SELECTION = (api_time, late, origin, station) => {
   //calculation part here
   let computed_time;
-  let api_time;
   let time = computed_time - api_time;
 
   if(origin == station)
