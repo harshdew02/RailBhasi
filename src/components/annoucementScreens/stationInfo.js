@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-export default function Delay() {
+export default function StationInfo() {
   return (
     <View>
-      <Text>Delay</Text>
+      <Text>FromStation</Text>
     </View>
   )
 }

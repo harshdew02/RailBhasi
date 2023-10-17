@@ -2,20 +2,20 @@ export const sortCategoryData = ["All", "Popular", "Recommended", "More"];
 
 export const categoriesData = [
   {
-    title: "Near station",
+    title: "Live Station",
+    image: require("../../assets/images/location_live.png"),
+  },
+  {
+    title: "Live Train",
+    image: require("../../assets/images/traintotrain.png"),
+  },
+  {
+    title: "From To",
     image: require("../../assets/images/location.png"),
   },
   {
-    title: "Delay",
-    image: require("../../assets/images/delay.png"),
-  },
-  {
-    title: "Information",
+    title: "Station Info",
     image: require("../../assets/images/information.png"),
-  },
-  {
-    title: "From Station",
-    image: require("../../assets/images/traintotrain.png"),
   },
 ];
 

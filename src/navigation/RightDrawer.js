@@ -8,9 +8,11 @@ import {
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+
 // Drawer
 import BottomTabs from './BottomTabs';
 import { Help, Profile, SelectLang, Settings } from '../drawer';
+import { ChevronUpDownIcon, Cog6ToothIcon, HomeIcon, QuestionMarkCircleIcon, UserIcon } from 'react-native-heroicons/outline';
 
 
 export default function RightDrawer() {
@@ -52,7 +54,8 @@ export default function RightDrawer() {
                     options={{
                         drawerLabel: 'Home Screen',
                         drawerIcon: ({ focused, size, color }) => (
-                            <MaterialCommunityIcons name="home" color={color} size={size} />
+                            // <MaterialCommunityIcons name="home" color={color} size={size} />
+                            <HomeIcon color={color} size={size} />
                         ),
                     }}
                 />
@@ -61,9 +64,10 @@ export default function RightDrawer() {
                     name={'Profile'}
                     component={Profile}
                     options={{
-                        drawerLabel: 'My Rewards Screen',
+                        drawerLabel: 'Profile',
                         drawerIcon: ({ focused, size, color }) => (
-                            <MaterialCommunityIcons name="firewire" color={color} size={size} />
+                            // <MaterialCommunityIcons name="firewire" color={color} size={size} />
+                            <UserIcon color={color} size={size} />
                         ),
                     }}
                 />
@@ -71,10 +75,14 @@ export default function RightDrawer() {
                     name={'SelectLang'}
                     component={SelectLang}
                     options={{
-                        drawerLabel: 'Locations Screen',
+                        drawerLabel: 'Select Language',
                         drawerIcon: ({ focused, size, color }) => (
-                            <MaterialCommunityIcons
-                                name="location-enter"
+                            // <MaterialCommunityIcons
+                            //     name="location-enter"
+                            //     color={color}
+                            //     size={size}
+                            // />
+                            <ChevronUpDownIcon 
                                 color={color}
                                 size={size}
                             />
@@ -86,25 +94,33 @@ export default function RightDrawer() {
                     name="Settings"
                     component={Settings}
                     options={{
-                        drawerLabel: 'Locations Screen',
+                        drawerLabel: 'Settings',
                         drawerIcon: ({ focused, size, color }) => (
-                            <MaterialCommunityIcons
-                                name="location-enter"
-                                color={color}
-                                size={size}
-                            />
+                            // <MaterialCommunityIcons
+                            //     name="location-enter"
+                            //     color={color}
+                            //     size={size}
+                            // />
+                            <Cog6ToothIcon
+                            color={color}
+                            size={size}
+                        />
                         ),
                     }}
                 />
                 <Drawer.Screen name="Help" component={Help}
                     options={{
-                        drawerLabel: 'Locations Screen',
+                        drawerLabel: 'Contact Us',
                         drawerIcon: ({ focused, size, color }) => (
-                            <MaterialCommunityIcons
-                                name="location-enter"
-                                color={color}
-                                size={size}
-                            />
+                            // <MaterialCommunityIcons
+                            //     name="location-enter"
+                            //     color={color}
+                            //     size={size}
+                            // />
+                            <QuestionMarkCircleIcon
+                            color={color}
+                            size={size}
+                        />
                         ),
                     }}
                 />

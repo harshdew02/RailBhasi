@@ -1,6 +1,7 @@
-import Delay from "./delay";
-import FromStation from "./fromStation";
-import Information from "./information";
-import NearStation from "./nearStation";
 
-export {Delay , FromStation , Information, NearStation };
+import StationInfo from "./stationInfo";
+import FromTo from "./fromTo";
+import LiveStation from "./liveStation";
+import LiveTrain from "./LiveTrain";
+
+export {LiveTrain , StationInfo , FromTo, LiveStation };
