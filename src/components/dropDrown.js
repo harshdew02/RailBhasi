@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { stationListEN } from "../constants";
+import { CheckIcon } from "react-native-heroicons/solid";
 
 const DropdownComponent = ({setStation}) => {
   const [value, setValue] = useState(null);
@@ -33,7 +34,13 @@ const DropdownComponent = ({setStation}) => {
       <View style={styles.item}>
         <Text style={styles.textItem}>{item.label}</Text>
         {item.value === value && (
-          <AntDesign
+          // <AntDesign
+          //   style={styles.icon}
+          //   color="black"
+          //   name="Safety"
+          //   size={20}
+          // />
+          <CheckIcon 
             style={styles.icon}
             color="black"
             name="Safety"
