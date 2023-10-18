@@ -57,7 +57,7 @@ export default function Destinations({ language, station }) {
           break;
       }
       
-      message
+      message = message
         .replace("(train_no)", item.nos)
         .replace("(origin)", from)
         .replace("(destination)", to)
