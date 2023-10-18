@@ -11,11 +11,11 @@ import {
   Image,
 } from 'react-native';
 
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import GoogleSVG from '../../assets/images copy/misc/google.svg';
-import FacebookSVG from '../../assets/images copy/misc/facebook.svg';
+import GoogleSVG from '../../assets/images_copy/misc/google.svg';
+import FacebookSVG from '../../assets/images_copy/misc/facebook.svg';
 import CustomButton from '../components/CustomButton';
 import LottieView from "lottie-react-native";
 
@@ -64,15 +64,15 @@ const RegisterScreen = ({navigation}) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{paddingHorizontal: 25,paddingTop:40}}>
-        <View style={{alignItems: 'center'}}>
-        <Image source={require('../../assets/images copy/misc/logo.png')} 
-          style={{width:200,height:200,borderRadius:100}}
-        />
-        </View>
 
+        <View style={{alignItems: 'center'}}>
+        <Image source={require('../../assets/images_copy/misc/logo.png')} 
+          style={{width:wp(30),height:wp(30),borderRadius:100,  marginTop:wp(6)}}
+        />
         <Text
+          className={`font-roboto`}
           style={{
-            fontFamily: 'Roboto-Medium',
+            // fontFamily: 'Roboto_Medium',
             fontSize: 28,
             fontWeight: '500',
             color: '#333',
@@ -81,40 +81,8 @@ const RegisterScreen = ({navigation}) => {
           }}>
           Register
         </Text>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            marginBottom: 20,
-          }}>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-            <GoogleSVG height={24} width={24} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-            <FacebookSVG height={24} width={24} />
-          </TouchableOpacity>
         </View>
 
-        <Text style={{textAlign: 'center', color: '#666', marginBottom: 30}}>
-          Or, register with email ...
-        </Text>
 
         {/* <InputField
           label={'Full Name'}
@@ -259,7 +227,41 @@ const RegisterScreen = ({navigation}) => {
           />
         </View>       
 
-        <CustomButton label={'Register'} onPress={() => {}} />
+        <CustomButton label={'Register'} onPress={() => navigation.navigate("Login")} />
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            marginBottom: 20,
+          }}>
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{
+              borderColor: '#ddd',
+              borderWidth: 2,
+              borderRadius: 10,
+              paddingHorizontal: 30,
+              paddingVertical: 10,
+            }}>
+            <GoogleSVG height={24} width={24} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{
+              borderColor: '#ddd',
+              borderWidth: 2,
+              borderRadius: 10,
+              paddingHorizontal: 30,
+              paddingVertical: 10,
+            }}>
+            <FacebookSVG height={24} width={24} />
+          </TouchableOpacity>
+        </View>
+
+        <Text style={{textAlign: 'center', color: '#666', marginBottom: 30}}>
+          Or, register with email ...
+        </Text>
 
         <View
           style={{
@@ -268,7 +270,7 @@ const RegisterScreen = ({navigation}) => {
             marginBottom: 60,
           }}>
           <Text>Already registered?</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <Text style={{color: '#2776ff', fontWeight: '700'}}> Login</Text>
           </TouchableOpacity>
         </View>

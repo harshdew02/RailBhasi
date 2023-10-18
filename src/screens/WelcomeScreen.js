@@ -37,7 +37,7 @@ export default function WelcomeScreen() {
                 Experience the world's best adventure around the world with us
             </Text>
         </View>
-        <TouchableOpacity onPress={()=> navigation.navigate("Main")} style={{backgroundColor: theme.bg(1)}} className="mx-auto p-3 px-12 rounded-full">
+        <TouchableOpacity onPress={()=> navigation.navigate("Login")} style={{backgroundColor: theme.bg(1)}} className="mx-auto p-3 px-12 rounded-full">
             <Text className="text-white font-bold" style={{fontSize: wp(5.5)}}>Let's go!</Text>
         </TouchableOpacity>
         
