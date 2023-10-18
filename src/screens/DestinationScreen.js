@@ -18,7 +18,7 @@ export default function DestinationScreen(props) {
   return (
     <View className="bg-white flex-1">
         {/* destination image */}
-        <Image source={item.image} style={{width: wp(100), height: hp(55)}} />
+        <Image source={require("../../assets/images/mountain.png")} style={{width: wp(100), height: hp(55)}} />
         <StatusBar style={'light'} />
 
         {/* back button */}

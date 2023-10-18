@@ -14,7 +14,9 @@ export default function TopBar({heading}) {
 
     <View className={"mx-0 pt-1 flex-row justify-start items-center px-4 mb-0 bg-[#16247d]"} style={{height: wp(16)}}>
             <StatusBar
+            barStyle={"light-content"}
             backgroundColor="#16247d"
+            hidden={false}
             />
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
         <Image source={require('../../assets/images/avatar.png')} style={{height: wp(12), width: wp(12)}} />
