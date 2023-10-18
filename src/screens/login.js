@@ -3,89 +3,99 @@ import {
   SafeAreaView,
   View,
   Text,
+  StatusBar,
   TextInput,
   TouchableOpacity,
   StyleSheet,
   Image,
 } from 'react-native';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import GoogleSVG from '../../assets/images copy/misc/google.svg';
-import FacebookSVG from '../../assets/images copy/misc/facebook.svg';
+import GoogleSVG from '../../assets/images_copy/misc/google.svg';
+import FacebookSVG from '../../assets/images_copy/misc/facebook.svg';
 
 import CustomButton from '../components/CustomButton';
 import LottieView from "lottie-react-native";
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <View style={{paddingHorizontal: 25}}>
-        <View style={{alignItems: 'center'}}>
-        <Image source={require('../../assets/images copy/misc/logo.png')} 
-          style={{width:200,height:200,borderRadius:100,marginBottom:20}}
-        />
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
+
+      <StatusBar
+        backgroundColor={"#f2f2f2"}
+        barStyle={"dark-content"}
+        hidden={false}
+      />
+
+      <View style={{ paddingHorizontal: 25 }}>
+        <View style={{ alignItems: 'center' }}>
+          <Image source={require('../../assets/images_copy/misc/logo.png')}
+            style={{ width: wp(40), height: wp(40), borderRadius: 100, marginBottom: 20 }}
+          />
           {/* <LottieView
             source={require('../assets/images/misc/train.json')}
             autoPlay
             loop
           /> */}
+          <Text
+            className={`font-roboto`}
+            style={{
+              // fontFamily: 'Roboto-Medium',
+              fontSize: 28,
+              fontWeight: '500',
+              color: '#333',
+              marginBottom: 30,
+            }}>
+            Login
+          </Text>
         </View>
 
-        <Text
-          style={{
-            fontFamily: 'Roboto-Medium',
-            fontSize: 28,
-            fontWeight: '500',
-            color: '#333',
-            marginBottom: 30,
-          }}>
-          Login
-        </Text>
-
-        <View 
-        style={styles.searchSection}
+        <View
+          style={styles.searchSection}
         >
           <Ionicons
             name="at-outline"
             size={20}
             color="#2776ff"
-            style={{marginRight: 5}}
+            style={{ marginRight: 5 }}
           />
           <TextInput
             style={styles.input}
             placeholder="Email"
           />
-          
+
         </View>
 
-        <View style={{flexDirection: 'row',
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 30,}}>
-          <View style={{flexDirection:'row', alignItems:'center'}}>
+        <View style={{
+          flexDirection: 'row',
+          borderBottomColor: '#ccc',
+          borderBottomWidth: 1,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 30,
+        }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Ionicons
               name="lock-closed-outline"
               size={20}
               color="#2776ff"
-              style={{marginRight: 5}}
+              style={{ marginRight: 5 }}
             />
             <TextInput
               style={styles.input}
               placeholder="Password"
               secureTextEntry={true}
-              
+
             />
           </View>
-          <TouchableOpacity onPress={() => {}}>
-        <Text style={{color: '#2776ff', fontWeight: '700'}}>Forgot?</Text>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={() => { }}>
+            <Text style={{ color: '#2776ff', fontWeight: '700' }}>Forgot?</Text>
+          </TouchableOpacity>
         </View>
 
-        <CustomButton label={"Login"} onPress={() => {}} />
+        <CustomButton label={"Login"} onPress={() => { navigation.navigate('Main') }} />
 
-        <Text style={{textAlign: 'center', color: '#666', marginBottom: 20}}>
+        <Text style={{ textAlign: 'center', color: '#666', marginBottom: 20 }}>
           Or, login with ...
         </Text>
 
@@ -96,7 +106,7 @@ const LoginScreen = ({navigation}) => {
             marginBottom: 30,
           }}>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => { }}
             style={{
               borderColor: '#ddd',
               borderWidth: 2,
@@ -107,7 +117,7 @@ const LoginScreen = ({navigation}) => {
             <GoogleSVG height={24} width={24} />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => { }}
             style={{
               borderColor: '#ddd',
               borderWidth: 2,
@@ -127,7 +137,7 @@ const LoginScreen = ({navigation}) => {
           }}>
           <Text>New to RailBhasi?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={{color: '#2776ff', fontWeight: '700'}}> Register</Text>
+            <Text style={{ color: '#2776ff', fontWeight: '700' }}> Register</Text>
           </TouchableOpacity>
         </View>
       </View>
