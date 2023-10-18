@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-export default function FromStation() {
+export default function LiveTrain() {
   return (
     <View>
-      <Text>FromStation</Text>
+      <Text>Delay</Text>
     </View>
   )
 }

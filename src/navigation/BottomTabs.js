@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { View, Text,Dimensions } from 'react-native'
 import { Snackbar, Button } from 'react-native-paper';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 
 // Screens
 import HomeScreen from '../screens/HomeScreen';
@@ -17,6 +19,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { HomeIcon, MegaphoneIcon,SpeakerWaveIcon, ChatBubbleBottomCenterIcon, PhoneIcon } from "react-native-heroicons/solid";
+
+
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -70,7 +75,8 @@ export default function BottomTabs() {
                         return (
                             // <TouchableOpacity>
                             <View style={{ alignItems: "center", justifyContent: "center" }}>
-                                <Entypo name="home" size={30} color={focused ? "#16247d" : "#9e9d9d"} />
+                                {/* <Entypo name="home" size={30} color={focused ? "#16247d" : "#9e9d9d"} /> */}
+                                <HomeIcon size={wp(5)} color={focused ? "#16247d" : "#9e9d9d"} />
                                 <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>HOME</Text>
                             </View>
                             //  </TouchableOpacity>
@@ -88,7 +94,8 @@ export default function BottomTabs() {
                             // <TouchableOpacity>
                             <View style={{ alignItems: "center", justifyContent: "center" }}>
                                 {/* <Entypo name="wallet" size={24} color={focused ? "#16247d": "#9e9d9d"} /> */}
-                                <MaterialIcons name="campaign" size={30} color={focused ? "#16247d" : "#9e9d9d"} />
+                                {/* <MaterialIcons name="campaign" size={30} color={focused ? "#16247d" : "#9e9d9d"} /> */}
+                                <MegaphoneIcon size={wp(5)} color={focused ? "#16247d" : "#9e9d9d"} />
                                 <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>ANNOUNCEMENT</Text>
                             </View>
                             //  </TouchableOpacity>
@@ -129,7 +136,8 @@ export default function BottomTabs() {
                                     borderRadius: Platform.OS == "ios" ? 25 : 30
                                 }} >
                                     <TouchableOpacity onPress={onToggleSnackBar} classNam={`pt-5`}>
-                                    <FontAwesome name="volume-up" size={30} color={visible ? "#9e9d9d":"#fff"} />
+                                    {/* <FontAwesome name="volume-up" size={30} color={visible ? "#9e9d9d":"#fff"} /> */}
+                                    <SpeakerWaveIcon size={wp(5)} color={visible ? "#9e9d9d":"#fff"} />
                                     </TouchableOpacity>
                                     {/* <Button  onPress={onToggleSnackBar}>{visible ? 'Hide' : 'Show'}</Button> */}
                                 </View>
@@ -147,7 +155,8 @@ export default function BottomTabs() {
                         return (
                             // <TouchableOpacity>
                             <View style={{ alignItems: "center", justifyContent: "center" }}>
-                                <MaterialCommunityIcons name="robot" size={30} color={focused ? "#16247d" : "#9e9d9d"} />
+                                {/* <MaterialCommunityIcons name="robot" size={30} color={focused ? "#16247d" : "#9e9d9d"} /> */}
+                                <ChatBubbleBottomCenterIcon size={wp(5)} color={focused ? "#16247d" : "#9e9d9d"} />
                                 <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>CHAT BOT</Text>
                             </View>
                             //  </TouchableOpacity>
@@ -163,7 +172,8 @@ export default function BottomTabs() {
                         return (
                             // <TouchableOpacity>
                             <View style={{ alignItems: "center", justifyContent: "center" }}>
-                                <Ionicons name="call" size={30} color={focused ? "#16247d" : "#9e9d9d"} />
+                                {/* <Ionicons name="call" size={30} color={focused ? "#16247d" : "#9e9d9d"} /> */}
+                                <PhoneIcon size={wp(5)} color={focused ? "#16247d" : "#9e9d9d"} />
                                 <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>IVR</Text>
                             </View>
                             //  </TouchableOpacity>
