@@ -12,8 +12,10 @@ import { getAudio } from "./ASRComponents/TTS";
 import {
   PREDEFINED_ANNOUNCEMENT,
   LANGUAGE_SELECTION,
-  TYPE_SELECTION
+  TYPE_SELECTION,
 } from "../constants/config";
+import Sound from "react-native-sound";
+import fs from "react-native-fs";
 
 export default function Destinations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
@@ -27,36 +29,42 @@ export default function Destinations({ language, station }) {
     let index = LANGUAGE_SELECTION(language);
     const fetchData = async (item) => {
       setTrainData([]);
-      let type = TYPE_SELECTION(item.arr,[item.late_hour, item.late_min], item.from, station)
+      // let type = TYPE_SELECTION(
+      //   item.arr,
+      //   [item.late_hour, item.late_min],
+      //   item.from,
+      //   station
+      // );
+      let type = "origination";
       let trains = await getTranslation(item.train, "en", language);
       let from = await getTranslation(item.from, "en", language);
       let to = await getTranslation(item.to, "en", language);
       let message;
 
       switch (type) {
-        case 'origination':
+        case "origination":
           message = PREDEFINED_ANNOUNCEMENT[index].origination;
           break;
-        case 'arrived':
+        case "arrived":
           message = PREDEFINED_ANNOUNCEMENT[index].arrived;
           break;
-        case 'arriving':
+        case "arriving":
           message = PREDEFINED_ANNOUNCEMENT[index].arriving;
           break;
-        case 'late':
+        case "late":
           message = PREDEFINED_ANNOUNCEMENT[index].late;
           break;
-        case 'ontime':
+        case "ontime":
           message = PREDEFINED_ANNOUNCEMENT[index].ontime;
           break;
-        case 'custom':
+        case "custom":
           message = PREDEFINED_ANNOUNCEMENT[index].custom;
           break;
         default:
           message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
           break;
       }
-      
+
       message = message
         .replace("(train_no)", item.nos)
         .replace("(origin)", from)
@@ -65,10 +73,10 @@ export default function Destinations({ language, station }) {
         .replace("(PF)", item.platform)
         .replace("(intime)", item.arr)
         .replace("(outtime)", item.dep)
-        .replace("(stop)",item.stop)
-        .replace("(ghante)",item.late_hour)
-        .replace("(mintu)",item.late_min);
-        
+        .replace("(stop)", item.stop)
+        .replace("(ghante)", item.late_hour)
+        .replace("(mintu)", item.late_min);
+
       let message1 = PREDEFINED_ANNOUNCEMENT[index].additional
         .replace("(intime)", item.arr)
         .replace("(outtime)", item.dep)
@@ -116,6 +124,8 @@ export default function Destinations({ language, station }) {
 
 const DestinationCard = ({ item, navigation }) => {
   const [isFavourite, toggleFavourite] = useState(false);
+  const [sounds, setSound] = useState(null);
+  const [times, setTime] = useState(null);
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Destination", { ...item })}
@@ -147,9 +157,26 @@ const DestinationCard = ({ item, navigation }) => {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => {
-            toggleFavourite(!isFavourite);
-            getAudio(item.type1 + item.type2, item.langu, "female");
+          onPress={async () => {
+            if (sounds == null) {
+              await getAudio(item.type1 + item.type2, item.langu, "female");
+              toggleFavourite(!isFavourite);
+              let sound = new Sound(
+                `${fs.CachesDirectoryPath}/output.wav`,
+                null,
+                (error) => {
+                  sound.play((played) => {
+                    console.log(played);
+                    toggleFavourite(!isFavourite);
+                  });
+                }
+              );
+              setSound(sound);
+            } else {
+              sounds.stop();
+              setSound(null);
+              toggleFavourite(!isFavourite);
+            }
           }}
           style={{ backgroundColor: "rgba(255,255,255,0.4)" }}
           className="rounded-full p-3"

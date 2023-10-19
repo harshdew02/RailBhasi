@@ -31,6 +31,18 @@ export let destinationData = [
     platform: "4",
     late_hour:'',
     late_min:'45',
+  },
+  {
+    train: "South Bihar Express",
+    from: "Howrah",
+    to: "Ahmedabad",
+    arr: "15:50",
+    dep: "15:55",
+    stop: "5",
+    nos: "12834",
+    platform: "4",
+    late_hour:'',
+    late_min:'45',
   }
 ];
 
