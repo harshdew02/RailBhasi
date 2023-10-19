@@ -37,7 +37,7 @@ const requestFilePermission = async (navigation) => {
     });
 
     if (((overall[0] == overall[1]) == overall[2]) == true)
-      navigation.navigate("Main");
+      navigation.navigate("Login");
     else {
       if (overall[0] == false) {
         Alert.alert(
