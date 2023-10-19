@@ -125,7 +125,6 @@ export default function Destinations({ language, station }) {
 const DestinationCard = ({ item, navigation }) => {
   const [isFavourite, toggleFavourite] = useState(false);
   const [sounds, setSound] = useState(null);
-  const [times, setTime] = useState(null);
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Destination", { ...item })}
@@ -160,14 +159,14 @@ const DestinationCard = ({ item, navigation }) => {
           onPress={async () => {
             if (sounds == null) {
               await getAudio(item.type1 + item.type2, item.langu, "female");
-              toggleFavourite(!isFavourite);
+              toggleFavourite(true);
               let sound = new Sound(
                 `${fs.CachesDirectoryPath}/output.wav`,
                 null,
                 (error) => {
-                  sound.play((played) => {
-                    console.log(played);
-                    toggleFavourite(!isFavourite);
+                  sound.play(() => {
+                    setSound(null);
+                    toggleFavourite(false);
                   });
                 }
               );
@@ -175,7 +174,7 @@ const DestinationCard = ({ item, navigation }) => {
             } else {
               sounds.stop();
               setSound(null);
-              toggleFavourite(!isFavourite);
+              toggleFavourite(false);
             }
           }}
           style={{ backgroundColor: "rgba(255,255,255,0.4)" }}
