@@ -25,7 +25,7 @@ export default function LiveStation() {
             <MicrophoneIcon size={20} color="#fff" />
           </TouchableOpacity>
           <TouchableOpacity className="p-3 rounded-xl bg-blue-500"   onPress={() => {
-              setLang('hi');
+              setLang('mr');
            }} mode='elevated' dark={true}>
             {/* <Ionicons name="location" size={20} color="#fff"  /> */}
             <MapPinIcon size={20} color="#fff"  />
