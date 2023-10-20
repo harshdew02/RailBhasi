@@ -17,7 +17,7 @@ import {
 import Sound from "react-native-sound";
 import fs, { stat } from "react-native-fs";
 import { useDispatch, useSelector } from "react-redux";
-import { setGlobalSound } from "../redux/soundSlice";
+import { setDisable, setGlobalSound } from "../redux/soundSlice";
 
 export default function Destinations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
@@ -108,6 +108,7 @@ export default function Destinations({ language, station }) {
   }, [language, station]);
 
   const handleCurrnetSound = async item => {
+    dispatch(setDisable(true));
     if (sounds == null || currnetSound != item) {
       if (currnetSound != item && sounds != null) {
         dispatch(setGlobalSound(null));
@@ -115,6 +116,7 @@ export default function Destinations({ language, station }) {
       }
       setCurrentSound(item);
       await getAudio(item.type1 + item.type2, item.langu, "female");
+      dispatch(setDisable(false));
       dispatch(setGlobalSound(item));
       // toggleFavourite(true);
       let sound = new Sound(
@@ -128,6 +130,7 @@ export default function Destinations({ language, station }) {
               setSound(null);
               // toggleFavourite(false);
               dispatch(setGlobalSound(null));
+              dispatch(setDisable(false));
             });
           }
         }
@@ -138,6 +141,7 @@ export default function Destinations({ language, station }) {
       item = null;
       // toggleFavourite(false);
       dispatch(setGlobalSound(null));
+      dispatch(setDisable(null));
     }
   };
 
@@ -169,12 +173,15 @@ const DestinationCard = ({
   currnetSound,
 }) => {
   const [isFavourite, toggleFavourite] = useState(false);
+  const [isDisabled, toggleDisabled] = useState(false);
   const mySound = useSelector(state => state.currentSound);
+  const myDisabled = useSelector(state => state.disabledSound);
   // console.log("mySound", mySound);
   useEffect(() => {
     // console.log("Sound changed", mySound);
     toggleFavourite(mySound == item);
-  }, [mySound]);
+    toggleDisabled(myDisabled);
+  }, [mySound, myDisabled]);
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Destination", { ...item })}
@@ -227,6 +234,7 @@ const DestinationCard = ({
           //     toggleFavourite(false);
           //   }
           // }}
+          disabled={isDisabled}
           onPress={() => {
             handleCurrnetSound(item);
           }}
