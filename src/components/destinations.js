@@ -213,27 +213,6 @@ const DestinationCard = ({
           </Text>
         </View>
         <TouchableOpacity
-          // onPress={async () => {
-          //   if (sounds == null) {
-          //     await getAudio(item.type1 + item.type2, item.langu, "female");
-          //     toggleFavourite(true);
-          //     let sound = new Sound(
-          //       `${fs.CachesDirectoryPath}/output.wav`,
-          //       null,
-          //       (error) => {
-          //         sound.play(() => {
-          //           setSound(null);
-          //           toggleFavourite(false);
-          //         });
-          //       }
-          //     );
-          //     setSound(sound);
-          //   } else {
-          //     sounds.stop();
-          //     setSound(null);
-          //     toggleFavourite(false);
-          //   }
-          // }}
           disabled={isDisabled}
           onPress={() => {
             handleCurrnetSound(item);
