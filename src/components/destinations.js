@@ -19,7 +19,8 @@ import fs from "react-native-fs";
 
 export default function Destinations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
-  const [cnt, setCnt] = useState(0);
+  const [currnetSound, setCurrentSound] = useState(null);
+  const [sounds, setSound] = useState(null);
   const navigation = useNavigation();
 
   //use effect will be applied here as language changes
@@ -103,6 +104,34 @@ export default function Destinations({ language, station }) {
     });
   }, [language, station]);
 
+  const handleCurrnetSound = async (item) => {
+    if (sounds == null || currnetSound != item) {
+      if (currnetSound != item && sounds != null) sounds.stop();
+      setCurrentSound(item);
+      await getAudio(item.type1 + item.type2, item.langu, "female");
+      // toggleFavourite(true);
+      let sound = new Sound(
+        `${fs.CachesDirectoryPath}/output.wav`,
+        null,
+        (error) => {
+          if (error) console.log(error);
+          else {
+            setSound(sound);
+            sound.play(() => {
+              setSound(null);
+              // toggleFavourite(false);
+            });
+          }
+        }
+      );
+    } else if (currnetSound == item) {
+      sounds.stop();
+      setSound(null);
+      item = null;
+      // toggleFavourite(false);
+    }
+  };
+
   return (
     <ScrollView
       className="mx-0 mt-2 px-2"
@@ -115,6 +144,8 @@ export default function Destinations({ language, station }) {
             item={item}
             key={index}
             langu={language}
+            handleCurrnetSound={handleCurrnetSound}
+            currnetSound={currnetSound}
           />
         );
       })}
@@ -122,7 +153,12 @@ export default function Destinations({ language, station }) {
   );
 }
 
-const DestinationCard = ({ item, navigation }) => {
+const DestinationCard = ({
+  item,
+  navigation,
+  handleCurrnetSound,
+  currnetSound,
+}) => {
   const [isFavourite, toggleFavourite] = useState(false);
   const [sounds, setSound] = useState(null);
   return (
@@ -156,26 +192,29 @@ const DestinationCard = ({ item, navigation }) => {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={async () => {
-            if (sounds == null) {
-              await getAudio(item.type1 + item.type2, item.langu, "female");
-              toggleFavourite(true);
-              let sound = new Sound(
-                `${fs.CachesDirectoryPath}/output.wav`,
-                null,
-                (error) => {
-                  sound.play(() => {
-                    setSound(null);
-                    toggleFavourite(false);
-                  });
-                }
-              );
-              setSound(sound);
-            } else {
-              sounds.stop();
-              setSound(null);
-              toggleFavourite(false);
-            }
+          // onPress={async () => {
+          //   if (sounds == null) {
+          //     await getAudio(item.type1 + item.type2, item.langu, "female");
+          //     toggleFavourite(true);
+          //     let sound = new Sound(
+          //       `${fs.CachesDirectoryPath}/output.wav`,
+          //       null,
+          //       (error) => {
+          //         sound.play(() => {
+          //           setSound(null);
+          //           toggleFavourite(false);
+          //         });
+          //       }
+          //     );
+          //     setSound(sound);
+          //   } else {
+          //     sounds.stop();
+          //     setSound(null);
+          //     toggleFavourite(false);
+          //   }
+          // }}
+          onPress={() => {
+            handleCurrnetSound(item);
           }}
           style={{ backgroundColor: "rgba(255,255,255,0.4)" }}
           className="rounded-full p-3"

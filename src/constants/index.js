@@ -39,7 +39,7 @@ export let destinationData = [
     arr: "15:50",
     dep: "15:55",
     stop: "5",
-    nos: "12834",
+    nos: "13287",
     platform: "4",
     late_hour:'',
     late_min:'45',

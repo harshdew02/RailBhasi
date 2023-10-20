@@ -38,6 +38,6 @@ export const getAudio = async (inputString, Language, Voice) => {
       const path = `${fs.CachesDirectoryPath}/output.wav`;
       await fs.writeFile(path, audioContent, "base64");
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => console.log("error TTS", error));
   return mySound;
 };
