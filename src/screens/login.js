@@ -10,12 +10,13 @@ import {
   Image,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import GoogleSVG from '../../assets/images_copy/misc/google.svg';
 import FacebookSVG from '../../assets/images_copy/misc/facebook.svg';
 
 import CustomButton from '../components/CustomButton';
-import LottieView from "lottie-react-native";
+import { AtSymbolIcon } from 'react-native-heroicons/solid'
+import { LockClosedIcon } from 'react-native-heroicons/outline';
 
 const LoginScreen = ({ navigation }) => {
   return (
@@ -53,8 +54,7 @@ const LoginScreen = ({ navigation }) => {
         <View
           style={styles.searchSection}
         >
-          <Ionicons
-            name="at-outline"
+          <AtSymbolIcon
             size={20}
             color="#2776ff"
             style={{ marginRight: 5 }}
@@ -75,8 +75,7 @@ const LoginScreen = ({ navigation }) => {
           marginBottom: 30,
         }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Ionicons
-              name="lock-closed-outline"
+            <LockClosedIcon
               size={20}
               color="#2776ff"
               style={{ marginRight: 5 }}
@@ -85,7 +84,6 @@ const LoginScreen = ({ navigation }) => {
               style={styles.input}
               placeholder="Password"
               secureTextEntry={true}
-
             />
           </View>
           <TouchableOpacity onPress={() => { }}>
