@@ -15,20 +15,23 @@ import {
   TYPE_SELECTION,
 } from "../constants/config";
 import Sound from "react-native-sound";
-import fs from "react-native-fs";
+import fs, { stat } from "react-native-fs";
+import { useDispatch, useSelector } from "react-redux";
+import { setGlobalSound } from "../redux/soundSlice";
 
 export default function Destinations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
   const [currnetSound, setCurrentSound] = useState(null);
   const [sounds, setSound] = useState(null);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   //use effect will be applied here as language changes
   //get the desired language information from nearStation via props
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
   useEffect(() => {
     let index = LANGUAGE_SELECTION(language);
-    const fetchData = async (item) => {
+    const fetchData = async item => {
       setTrainData([]);
       // let type = TYPE_SELECTION(
       //   item.arr,
@@ -96,7 +99,7 @@ export default function Destinations({ language, station }) {
         image: item.image,
       };
 
-      setTrainData((prev) => (prev ? [...prev, obj] : [obj]));
+      setTrainData(prev => (prev ? [...prev, obj] : [obj]));
     };
 
     destinationData.map((item, index) => {
@@ -104,22 +107,27 @@ export default function Destinations({ language, station }) {
     });
   }, [language, station]);
 
-  const handleCurrnetSound = async (item) => {
+  const handleCurrnetSound = async item => {
     if (sounds == null || currnetSound != item) {
-      if (currnetSound != item && sounds != null) sounds.stop();
+      if (currnetSound != item && sounds != null) {
+        dispatch(setGlobalSound(null));
+        sounds.stop();
+      }
       setCurrentSound(item);
       await getAudio(item.type1 + item.type2, item.langu, "female");
+      dispatch(setGlobalSound(item));
       // toggleFavourite(true);
       let sound = new Sound(
         `${fs.CachesDirectoryPath}/output.wav`,
         null,
-        (error) => {
+        error => {
           if (error) console.log(error);
           else {
             setSound(sound);
             sound.play(() => {
               setSound(null);
               // toggleFavourite(false);
+              dispatch(setGlobalSound(null));
             });
           }
         }
@@ -129,6 +137,7 @@ export default function Destinations({ language, station }) {
       setSound(null);
       item = null;
       // toggleFavourite(false);
+      dispatch(setGlobalSound(null));
     }
   };
 
@@ -160,7 +169,12 @@ const DestinationCard = ({
   currnetSound,
 }) => {
   const [isFavourite, toggleFavourite] = useState(false);
-  const [sounds, setSound] = useState(null);
+  const mySound = useSelector(state => state.currentSound);
+  // console.log("mySound", mySound);
+  useEffect(() => {
+    // console.log("Sound changed", mySound);
+    toggleFavourite(mySound == item);
+  }, [mySound]);
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Destination", { ...item })}
