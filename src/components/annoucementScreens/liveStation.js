@@ -15,7 +15,7 @@ export default function LiveStation() {
   const [station, setStation] = React.useState("");
   return (
     <SafeAreaView>
-      <View className="flex-row items-center mx-2 justify-between">
+      <View className="flex-row items-center mx-2 mt-2 justify-between">
         <View style={{ width: wp(70) }}>
           <DropdownComponent  setStation={setStation}/>
         </View>

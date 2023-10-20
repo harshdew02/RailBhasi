@@ -66,7 +66,7 @@ export default function BottomTabs() {
             height,
         }}>
 
-        <Tab.Navigator initialRouteName='Home' screenOptions={screenOptions}>
+        <Tab.Navigator initialRouteName='Announcement' screenOptions={screenOptions}>
             <Tab.Screen
                 name="Home"
                 component={HomeScreen}
