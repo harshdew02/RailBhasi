@@ -1,5 +1,5 @@
-import fs from "react-native-fs";
-import Sound from "react-native-sound";
+// import fs from "react-native-fs";
+// import Sound from "react-native-sound";
 // Uncomment this for backend
 
 export const getAudio = (inputString, Language, Voice) => {
