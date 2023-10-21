@@ -40,9 +40,8 @@ export default function Destinations({ language, station }) {
       //   station
       // );
       let type = "origination";
-      let trains = await getTranslation(item.train, "en", language);
-      let from = await getTranslation(item.from, "en", language);
-      let to = await getTranslation(item.to, "en", language);
+      let info = await getTranslation(`${item.from} / ${item.to} / ${item.train}`,'en',language);
+      let data = info.split('/');
       let message;
 
       switch (type) {
@@ -71,9 +70,9 @@ export default function Destinations({ language, station }) {
 
       message = message
         .replace("(train_no)", item.nos)
-        .replace("(origin)", from)
-        .replace("(destination)", to)
-        .replace("(train_name)", trains)
+        .replace("(origin)", data[0])
+        .replace("(destination)", data[1])
+        .replace("(train_name)", data[2])
         .replace("(PF)", item.platform)
         .replace("(intime)", item.arr)
         .replace("(outtime)", item.dep)
@@ -88,7 +87,7 @@ export default function Destinations({ language, station }) {
 
       const obj = {
         nos: "Train no: " + item.nos,
-        train: trains,
+        train: data[2],
         type1: message,
         type2: message1,
         arr: item.arr,
