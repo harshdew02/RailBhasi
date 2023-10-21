@@ -14,8 +14,12 @@ import {
   LANGUAGE_SELECTION,
   TYPE_SELECTION,
 } from "../constants/config";
-import Sound from "react-native-sound";
-import fs, { stat } from "react-native-fs";
+
+// need to disable
+// import Sound from "react-native-sound";
+// import fs, { stat } from "react-native-fs";
+// 
+
 import { useDispatch, useSelector } from "react-redux";
 import { setDisable, setGlobalSound } from "../redux/soundSlice";
 
