@@ -36,9 +36,6 @@ export default function LiveStation() {
          {/*Access the data from index.js here then pass it to the destinations using props*/}
         <Destinations language = {lang} station={station} />
       </View>
-      <TouchableOpacity className={`flex items-center rounded-3xl space-y-1 p-3 bg-blue-100`} style={{ width: wp(26), height: wp(20) }} >
-        <Text className="text-neutral-700 font-medium" style={{ fontSize: wp(5), color: 'rgba(0,0,0,0.6)' }}>Mic</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   )
 }

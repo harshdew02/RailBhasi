@@ -68,8 +68,8 @@ const DropdownComponent = ({setStation}) => {
       searchPlaceholder="Search..."
       value={value}
       onChange={(item) => {
-        setValue(item.value);
-        setStation(item.value);
+        setValue(item.code);
+        setStation(item.code);
       }}
       renderLeftIcon={() => (
         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
