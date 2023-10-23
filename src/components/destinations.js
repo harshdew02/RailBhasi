@@ -101,7 +101,7 @@ export default function Destinations({ language, station }) {
         langu: language,
         image: item.image,
       };
-
+      console.log(language, station);
       setTrainData(prev => (prev ? [...prev, obj] : [obj]));
     };
 
