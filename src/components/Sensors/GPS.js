@@ -4,7 +4,6 @@ import Geocoder from 'react-native-geocoding'
 Geocoder.init('');
 
 export const getLongitude = async () => {
-
     Geolocation.getCurrentPosition((position)=>{
         console.log(position);
         Geocoder.from(position.coords.latitude,position.coords.longitude)
@@ -17,7 +16,7 @@ export const getLongitude = async () => {
         console.log(error.code, error.message);
     },{
         enableHighAccuracy: false,
-        timeout:10000,
+        timeout:20000,
         maximumAge: 100000
     });
     

@@ -68,7 +68,7 @@ const DropdownComponent = ({setStation}) => {
       searchPlaceholder="Search..."
       value={value}
       onChange={(item) => {
-        setValue(item.code);
+        setValue(item.value);
         setStation(item.code);
       }}
       renderLeftIcon={() => (

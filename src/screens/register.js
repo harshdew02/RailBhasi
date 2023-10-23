@@ -23,42 +23,7 @@ import CustomButton from "../components/CustomButton";
 import LottieView from "lottie-react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
-
-const statesdata = [
-  { label: "Andhra Pradesh", value: "1" },
-  { label: "Arunachal Pradesh	", value: "2" },
-  { label: "Assam", value: "3" },
-  { label: "Bihar", value: "4" },
-  { label: "Chhattisgarh", value: "5" },
-  { label: "Goa", value: "6" },
-  { label: "Gujarat", value: "7" },
-  { label: "Haryana", value: "8" },
-  { label: "Himachal Pradesh", value: "9" },
-  { label: "Jharkhand", value: "10" },
-  { label: "Karnataka", value: "11" },
-  { label: "Kerala", value: "12" },
-  { label: "Madhya Pradesh", value: "13" },
-  { label: "Maharashtra", value: "14" },
-  { label: "Manipur", value: "15" },
-  { label: "Meghalaya", value: "16" },
-  { label: "Mizoram", value: "17" },
-  { label: "Nagaland", value: "18" },
-  { label: "Odisha", value: "19" },
-  { label: "Punjab", value: "20" },
-  { label: "Rajasthan", value: "21" },
-  { label: "Sikkim", value: "22" },
-  { label: "Tamil Nadu", value: "23" },
-  { label: "Telangana", value: "24" },
-  { label: "Tripura", value: "25" },
-  { label: "Uttar Pradesh	", value: "26" },
-  { label: "Uttarakhand	", value: "27" },
-  { label: "West Bengal", value: "28" },
-];
-const languagesdata = [
-  { label: "English", value: "1" },
-  { label: "Hindi", value: "2" },
-  { label: "Gujrati", value: "3" },
-];
+import { langSelection, stationListEN } from "../constants";
 
 const RegisterScreen = ({ navigation }) => {
   const [states, setStates] = useState(null);
@@ -119,6 +84,33 @@ const RegisterScreen = ({ navigation }) => {
             />
           }
         /> */}
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          data={langSelection}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder="Select Language"
+          searchPlaceholder="Search..."
+          value={languages}
+          onChange={(item) => {
+            setLanguages(item.value);
+            console.log(item.code)
+          }}
+          renderLeftIcon={() => (
+            <Ionicons
+              name="language-outline"
+              size={20}
+              color="#2776ff"
+              style={{ marginRight: 5 }}
+            />
+          )}
+        />
+
         <View style={styles.searchSection}>
           <Ionicons
             name="person-outline"
@@ -134,46 +126,21 @@ const RegisterScreen = ({ navigation }) => {
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
-          data={statesdata}
+          data={stationListEN}
           search
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder="Select State"
+          placeholder="Select nearest station"
           searchPlaceholder="Search..."
           value={states}
           onChange={(item) => {
             setStates(item.value);
+            console.log(item.code);
           }}
           renderLeftIcon={() => (
             <Ionicons
               name="home-outline"
-              size={20}
-              color="#2776ff"
-              style={{ marginRight: 5 }}
-            />
-          )}
-        />
-
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          data={languagesdata}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder="Select Language"
-          searchPlaceholder="Search..."
-          value={languages}
-          onChange={(item) => {
-            setLanguages(item.value);
-          }}
-          renderLeftIcon={() => (
-            <Ionicons
-              name="language-outline"
               size={20}
               color="#2776ff"
               style={{ marginRight: 5 }}
