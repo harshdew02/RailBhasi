@@ -23,13 +23,11 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        alert("User login successful");
         navigation.replace("Main");
       })
       .catch((error) => {
@@ -83,10 +81,14 @@ const LoginScreen = ({ navigation }) => {
             color="#2776ff"
             style={{ marginRight: 5 }}
           />
-          <TextInput style={styles.input} placeholder="Email" onChangeText={(text)=>{
-            setEmail(text);
-            console.log(email); //uses the set state to set email
-          }} />
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            onChangeText={(text) => {
+              setEmail(text);
+              console.log(email); //uses the set state to set email
+            }}
+          />
         </View>
 
         <View
@@ -110,7 +112,7 @@ const LoginScreen = ({ navigation }) => {
               style={styles.input}
               placeholder="Password"
               secureTextEntry={true}
-              onChangeText={(text)=>{
+              onChangeText={(text) => {
                 setPassword(text);
                 console.log(password); //Uses the setstate to set password
               }}
@@ -129,7 +131,7 @@ const LoginScreen = ({ navigation }) => {
           //   // navigation.navigate("Main");
           // }
           onPress={
-            () => login(auth,email,password) 
+            () => login(auth, email, password)
             // () => login() //Initially it was called like this
             // ()=>{
             //   console.log(email,password);
