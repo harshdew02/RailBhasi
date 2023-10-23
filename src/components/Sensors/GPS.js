@@ -3,11 +3,22 @@ import Geocoder from 'react-native-geocoding'
 
 Geocoder.init('');
 
-Geocoder.from(41.89, 12.49)
-.then(json => {
-    var addressComponent = json;
-    console.log(addressComponent);
-})
-.catch(error => {
-    console.error(error)
-})
+export const getLongitude = async () => {
+
+    Geolocation.getCurrentPosition((position)=>{
+        console.log(position);
+        Geocoder.from(position.coords.latitude,position.coords.longitude)
+        .then((json)=>{
+            console.log(json);
+            var addressComponent = json.results[0].address_components;
+            console.log(addressComponent);
+        }).catch(error => console.error(error));
+    },(error) => {
+        console.log(error.code, error.message);
+    },{
+        enableHighAccuracy: false,
+        timeout:10000,
+        maximumAge: 100000
+    });
+    
+}
