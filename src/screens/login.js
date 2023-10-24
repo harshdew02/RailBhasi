@@ -21,6 +21,7 @@ import CustomButton from "../components/CustomButton";
 import LottieView from "lottie-react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -28,10 +29,10 @@ const LoginScreen = ({ navigation }) => {
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        AsyncStorage.setItem('byPass','true');
         navigation.replace("Main");
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
         alert(errorMessage);
       });
