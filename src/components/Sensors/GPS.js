@@ -1,22 +1,17 @@
 import Geolocation from 'react-native-geolocation-service'
-import Geocoder from 'react-native-geocoding'
-
 
 export const getLongitude = async () => {
-    Geolocation.getCurrentPosition((position)=>{
+    let address = Geolocation.getCurrentPosition(async (position)=>{
         let api_url = `https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`
-        fetch(api_url,{
-            method:'GET',
-        }).then((response)=>{
-            console.log(response.json());
+        let result = await fetch(api_url).then((response)=>{
+            return response.text();
+        }).then(response => {
+            console.log(JSON.parse(response))
+            return JSON.parse(response)
+        }).catch((error)=>{
+            console.log(error)
         })
-        // console.log(position);
-        // Geocoder.from(position.coords.latitude,position.coords.longitude)
-        // .then((json)=>{
-        //     console.log(json);
-        //     var addressComponent = json.results[0].address_components;
-        //     console.log(addressComponent);
-        // }).catch(error => console.error(error));
+        return result
     },(error) => {
         console.log(error.code, error.message);
     },{
@@ -24,5 +19,5 @@ export const getLongitude = async () => {
         timeout:20000,
         maximumAge: 100000
     });
-    
+    return address;
 }
