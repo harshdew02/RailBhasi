@@ -22,6 +22,8 @@ import fs, { stat } from "react-native-fs";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setDisable, setGlobalSound } from "../redux/soundSlice";
+import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./Information/Railwayapi";
+import { getLiveStation } from "./Information/RapidAPI";
 
 export default function Destinations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
@@ -37,14 +39,13 @@ export default function Destinations({ language, station }) {
     let index = LANGUAGE_SELECTION(language);
     const fetchData = async item => {
       setTrainData([]);
-      // let type = TYPE_SELECTION(
-      //   item.arr,
-      //   [item.late_hour, item.late_min],
-      //   item.from,
-      //   station
-      // );
-      let type = "origination";
-      let info = await getTranslation(`${item.from} / ${item.to} / ${item.train}`,'en',language);
+      let type = TYPE_SELECTION(
+        item.arr,
+        [item.late_hour, item.late_min],
+        item.from,
+        station
+      );
+      let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
       let data = info.split('/');
       let message;
 
