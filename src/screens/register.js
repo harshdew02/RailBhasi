@@ -27,12 +27,17 @@ import { langSelection, stationListEN } from "../constants";
 
 const RegisterScreen = ({ navigation }) => {
   const [states, setStates] = useState(null);
+  const [station, setStation] = useState(null);
+  const [lang,setLang]  = useState(null);
+  const [name,setName] = useState(null);
+  const [phone, setPhone] = useState(null);
   const [languages, setLanguages] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const signup = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        console.log(station,lang,phone)
         alert("User created successfully!");
         navigation.replace("Login");
       })
@@ -99,7 +104,7 @@ const RegisterScreen = ({ navigation }) => {
           value={languages}
           onChange={(item) => {
             setLanguages(item.value);
-            console.log(item.code)
+            setLang(item.code);
           }}
           renderLeftIcon={() => (
             <Ionicons
@@ -118,7 +123,9 @@ const RegisterScreen = ({ navigation }) => {
             color="#2776ff"
             style={{ marginRight: 5 }}
           />
-          <TextInput style={styles.input} placeholder="Full Name" />
+          <TextInput style={styles.input} value={name} placeholder="Full Name" onChangeText={(text) => {
+            setName(text);
+          }} />
         </View>
 
         <Dropdown
@@ -136,7 +143,7 @@ const RegisterScreen = ({ navigation }) => {
           value={states}
           onChange={(item) => {
             setStates(item.value);
-            console.log(item.code);
+            setStation(item.code);
           }}
           renderLeftIcon={() => (
             <Ionicons
@@ -216,6 +223,8 @@ const RegisterScreen = ({ navigation }) => {
             style={styles.input}
             placeholder="Mobile Number"
             keyboardType="numeric"
+            value={phone}
+            onChangeText={(txt) => setPhone(txt)}
           />
         </View>
 

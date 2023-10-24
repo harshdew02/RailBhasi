@@ -87,7 +87,6 @@ const LoginScreen = ({ navigation }) => {
             placeholder="Email"
             onChangeText={(text) => {
               setEmail(text);
-              console.log(email); //uses the set state to set email
             }}
           />
         </View>
@@ -115,7 +114,6 @@ const LoginScreen = ({ navigation }) => {
               secureTextEntry={true}
               onChangeText={(text) => {
                 setPassword(text);
-                console.log(password); //Uses the setstate to set password
               }}
             />
           </View>
@@ -126,18 +124,8 @@ const LoginScreen = ({ navigation }) => {
 
         <CustomButton
           label={"Login"}
-          // onPress={() =>
-          //   login();
-          //   // navigation.replace("Main");
-          //   // navigation.navigate("Main");
-          // }
           onPress={
             () => login(auth, email, password)
-            // () => login() //Initially it was called like this
-            // ()=>{
-            //   console.log(email,password);
-            // }
-            // navigation.navigate("Login");
           }
         />
 
