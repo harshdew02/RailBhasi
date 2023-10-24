@@ -5,6 +5,7 @@ import AppNavigation from "./src/navigation";
 import React, { useState } from "react";
 import { store } from "./src/redux/store";
 import { Provider } from "react-redux";
+import { auth } from "./firebase/firebase.config";
 {
   /* <StatusBar
 animated={true}

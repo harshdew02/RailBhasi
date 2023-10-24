@@ -16,6 +16,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { theme } from "../theme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { nativeViewGestureHandlerProps } from "react-native-gesture-handler/lib/typescript/handlers/NativeViewGestureHandler";
 
 const requestFilePermission = async (navigation) => {
@@ -37,7 +38,17 @@ const requestFilePermission = async (navigation) => {
     });
 
     if (((overall[0] == overall[1]) == overall[2]) == true)
-      navigation.navigate("Login");
+    {
+      let result = await AsyncStorage.getItem('byPass',(data)=>{
+        console.log(data);
+      })
+      if(result == null || result == undefined || result != 'true'){
+        navigation.navigate("Login");
+      }
+      else 
+        navigation.navigate('Main');
+    }
+    
     else {
       if (overall[0] == false) {
         Alert.alert(
