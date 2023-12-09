@@ -27,3 +27,7 @@ Start the server
 ```bash
   npm run dev
 ```
+
+```For Expo run
+  npx expo start --offline
+```
