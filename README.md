@@ -24,8 +24,8 @@ Install dependencies
 
 Start the server
 
-```bash
-  npm run dev
+```For CLI
+  npm react-native run -android
 ```
 
 ```For Expo run
