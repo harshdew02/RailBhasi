@@ -1,5 +1,7 @@
-import fs from "react-native-fs";
-
+import { useState } from "react";
+// 
+// import fs from "react-native-fs";
+// 
 // Uncomment this for backend
 
 export const getAudio = async (inputString, Language, Voice) => {
