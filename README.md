@@ -37,7 +37,6 @@ Start the server
 - TTS.js
 ```bash
 import fs from "react-native-fs";
-Record.js
 ```
 - Recorder.js
 ```bash
