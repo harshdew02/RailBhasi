@@ -19,7 +19,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <TopBar heading={"Get Announcement"} />
+      <TopBar heading={"Home"} />
 
 
       <Tab.Navigator initialRouteName='From To' screenOptions={screenOptions}>
