@@ -1,9 +1,5 @@
 import { Component } from 'react';
 // import AudioRecord from 'react-native-audio-record';
-<<<<<<< HEAD
-
-=======
->>>>>>> 578d84b35dc80e8226ee5ec74a4dc2439f9f3246
 // import fs from 'react-native-fs';
 // uncomment this for backend
 
