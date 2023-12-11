@@ -7,6 +7,11 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Destinations from '../destinations';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MapPinIcon, MicrophoneIcon, ArrowPathIcon } from 'react-native-heroicons/solid';
+import { MapPinIcon, MicrophoneIcon } from 'react-native-heroicons/solid';
+// import { getLongitude } from '../Sensors/GPS';
+
+import { ArrowPathIcon } from 'react-native-heroicons/outline';
+
 import { getLongitude } from '../Sensors/GPS';
 import { getLiveStation, getTrainBetweenStation } from '../Information/ERail';
 import { getTrainSchedules, getStationInfo } from '../Information/Railwayapi';
