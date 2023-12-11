@@ -7,17 +7,13 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Destinations from '../destinations';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MapPinIcon, MicrophoneIcon } from 'react-native-heroicons/solid';
-<<<<<<< HEAD
-
 // import { getLongitude } from '../Sensors/GPS';
 
 import { ArrowPathIcon } from 'react-native-heroicons/outline';
 
-=======
 import { getLongitude } from '../Sensors/GPS';
 import { getLiveStation, getTrainBetweenStation } from '../Information/ERail';
 import { getTrainSchedules, getStationInfo } from '../Information/Railwayapi';
->>>>>>> b14cd38a8160594958cc1b59d0bd10da071bc3ac
 // import { MinusCircleIcon } from 'react-native-heroicons/solid';
 
 export default function LiveStation() {

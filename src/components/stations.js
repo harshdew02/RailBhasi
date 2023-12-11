@@ -13,7 +13,6 @@ import { getAudio } from "./ASRComponents/TTS";
 import {
   PREDEFINED_ANNOUNCEMENT,
   LANGUAGE_SELECTION,
-  TYPE_SELECTION,
 } from "../constants/config";
 
 // need to disable
@@ -24,7 +23,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setDisable, setGlobalSound } from "../redux/soundSlice";
 import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./Information/Railwayapi";
-import { getLiveStation } from "./Information/RapidAPI";
+// import { getLiveStation } from "./Information/RapidAPI";
 
 export default function stations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
@@ -40,12 +39,12 @@ export default function stations({ language, station }) {
     let index = LANGUAGE_SELECTION(language);
     const fetchData = async item => {
       setTrainData([]);
-      let type = TYPE_SELECTION(
-        item.arr,
-        [item.late_hour, item.late_min],
-        item.from,
-        station
-      );
+      // let type = TYPE_SELECTION(
+      //   item.arr,
+      //   [item.late_hour, item.late_min],
+      //   item.from,
+      //   station
+      // );
       let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
       let data = info.split('/');
       let message;
