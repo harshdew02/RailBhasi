@@ -22,13 +22,8 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { setDisable, setGlobalSound } from "../redux/soundSlice";
-<<<<<<< HEAD
 import { getStationInfo, getTrainSchedules } from "./Information/Railwayapi";
 import { getLiveTrain, getTrainBetweenStation } from "./Information/ERail";
-=======
-import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./Information/Railwayapi";
-// import { getLiveStation } from "./Information/RapidAPI";
->>>>>>> 9534ac316aa4f08a0705d77ec3777c2d47d3fbd9
 
 export default function stations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
