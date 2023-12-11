@@ -29,7 +29,7 @@ const LoginScreen = ({ navigation }) => {
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        AsyncStorage.setItem('byPass','true');
+        AsyncStorage.setItem("byPass", "true");
         navigation.replace("Main");
       })
       .catch((error) => {
@@ -124,9 +124,7 @@ const LoginScreen = ({ navigation }) => {
 
         <CustomButton
           label={"Login"}
-          onPress={
-            () => login(auth, email, password)
-          }
+          onPress={() => login(auth, email, password)}
         />
 
         <Text style={{ textAlign: "center", color: "#666", marginBottom: 20 }}>
