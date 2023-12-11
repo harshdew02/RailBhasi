@@ -1,5 +1,6 @@
-import { View, Text, TouchableOpacity, Image, ScrollView, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
+import { stationListEN } from "../constants";
 import { destinationData } from "../constants";
 import {
   widthPercentageToDP as wp,
@@ -12,7 +13,6 @@ import { getAudio } from "./ASRComponents/TTS";
 import {
   PREDEFINED_ANNOUNCEMENT,
   LANGUAGE_SELECTION,
-  TYPE_SELECTION,
 } from "../constants/config";
 
 // need to disable
@@ -25,7 +25,7 @@ import { setDisable, setGlobalSound } from "../redux/soundSlice";
 import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./Information/Railwayapi";
 // import { getLiveStation } from "./Information/RapidAPI";
 
-export default function Destinations({ language, station }) {
+export default function stations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
   const [currnetSound, setCurrentSound] = useState(null);
   const [sounds, setSound] = useState(null);
@@ -37,25 +37,14 @@ export default function Destinations({ language, station }) {
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
   useEffect(() => {
     let index = LANGUAGE_SELECTION(language);
-    const fetchStationDetails = async item => {
-      //This function will fetch the details from the Railway APIs.
-      //This will return the object containing all the required details to display.
-      //Create destinationData type array then map it.
-
-    }
-
-    // let destinationData = fetchStationDetails
-
     const fetchData = async item => {
       setTrainData([]);
       // let type = TYPE_SELECTION(
       //   item.arr,
       //   [item.late_hour, item.late_min],
       //   item.from,
-      //   station,
-        
+      //   station
       // );
-      type = 'ontime'
       let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
       let data = info.split('/');
       let message;
@@ -102,7 +91,7 @@ export default function Destinations({ language, station }) {
         .replace("(stop)", item.stop);
 
       const obj = {
-        nos: "Train no: " + item.nos,
+        nos: "Station code: " + item.nos,
         train: data[2],
         type1: message,
         type2: message1,
@@ -117,15 +106,9 @@ export default function Destinations({ language, station }) {
       setTrainData(prev => (prev ? [...prev, obj] : [obj]));
     };
 
-    if(station == '' || station == null || station == undefined)
-    {
-      Alert.prompt('Information','Please select station');
-    }
-    else{
     destinationData.map((item, index) => {
       fetchData(item);
     });
-  }
   }, [language, station]);
 
   const handleCurrnetSound = async item => {
@@ -205,32 +188,31 @@ const DestinationCard = ({
   }, [mySound, myDisabled]);
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Destination", { ...item })}
+      onPress={() => navigation.navigate("Station")}
       style={{ width: wp(94) }}
-      className="bg-blue-800 rounded-2xl relative p-4 space-y-4 mb-2"
+      className="bg-blue-800 rounded-2xl relative py-7 px-5 space-y-4 mb-2"
     >
       <View>
         <Text
-          style={{ fontSize: wp(2.7) }}
+          style={{ fontSize: wp(4.5) }}
           className="text-white font-semibold"
         >
-          {item.nos}
+          {/* {item.nos} */}
+          Station Code: R
         </Text>
-        <Text style={{ fontSize: wp(5) }} className="text-white  font-semibold">
-          {item.train}
+        <Text style={{ fontSize: wp(7) }} className="text-white  font-semibold">
+          {/* {item.train} */}
+          Raipur Junction
         </Text>
       </View>
 
-      <View className="flex-row justify-between items-center">
-        <View className="flex-row justify-between">
-          <Text style={{ fontSize: wp(3.8) }} className="text-white mr-4">
-            Arr: {item.arr}
+      <View className="flex-row justify-between items-center p-1">
+        <View className="flex-column justify-between">
+          <Text style={{ fontSize: wp(4.8) }} className="text-white">
+            Number of PFs: {item.platform}
           </Text>
-          <Text style={{ fontSize: wp(3.8) }} className="text-white mx-2">
-            Dep: {item.dep}
-          </Text>
-          <Text style={{ fontSize: wp(3.8) }} className="text-white ml-4">
-            PF: {item.platform}
+          <Text style={{ fontSize: wp(4.8) }} className="text-white w-56">
+            Zone: South East Central Railway
           </Text>
         </View>
         <TouchableOpacity

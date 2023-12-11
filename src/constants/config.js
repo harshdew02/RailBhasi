@@ -64,21 +64,24 @@ const TRANSLATION = {
   ur: "اردو (Urdu)",
 };
 
-const TYPE_SELECTION = (api_time, late, origin, station) => {
+const TYPE_SELECTION = (api_time, late, origin, station, isCustom) => {
   //calculation part here
-  let computed_time;
-  let time = computed_time - api_time;
-
+  let d = Date(api_time);
+  let time = d.getTime() - Date.now();
   if (origin == station) return "origination";
 
-  if (time <= 5) {
-    return "arrived";
-  } else if (time > 5 && time <= 25) {
-    return "arriving";
-  } else if (time > 25) {
-    if (late > 0) return "late";
-    else return "ontime";
-  } else {
+  if(isCustom)
+  {
+    if (time <= 300000) {
+      return "arrived";
+    } else if (time > 300000 && time <= 1500000) {
+      return "arriving";
+    } else if (time > 1500000) {
+      if (late > 0) return "late";
+      else return "ontime";
+    }
+  }
+  else {
     if (late > 0) return "custom";
     else return "custom_ontime";
   }
