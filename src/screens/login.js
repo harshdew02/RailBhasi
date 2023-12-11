@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import {
   SafeAreaView,
@@ -172,7 +174,7 @@ const LoginScreen = ({ navigation }) => {
           }}
         >
           <Text>New to RailBhasi?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Main")}>
             <Text style={{ color: "#2776ff", fontWeight: "700" }}>
               {" "}
               Register

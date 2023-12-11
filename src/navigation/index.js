@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // Type
 import RightDrawer from "./RightDrawer";
 import DestinationScreen from "../screens/DestinationScreen";
+import StationScreen from "../screens/StationScreen";
 
 // Main Function
 function AppNavigation() {
@@ -25,6 +26,7 @@ function AppNavigation() {
         <Stack.Screen name="Main" component={RightDrawer} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Destination" component={DestinationScreen} />
+        <Stack.Screen name="Station" component={StationScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
