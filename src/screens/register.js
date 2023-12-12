@@ -22,22 +22,24 @@ import FacebookSVG from "../../assets/images_copy/misc/facebook.svg";
 import CustomButton from "../components/CustomButton";
 import LottieView from "lottie-react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase.config";
 import { langSelection, stationListEN } from "../constants";
+import { collection, addDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase/firebase.config";
 
 const RegisterScreen = ({ navigation }) => {
   const [states, setStates] = useState(null);
   const [station, setStation] = useState(null);
-  const [lang,setLang]  = useState(null);
-  const [name,setName] = useState(null);
+  const [name, setName] = useState(null);
+  const [lang, setLang] = useState(null);
   const [phone, setPhone] = useState(null);
   const [languages, setLanguages] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+
   const signup = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(station,lang,phone)
+        console.log(station, lang, phone);
         alert("User created successfully!");
         navigation.replace("Login");
       })
@@ -46,6 +48,16 @@ const RegisterScreen = ({ navigation }) => {
         const errorMessage = error.message;
         alert(errorMessage);
       });
+  };
+  const saveData = async () => {
+    // await firestore()
+    const docRef = await addDoc(collection(db, "users"), {
+      FullName: name,
+      Language: lang,
+      Mobile: phone,
+      StationName: states,
+    });
+    console.log("Document written with ID: ", docRef.id);
   };
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
@@ -123,9 +135,14 @@ const RegisterScreen = ({ navigation }) => {
             color="#2776ff"
             style={{ marginRight: 5 }}
           />
-          <TextInput style={styles.input} value={name} placeholder="Full Name" onChangeText={(text) => {
-            setName(text);
-          }} />
+          <TextInput
+            style={styles.input}
+            value={name}
+            placeholder="Full Name"
+            onChangeText={(text) => {
+              setName(text);
+            }}
+          />
         </View>
 
         <Dropdown
@@ -231,7 +248,10 @@ const RegisterScreen = ({ navigation }) => {
         <CustomButton
           label={"Register"}
           onPress={
-            () => signup()
+            () => {
+              saveData();
+              signup();
+            }
             // navigation.navigate("Login");
           }
         />

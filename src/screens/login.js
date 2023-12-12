@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import {
   SafeAreaView,
@@ -31,7 +29,7 @@ const LoginScreen = ({ navigation }) => {
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        AsyncStorage.setItem('byPass','true');
+        AsyncStorage.setItem("byPass", "true");
         navigation.replace("Main");
       })
       .catch((error) => {
@@ -126,9 +124,7 @@ const LoginScreen = ({ navigation }) => {
 
         <CustomButton
           label={"Login"}
-          onPress={
-            () => login(auth, email, password)
-          }
+          onPress={() => login(auth, email, password)}
         />
 
         <Text style={{ textAlign: "center", color: "#666", marginBottom: 20 }}>
@@ -176,7 +172,7 @@ const LoginScreen = ({ navigation }) => {
           }}
         >
           <Text>New to RailBhasi?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
             <Text style={{ color: "#2776ff", fontWeight: "700" }}>
               {" "}
               Register

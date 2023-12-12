@@ -37,19 +37,14 @@ const requestFilePermission = async (navigation) => {
       } else overall[0] = true;
     });
 
-    if (((overall[0] == overall[1]) == overall[2]) == true)
-    {
-      let result = await AsyncStorage.getItem('byPass',(data)=>{
+    if (((overall[0] == overall[1]) == overall[2]) == true) {
+      let result = await AsyncStorage.getItem("byPass", (data) => {
         console.log(data);
-      })
-      if(result == null || result == undefined || result != 'true'){
+      });
+      if (result == null || result == undefined || result != "false") {
         navigation.navigate("Login");
-      }
-      else 
-        navigation.navigate('Main');
-    }
-    
-    else {
+      } else navigation.navigate("Main");
+    } else {
       if (overall[0] == false) {
         Alert.alert(
           "Permission Denied",
@@ -62,8 +57,8 @@ const requestFilePermission = async (navigation) => {
               },
             },
             {
-              text: 'Cancel',
-              style: 'cancel',
+              text: "Cancel",
+              style: "cancel",
             },
           ]
         );
