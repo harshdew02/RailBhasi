@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
-import { stationListEN } from "../constants";
-import { destinationData } from "../constants";
+import { destinationData, stationListEN } from "../constants";
+// import { destinationData } from "../constants";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -16,8 +16,8 @@ import {
 } from "../constants/config";
 
 // need to disable
-// import Sound from "react-native-sound";
-// import fs, { stat } from "react-native-fs";
+import Sound from "react-native-sound";
+import fs, { stat } from "react-native-fs";
 // 
 
 import { useDispatch, useSelector } from "react-redux";
@@ -35,8 +35,9 @@ export default function stations({ language, station }) {
   //use effect will be applied here as language changes
   //get the desired language information from nearStation via props
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
-  useEffect(() => {
+  useEffect(async () => {
     let index = LANGUAGE_SELECTION(language);
+    destinationData = await getStationInfo(station);
     const fetchData = async item => {
       setTrainData([]);
       // let type = TYPE_SELECTION(
@@ -46,44 +47,6 @@ export default function stations({ language, station }) {
       //   station
       // );
       let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
-      let data = info.split('/');
-      let message;
-
-      switch (type) {
-        case "origination":
-          message = PREDEFINED_ANNOUNCEMENT[index].origination;
-          break;
-        case "arrived":
-          message = PREDEFINED_ANNOUNCEMENT[index].arrived;
-          break;
-        case "arriving":
-          message = PREDEFINED_ANNOUNCEMENT[index].arriving;
-          break;
-        case "late":
-          message = PREDEFINED_ANNOUNCEMENT[index].late;
-          break;
-        case "ontime":
-          message = PREDEFINED_ANNOUNCEMENT[index].ontime;
-          break;
-        case "custom":
-          message = PREDEFINED_ANNOUNCEMENT[index].custom;
-          break;
-        default:
-          message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
-          break;
-      }
-
-      message = message
-        .replace("(train_no)", item.nos)
-        .replace("(origin)", data[0])
-        .replace("(destination)", data[1])
-        .replace("(train_name)", data[2])
-        .replace("(PF)", item.platform)
-        .replace("(intime)", item.arr)
-        .replace("(outtime)", item.dep)
-        .replace("(stop)", item.stop)
-        .replace("(ghante)", item.late_hour)
-        .replace("(mintu)", item.late_min);
 
       let message1 = PREDEFINED_ANNOUNCEMENT[index].additional
         .replace("(intime)", item.arr)
