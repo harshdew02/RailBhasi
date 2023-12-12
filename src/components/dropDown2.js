@@ -7,22 +7,8 @@ import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 
-const DropdownComponent2 = ({ setStation }) => {
+const DropdownComponent2 = ({ setFromStation }) => {
     const [value, setValue] = useState(null);
-
-    const url =
-        `https://api.railwayapi.site/api/v1/trains/12834`;
-    const options = {
-        method: "GET",
-    };
-
-    try {
-        fetch(url, options).then((result) => {
-            // console.log(result);
-        });
-    } catch (error) {
-        // console.error(error);
-    }
 
     const renderItem = (item) => {
         return (
@@ -57,7 +43,7 @@ const DropdownComponent2 = ({ setStation }) => {
             value={value}
             onChange={(item) => {
                 setValue(item.value);
-                setStation(item.code);
+                setFromStation(item.code);
             }}
             renderLeftIcon={() => (
                 <MagnifyingGlassIcon style={styles.icon} size={20} color="#028A0F" />

@@ -8,6 +8,7 @@ export const getTrainSchedules = async (trainNo)=> {
         })
         .then(response => {
           let res = JSON.parse(response);
+          res = res.data[0];
           return res;
         })
         .catch(error => console.log("error", error));
