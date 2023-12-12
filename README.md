@@ -35,21 +35,26 @@ Start the server
 ## Run using CLI uncomment below codes
 
 - TTS.js
-```bash
+
+```js
 import fs from "react-native-fs";
 ```
+
 - Recorder.js
-```bash
-import fs from 'react-native-fs';
+
+```js
+import fs from "react-native-fs";
 ```
+
 - destination.js
-```
-import Sound from "react-native-sound"
+
+```js
+import Sound from "react-native-sound";
 import fs, { stat } from "react-native-fs";
 ```
-- liveStation.js
-```
-import { getLongitude } from '../Sensors/GPS';
-```
-  
 
+- liveStation.js
+
+```js
+import { getLongitude } from "../Sensors/GPS";
+```
