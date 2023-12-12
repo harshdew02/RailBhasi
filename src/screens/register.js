@@ -22,9 +22,9 @@ import FacebookSVG from "../../assets/images_copy/misc/facebook.svg";
 import CustomButton from "../components/CustomButton";
 import LottieView from "lottie-react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../firebase/firebase.config";
 import { langSelection, stationListEN } from "../constants";
 import { collection, addDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase/firebase.config";
 
 const RegisterScreen = ({ navigation }) => {
   const [states, setStates] = useState(null);
@@ -50,14 +50,12 @@ const RegisterScreen = ({ navigation }) => {
       });
   };
   const saveData = async () => {
+    // await firestore()
     const docRef = await addDoc(collection(db, "users"), {
       FullName: name,
-      Phone: phone,
-      Language: languages,
-      // State: states,
-      // Language: lang,
-      // Email: email,
-      // Password: password,
+      Language: lang,
+      Mobile: phone,
+      StationName: states,
     });
     console.log("Document written with ID: ", docRef.id);
   };
