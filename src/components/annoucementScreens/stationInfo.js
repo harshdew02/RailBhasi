@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { Card, Button } from 'react-native-paper';
+
 import DropdownComponent from '../dropDrown';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+
 import Stations from '../stations';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MapPinIcon, MicrophoneIcon } from 'react-native-heroicons/solid';

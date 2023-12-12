@@ -2,18 +2,20 @@ import React from 'react'
 import {
   Pressable,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   View,
-  Button,
-  Image,
-  Alert
+  TouchableOpacity,
+  Button
 } from "react-native";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
 import DatePicker from "react-native-date-ranges";
+import DropdownComponent2 from '../dropDown2';
+import DropdownComponent3 from '../dropDown3';
+import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon } from 'react-native-heroicons/outline';
+
+// Dropdown module
 
 const customButton = (onConfirm) => {
   return (
@@ -30,93 +32,88 @@ const customButton = (onConfirm) => {
 };
 
 export default function FromTo() {
+
+  const [station, setStation] = React.useState("");
+
   return (
     <View>
-        <ScrollView>
-          <View
-            className="bg-neutral-100 py-4 px-6 m-5 item-center rounded-md"
-          >
-            {/* Destination */}
-            <Pressable
-              onPress={() => navigation.navigate("Search")}
-              className="px-4 py-3 border-b border-gray-400 items-center gap-3 flex-row"
-            >
-              <Feather name="search" size={24} color="green" />
-              <TextInput
-                placeholderTextColor="black"
-                placeholder={
-                  "From Station"
-                }
-              />
-            </Pressable>
-            <Pressable
-              onPress={() => navigation.navigate("Search")}
-              className="px-4 py-3 border-b border-gray-400 items-center gap-3 flex-row"
-            >
-              <Feather name="map-pin" size={24} color="red" />
-              <TextInput
-                placeholderTextColor="black"
-                placeholder={
-                   "To Station"
-                }
-              />
-            </Pressable>
-
-            {/* Selected Dates */}
-            <Pressable
-              style={{
-                gap:12
-                
-              }}
-              className="px-4 py-3 item-center flex-row"
-            >
-              <Feather name="calendar" size={24} color="black" />
-              <DatePicker
-                style={{
-                  width: 350,
-                  height: 30,
-                  borderColor: "transparent",
-                }}
-                customStyles={{
-                  placeholderText: {
-                    fontSize: 15,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginRight: "auto",
-                  },
-                  headerStyle: {
-                    backgroundColor: "#003580",
-                  },
-                  contentText: {
-                    fontSize: 15,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginRight: "auto",
-                  },
-                }}
-                selectedBgColor="#0047AB"
-                customButton={(onConfirm) => customButton(onConfirm)}
-                allowFontScaling={false}
-                placeholder={"Select Date"}
-
-              />
-            </Pressable>
-
-
-
-            {/* Search Button */}
-            <Pressable
-              onPress={() => searchPlaces()}
-              className="px-4 py-3 bg-blue-500 rounded-lg"
-            >
-              <Text
-                className="text-center text-white font-medium text-base"
-              >
-                Search
-              </Text>
-            </Pressable>
+      <ScrollView>
+        <View style={{ width: wp(100) }} className="items-center mt-1">
+          <View className="flex-row items-center mx-2 mt-1 justify-between">
+            <View style={{ width: wp(80) }}>
+              <DropdownComponent2 setStation={setStation} />
+            </View>
+            <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" onPress={async () => {
+              getLongitude();
+            }} mode='elevated' dark={true}>
+              <MapPinIcon size={20} color="#fff" />
+            </TouchableOpacity>
           </View>
-          </ScrollView>
+          <View className="flex-row items-center mx-2 mt-1 justify-between">
+            <View style={{ width: wp(80) }}>
+              <DropdownComponent3 setStation={setStation} />
+            </View>
+            <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" onPress={async () => {
+              getLongitude();
+            }} mode='elevated' dark={true}>
+              <MicrophoneIcon size={20} color="#fff" />
+            </TouchableOpacity>
           </View>
+        </View>
+        <Pressable
+          style={{
+            gap: 12,
+            width: wp(80),
+            height: 45,
+            backgroundColor: "white",
+            borderRadius: 12,
+            borderColor: "red",
+            borderStyle: "solid",
+            padding: 12,
+            shadowColor: "#000",
+            shadowOffset: {
+                width: 0,
+                height: 1,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 1.41,
+            elevation: 2,
+
+          }}
+          className="flex-row py-2 px-3 ml-3 mt-2 rounded-lg shadow-2xl items-center bg-white"
+        >
+          <MicrophoneIcon size={20} color="black" />
+          <DatePicker
+            style={{
+              width: 350,
+              height: 30,
+              borderColor: "transparent",
+            }}
+            customStyles={{
+              placeholderText: {
+                fontSize: 15,
+                flexDirection: "row",
+                alignItems: "center",
+                marginRight: "auto",
+              },
+              headerStyle: {
+                backgroundColor: "#003580",
+              },
+              contentText: {
+                fontSize: 15,
+                flexDirection: "row",
+                alignItems: "center",
+                marginRight: "auto",
+              },
+            }}
+            selectedBgColor="#0047AB"
+            customButton={(onConfirm) => customButton(onConfirm)}
+            allowFontScaling={false}
+            placeholder={"Select Date"}
+
+          />
+        </Pressable>
+      </ScrollView>
+    </View>
   )
 }

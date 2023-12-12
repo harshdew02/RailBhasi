@@ -28,7 +28,6 @@ export default function LiveStation() {
         </View>
         {/* <View className="flex-row justify-start mx-1" style={{ width: wp(30) }}> */}
           <TouchableOpacity className="p-3 rounded-xl bg-blue-500" onPress={() => {  }} mode='elevated' dark={true}>
-            {/* <FontAwesome name="microphone" size={20} color="#fff" /> */}
             <MicrophoneIcon size={20} color="#fff" />
           </TouchableOpacity>
           <TouchableOpacity className="p-3 rounded-xl bg-blue-500"   onPress={async () => {
