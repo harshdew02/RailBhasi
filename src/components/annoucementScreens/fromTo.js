@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Pressable,
   ScrollView,
@@ -14,6 +14,7 @@ import DatePicker from "react-native-date-ranges";
 import DropdownComponent2 from '../dropDown2';
 import DropdownComponent3 from '../dropDown3';
 import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon } from 'react-native-heroicons/outline';
+import { getTrainBetweenStation } from '../Information/ERail';
 
 // Dropdown module
 
@@ -33,7 +34,27 @@ const customButton = (onConfirm) => {
 
 export default function FromTo() {
 
-  const [station, setStation] = React.useState("");
+  const [fromStation, setFromStation] = React.useState("");
+  const [toStation, setToStation] = React.useState("");
+  const [selectedDate, setDate] = React.useState();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        // handle incomplete parameters
+        console.log(fromStation, toStation, selectedDate);
+        if (fromStation && toStation && selectedDate) {
+          const data = await getTrainBetweenStation(fromStation, toStation, selectedDate);
+          console.log(data);
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getData();
+  }, [fromStation, toStation, selectedDate])
 
   return (
     <View>
@@ -41,7 +62,8 @@ export default function FromTo() {
         <View style={{ width: wp(100) }} className="items-center mt-1">
           <View className="flex-row items-center mx-2 mt-1 justify-between">
             <View style={{ width: wp(80) }}>
-              <DropdownComponent2 setStation={setStation} />
+              {/* From */}
+              <DropdownComponent2 setFromStation={setFromStation} />
             </View>
             <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" onPress={async () => {
               getLongitude();
@@ -49,9 +71,10 @@ export default function FromTo() {
               <MapPinIcon size={20} color="#fff" />
             </TouchableOpacity>
           </View>
+          {/* To */}
           <View className="flex-row items-center mx-2 mt-1 justify-between">
             <View style={{ width: wp(80) }}>
-              <DropdownComponent3 setStation={setStation} />
+              <DropdownComponent3 setToStation={setToStation} />
             </View>
             <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" onPress={async () => {
               getLongitude();
@@ -72,8 +95,8 @@ export default function FromTo() {
             padding: 12,
             shadowColor: "#000",
             shadowOffset: {
-                width: 0,
-                height: 1,
+              width: 0,
+              height: 1,
             },
             shadowOpacity: 0.2,
             shadowRadius: 1.41,
@@ -110,7 +133,6 @@ export default function FromTo() {
             customButton={(onConfirm) => customButton(onConfirm)}
             allowFontScaling={false}
             placeholder={"Select Date"}
-
           />
         </Pressable>
       </ScrollView>

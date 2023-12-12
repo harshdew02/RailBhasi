@@ -7,38 +7,23 @@ import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
 import { MagnifyingGlassIcon, MapPinIcon } from "react-native-heroicons/outline";
 
-const DropdownComponent3 = ({ setStation }) => {
+const DropdownComponent3 = ({ setToStation }) => {
     const [value, setValue] = useState(null);
-
-    const url =
-        `https://api.railwayapi.site/api/v1/trains/12834`;
-    const options = {
-        method: "GET",
-    };
-
-    try {
-        fetch(url, options).then((result) => {
-            // console.log(result);
-        });
-    } catch (error) {
-        // console.error(error);
-    }
-
     const renderItem = (item) => {
         return (
-          <View style={styles.item}>
-            <Text style={styles.textItem}>{item.label}</Text>
-            {item.value === value && (
-              <CheckIcon
-                style={styles.icon}
-                color="black"
-                name="Safety"
-                size={20}
-              />
-            )}
-          </View>
+            <View style={styles.item}>
+                <Text style={styles.textItem}>{item.label}</Text>
+                {item.value === value && (
+                    <CheckIcon
+                        style={styles.icon}
+                        color="black"
+                        name="Safety"
+                        size={20}
+                    />
+                )}
+            </View>
         );
-      };
+    };
     return (
         <Dropdown
             style={styles.dropdown}
@@ -57,7 +42,7 @@ const DropdownComponent3 = ({ setStation }) => {
             value={value}
             onChange={(item) => {
                 setValue(item.value);
-                setStation(item.code);
+                setToStation(item.code);
             }}
             renderLeftIcon={() => (
                 <MapPinIcon style={styles.icon} size={20} color="#b20000" />
