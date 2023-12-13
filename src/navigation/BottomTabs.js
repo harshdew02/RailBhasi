@@ -36,9 +36,7 @@ const screenOptions = {
     tabBarShowLabel: false,
     headerShown: false,
     tabBarHideOnKeyboard: true,
-    tabBarStyle: {
-        
-        position: "absolute",
+    tabBarStyle: {        
         bottom: 0,
         right: 0,
         left: 0,
@@ -130,9 +128,8 @@ export default function BottomTabs() {
                                     alignItems: "center",
                                     justifyContent: "center",
                                     backgroundColor: "#16247d",
-                                    width: Platform.OS == "ios" ? 50 : 60,
-                                    height: Platform.OS == "ios" ? 50 : 60,
-                                    top: Platform.OS == "ios" ? -10 : -20,
+                                    width: Platform.OS == "ios" ? 30 : 40,
+                                    height: Platform.OS == "ios" ? 30 : 40,
                                     borderRadius: Platform.OS == "ios" ? 25 : 30
                                 }} >
                                     <TouchableOpacity onPress={onToggleSnackBar} classNam={`pt-5`}>
