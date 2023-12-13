@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import DropdownComponent from '../dropDrown';
@@ -34,8 +34,11 @@ export default function StationInfo() {
         </View>
       </View>
       <View>
-         {/*Access the data from index.js here then pass it to the destinations using props*/}
-        <Stations language = {lang} station={station} />
+        <View className="p-2">
+          <Image source={require("../../../assets/images/stationinfo.jpg")} className="w-full h-2/6 m-2 p-2"/>
+        </View>
+         {/*Access the datas from index.js here then pass it to the destinations using props*/}
+        <Stations style={{marginTop:-400}}language = {lang} station={station} />
       </View>
     </SafeAreaView>
   )

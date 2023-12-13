@@ -28,12 +28,14 @@ export default function LiveStation() {
           <TouchableOpacity className="p-3 rounded-xl bg-blue-500" onPress={() => {  }} mode='elevated' dark={true}>
             <MicrophoneIcon size={20} color="#fff" />
           </TouchableOpacity>
+
           <TouchableOpacity className="p-3 rounded-xl bg-blue-500"   onPress={async () => {
             getLongitude();
            }} mode='elevated' dark={true}>
             {/* <Ionicons name="location" size={20} color="#fff"  /> */}
             <MapPinIcon size={20} color="#fff"  />
           </TouchableOpacity>
+
           <TouchableOpacity className="p-3 rounded-xl bg-blue-500"   onPress={() => {
               setLang('mr');
            }} mode='elevated' dark={true}>
