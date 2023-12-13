@@ -31,12 +31,11 @@ const { width, height } = Dimensions.get("window")
 
 
 const screenOptions = {
-
-
     tabBarShowLabel: false,
     headerShown: false,
     tabBarHideOnKeyboard: true,
-    tabBarStyle: {        
+  
+    tabBarStyle: {
         bottom: 0,
         right: 0,
         left: 0,

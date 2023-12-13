@@ -7,13 +7,6 @@ import { CheckIcon } from "react-native-heroicons/solid";
 
 const DropdownComponent = ({setStation}) => {
   const [value, setValue] = useState(null);
-  let hardCode = null;
-  if(value === 104)
-    hardCode = 'BSP';
-  else if(value === 4306)
-    hardCode = 'SRWN';
-  else if(value === 168)
-    hardCode = 'NDLS';
 
   const url =
     `https://api.railwayapi.site/api/v1/trains/12834`;
@@ -69,7 +62,7 @@ const DropdownComponent = ({setStation}) => {
       value={value}
       onChange={(item) => {
         setValue(item.value);
-        setStation(item.value);
+        setStation(item.code);
       }}
       renderLeftIcon={() => (
         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
