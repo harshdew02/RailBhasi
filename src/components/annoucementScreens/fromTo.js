@@ -26,7 +26,6 @@ const customButton = (onConfirm) => {
         container: { width: "80%", marginHorizontal: "3%" },
         text: { fontSize: 20 },
       }}
-      primary
       title="Submit"
     />
   );
