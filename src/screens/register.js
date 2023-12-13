@@ -23,7 +23,8 @@ import CustomButton from "../components/CustomButton";
 import LottieView from "lottie-react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { langSelection, stationListEN } from "../constants";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, Firestore } from "firebase/firestore";
+import firestore from '@react-native-firebase/firestore'
 import { auth, db } from "../../firebase/firebase.config";
 
 const RegisterScreen = ({ navigation }) => {
@@ -38,8 +39,9 @@ const RegisterScreen = ({ navigation }) => {
 
   const signup = () => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(station, lang, phone);
+      .then(async (userCredential) => {
+        // console.log(station, lang, phone);
+        await saveData();
         alert("User created successfully!");
         navigation.replace("Login");
       })
@@ -51,12 +53,20 @@ const RegisterScreen = ({ navigation }) => {
   };
   const saveData = async () => {
     // await firestore()
+    // console.log(db.toJSON())
+    // const users = await firestore().collection('users').get();
+    // console.log(users)
     const docRef = await addDoc(collection(db, "users"), {
       FullName: name,
       Language: lang,
       Mobile: phone,
       StationName: states,
+    }).then(response => {
+      console.log(response);
+    }).catch(e => {
+      console.log(console.log('errors:' + e));
     });
+    console.log(name,lang,phone,states)
     console.log("Document written with ID: ", docRef.id);
   };
   return (
@@ -249,7 +259,6 @@ const RegisterScreen = ({ navigation }) => {
           label={"Register"}
           onPress={
             () => {
-              saveData();
               signup();
             }
             // navigation.navigate("Login");
