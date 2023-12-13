@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import AntDesign from "@expo/vector-icons/AntDesign";
+
 import { stationListEN } from "../constants";
 import { CheckIcon } from "react-native-heroicons/solid";
+import { placeholder } from "@babel/types";
+import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 
-const DropdownComponent = ({setStation}) => {
+
+const DropdownComponent = ({ setStation }) => {
   const [value, setValue] = useState(null);
 
   const url =
@@ -33,7 +36,7 @@ const DropdownComponent = ({setStation}) => {
           //   name="Safety"
           //   size={20}
           // />
-          <CheckIcon 
+          <CheckIcon
             style={styles.icon}
             color="black"
             name="Safety"
@@ -48,6 +51,7 @@ const DropdownComponent = ({setStation}) => {
     <Dropdown
       style={styles.dropdown}
       autoScroll={false}
+
       placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
@@ -65,7 +69,7 @@ const DropdownComponent = ({setStation}) => {
         setStation(item.code);
       }}
       renderLeftIcon={() => (
-        <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+        <MagnifyingGlassIcon style={styles.icon} size={20} color="black" />
       )}
       renderItem={renderItem}
     />
