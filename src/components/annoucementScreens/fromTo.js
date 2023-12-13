@@ -15,6 +15,7 @@ import DropdownComponent3 from '../dropDown3';
 import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon, CalendarDaysIcon } from 'react-native-heroicons/outline';
 import { getTrainBetweenStation } from '../Information/ERail';
 import Destinations2 from '../destinations2';
+import { PREDEFINED_LANGUAGE } from '../../constants/config';
 
 // Dropdown module
 
@@ -27,7 +28,7 @@ const customButton = (onConfirm) => {
         text: { fontSize: 20 },
       }}
       primary
-      title="Submit"
+      title={"Submit"}
     />
   );
 };

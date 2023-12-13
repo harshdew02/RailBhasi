@@ -1,11 +1,13 @@
 import { View, SafeAreaView, Image } from 'react-native';
 import * as React from 'react';
 import TopBar from '../components/topBar';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LiveTrain, FromTo } from '../components/annoucementScreens';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { PREDEFINED_LANGUAGE } from '../constants/config';
 
 const screenOptions = {
   tabBarShowLabel: true,
@@ -19,7 +21,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <TopBar heading={"Home"} />
+      <TopBar heading={PREDEFINED_LANGUAGE['home']['hi']} />
 
 
       <Tab.Navigator initialRouteName='From To' screenOptions={screenOptions}>

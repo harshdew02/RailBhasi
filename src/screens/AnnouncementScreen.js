@@ -1,11 +1,13 @@
 import { View, SafeAreaView, Image} from 'react-native';
 import * as React from 'react';
 import TopBar from '../components/topBar';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LiveStation, StationInfo } from '../components/annoucementScreens';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { PREDEFINED_LANGUAGE } from '../constants/config';
 
 const screenOptions = {
     tabBarShowLabel: true,
@@ -17,10 +19,18 @@ const screenOptions = {
 export default function AnnouncementScreen() {
 
     const Tab = createMaterialTopTabNavigator();
+    const [lang,setLang] = React.useState('hi');
 
+    React.useEffect( () => {
+        async function langS () {
+            setLang(await AsyncStorage.getItem('lang'))
+        }
+        langS()
+    }, [lang])
+    
     return (
         <SafeAreaView className="flex-1 bg-white">
-            <TopBar heading={"Get Announcement"} />
+            <TopBar heading={PREDEFINED_LANGUAGE['geta'][lang]} />
 
             <Tab.Navigator initialRouteName='LiveStation' screenOptions={screenOptions}>
                 <Tab.Screen

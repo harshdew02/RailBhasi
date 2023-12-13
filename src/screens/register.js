@@ -24,6 +24,7 @@ import LottieView from "lottie-react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { langSelection, stationListEN } from "../constants";
 import { collection, addDoc, Firestore } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import firestore from '@react-native-firebase/firestore'
 import { auth, db } from "../../firebase/firebase.config";
 
@@ -41,6 +42,7 @@ const RegisterScreen = ({ navigation }) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         // console.log(station, lang, phone);
+        await AsyncStorage.setItem('lang',lang)
         await saveData();
         alert("User created successfully!");
         navigation.replace("Login");
