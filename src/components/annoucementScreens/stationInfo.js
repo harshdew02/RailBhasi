@@ -37,7 +37,7 @@ export default function StationInfo() {
         <View className="p-2">
           <Image source={require("../../../assets/images/stationinfo.jpg")} className="w-full h-2/6 m-2 p-2"/>
         </View>
-         {/*Access the data from index.js here then pass it to the destinations using props*/}
+         {/*Access the datas from index.js here then pass it to the destinations using props*/}
         <Stations style={{marginTop:-400}}language = {lang} station={station} />
       </View>
     </SafeAreaView>
