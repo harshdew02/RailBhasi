@@ -1,0 +1,13 @@
+export const dialogflowConfig={
+        type: 'service_account',
+        project_id: 'chatbot-xevr',
+        private_key_id: '9bfa51faf0df30f8e0b4c4192e6f947a4ac71263',
+        private_key: '-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCwicPokFExQK7h\n64Zow/Xm5rR6fx91VEubSJtK4lKdJhlxBWpH05DzT+QdAS3JEti/QBLQmgOYGDxX\nuXjLVwite9sINYzFE13rRLM89rLi46acYwLLBM9ctb+0cHL8OL05kGuGsxeumCjO\ncYU7usz6ZkI/phFhG6jcIFb+yguYwC+mTD7hN99bzzcgQ7G/2WQV9xhf3rXxakEq\nxDCF/Ww5ubxrE+MMw9Fz87LiMRFX6zE9NRUiACNj/JThqyaBQm5PAAyh/4oDK4ql\nrDBSEVO3Mx9wLE3tWvaBej8ybmrnCq81VDjuzTHgbZLDG/I+6UCCKB7iMkwXpFxw\nJsqH9rnPAgMBAAECggEAAWePMIDlEkrVxP53B+JxDqCkFH6wJoVpTdp4cAEJmJcd\nJSikXt7sFULBr1qpuouU4uEB2a15dzWhyf+ciOq1qwKVwNkDIRxD7RHwiXzy+gje\nRT/6aTXoFhNVAuV0Io+rXbwyL4keaeNrYvdFEMaLMQmJsXw3WFzwp5OwSpcbMvfE\nVD9a1FW5cs8oRSJiMbcLZqiylAPpXaa0b+5RjZg87cTVgIymBie+mMOiB7PzFS72\nddCMAHPJqJSAAFFdhQbjyovT2h5Q2fatzReTZCPGPKR7+Bf7GErDTbBTgtnkGTWv\nm2+vLc5HptfFrP5sCeVnEDPKEH7DiTZ7iyJLpkwemQKBgQDyTErJ5Z88fBc6w1yF\nJUN/lkCpeAaHVLyFr4ZZi53XAPNZhe5ZP7nH2xwKVfZHy28TSgHQU0YBs5bbpnH7\nAWpYXFXnoP4KRYwQ87NZxr8tfXrtEeymGixgVz23E2Ss2rCjsgz9LZCWw7yqgRJ3\nCIohYvQqq7x7E7yA2gK5YrqEdwKBgQC6hXp9XsT/XKpENwACFf5kNZJAlRM/OtPw\nxmn9rIWqr/9/KUYbifps+JTxHU0UvKUtTUqGLMNn39rkrtjW8rAdolTgRXWbi2qz\nAaj5JD749mRGK3q5ykfCEHDsaqydhwBDg3KVbhS5ROvtThAGzmFUHkVi94sRxM5V\nwqGNDJ8DaQKBgQDKUyScZM7MDf7DxgCK+evcLVY/bQdemEZ4B3LTcT9TGusZ1TmL\ncygqF+/ZPaDSoLBW1hSfpfmuUA1nyxwgcjUgJbJiIdAgOaTVPvqDu+9GCCLOtYn7\nxZ1KsW7KYjpOEKsxdetcumCjVD1Fz1Pg69OUP3IN86wGxhtBKUrfDO8czwKBgQCc\npje+jVZD5Y52Zf7Swaf6f2eKZ+lXRE/1up4P19IXDWM2Z/KidFpnJMrqSaKQFPNg\nvbYmQ/gFCGOthg9FT2OML+a6yHtCnG+LUYyZWdCthTmoGSIkYXesy+QbGmhIkLYu\n/XnBeEddZj4C+nnJTZE+dYHu4VniHXjxW9oUPRJbaQKBgFQ657kRxKaI54cvldhc\nh2PzRqPfa5xm2RqcLQiqwWbKGEqY1UBEXUjTJ+NF60be3Vvua0EHUI+nZtic1/6Z\nndxOwn7dVf5zITyyybuky9fmL1MZh0X2ROCcjfQDXbQymXVZYleGiudIKtcJ5Lgc\n6L2VLLt86YUXl1VIo6G9AIgn\n-----END PRIVATE KEY-----\n',
+        client_email: 'aditya-chatbot@chatbot-xevr.iam.gserviceaccount.com',
+        client_id: '104561782839548990167',
+        auth_uri: 'https://accounts.google.com/o/oauth2/auth',
+        token_uri: 'https://oauth2.googleapis.com/token',
+        auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
+        client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/aditya-chatbot%40chatbot-xevr.iam.gserviceaccount.com',
+        universe_domain: 'googleapis.com'
+}
