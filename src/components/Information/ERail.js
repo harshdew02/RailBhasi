@@ -17,7 +17,7 @@ export const getTrainBetweenStation = async(from, to, date) => {
 }
 
 
-
+//do not use
 export const getLiveTrain = async(trainNo) => {
     let apiUrl = `https://indian-railway-api.cyclic.app/trains/getRoute?trainNo=${trainNo}`
     const myRes = await fetch(apiUrl, {

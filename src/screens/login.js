@@ -176,7 +176,7 @@ const LoginScreen = ({ navigation }) => {
           }}
         >
           <Text>New to RailBhasi?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
             <Text style={{ color: "#2776ff", fontWeight: "700" }}>
               {" "}
               Register

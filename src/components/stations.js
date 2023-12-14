@@ -49,47 +49,30 @@ export default function stations({ language, station }) {
       let data = info.split('/');
       let message;
 
-      switch (type) {
-        case "origination":
-          message = PREDEFINED_ANNOUNCEMENT[index].origination;
-          break;
-        case "arrived":
-          message = PREDEFINED_ANNOUNCEMENT[index].arrived;
-          break;
-        case "arriving":
-          message = PREDEFINED_ANNOUNCEMENT[index].arriving;
-          break;
-        case "late":
-          message = PREDEFINED_ANNOUNCEMENT[index].late;
-          break;
-        case "ontime":
-          message = PREDEFINED_ANNOUNCEMENT[index].ontime;
-          break;
-        case "custom":
-          message = PREDEFINED_ANNOUNCEMENT[index].custom;
-          break;
-        default:
-          message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
-          break;
-      }
-
-      message = message
-        .replace("(train_no)", item.nos)
-        .replace("(origin)", data[0])
-        .replace("(destination)", data[1])
-        .replace("(train_name)", data[2])
-        .replace("(PF)", item.platform)
-        .replace("(intime)", item.arr)
-        .replace("(outtime)", item.dep)
-        .replace("(stop)", item.stop)
-        .replace("(ghante)", item.late_hour)
-        .replace("(mintu)", item.late_min);
-
-      let message1 = PREDEFINED_ANNOUNCEMENT[index].additional
-        .replace("(intime)", item.arr)
-        .replace("(outtime)", item.dep)
-        .replace("(stop)", item.stop);
-
+      // switch (type) {
+      //   case "origination":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].origination;
+      //     break;
+      //   case "arrived":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].arrived;
+      //     break;
+      //   case "arriving":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].arriving;
+      //     break;
+      //   case "late":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].late;
+      //     break;
+      //   case "ontime":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].ontime;
+      //     break;
+      //   case "custom":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].custom;
+      //     break;
+      //   default:
+      //     message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
+      //     break;
+      // }
+      let message1 = PREDEFINED_ANNOUNCEMENT[index]
       const obj = {
         nos: "Station code: " + item.nos,
         train: data[2],
@@ -151,7 +134,7 @@ export default function stations({ language, station }) {
 
   return (
     <ScrollView
-      className="mx-0 mt-2 px-2"
+      className="mx-0 mt-0 px-2"
       style={{ height: hp(68), width: wp(100) }}
     >
       {trainData.map((item, index) => {
@@ -190,7 +173,7 @@ const DestinationCard = ({
     <TouchableOpacity
       onPress={() => navigation.navigate("Station")}
       style={{ width: wp(94) }}
-      className="bg-blue-800 rounded-2xl relative py-7 px-5 space-y-4 mb-2"
+      className="bg-blue-800 rounded-2xl relative py-7 px-5 space-y-1 mb-2"
     >
       <View>
         <Text
@@ -209,10 +192,10 @@ const DestinationCard = ({
       <View className="flex-row justify-between items-center p-1">
         <View className="flex-column justify-between">
           <Text style={{ fontSize: wp(4.8) }} className="text-white">
-            Number of PFs: {item.platform}
+            Number of PFs: 7
           </Text>
           <Text style={{ fontSize: wp(4.8) }} className="text-white w-56">
-            Zone: South East Central Railway
+            Zone: SECR
           </Text>
         </View>
         <TouchableOpacity
