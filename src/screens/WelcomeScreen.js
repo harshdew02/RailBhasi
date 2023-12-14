@@ -8,7 +8,7 @@ import {
   Alert,
   Linking,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,6 +17,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { theme } from "../theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PREDEFINED_ANNOUNCEMENT, PREDEFINED_LANGUAGE } from "../constants/config";
 // import { nativeViewGestureHandlerProps } from "react-native-gesture-handler/lib/typescript/handlers/NativeViewGestureHandler";
 
 const requestFilePermission = async (navigation) => {
@@ -37,19 +38,14 @@ const requestFilePermission = async (navigation) => {
       } else overall[0] = true;
     });
 
-    if (((overall[0] == overall[1]) == overall[2]) == true)
-    {
-      let result = await AsyncStorage.getItem('byPass',(data)=>{
+    if (((overall[0] == overall[1]) == overall[2]) == true) {
+      let result = await AsyncStorage.getItem("byPass", (data) => {
         console.log(data);
-      })
-      if(result == null || result == undefined || result != 'true'){
+      });
+      if (result == null || result == undefined || result != "true") {
         navigation.navigate("Login");
-      }
-      else 
-        navigation.navigate('Main');
-    }
-    
-    else {
+      } else navigation.navigate("Main");
+    } else {
       if (overall[0] == false) {
         Alert.alert(
           "Permission Denied",
@@ -62,8 +58,8 @@ const requestFilePermission = async (navigation) => {
               },
             },
             {
-              text: 'Cancel',
-              style: 'cancel',
+              text: "Cancel",
+              style: "cancel",
             },
           ]
         );
@@ -76,6 +72,25 @@ const requestFilePermission = async (navigation) => {
 };
 
 export default function WelcomeScreen() {
+  const [lang,setLang] = React.useState(null);
+    React.useEffect( () => {
+       const fetchData = async () => {
+        try{
+          const storedLang = await AsyncStorage.getItem('lang');
+          if(storedLang != null)
+            setLang(storedLang);
+          else
+            setLang('en')
+        }catch(error)
+        {
+          console.error('Error: ',error);
+        }
+       }
+       fetchData();
+    }, [])
+    useEffect(()=>{
+      console.log('Language changed: ', lang);
+    }, [lang])
   const navigation = useNavigation();
   return (
     <View className="flex-1 flex justify-end">
@@ -103,14 +118,13 @@ export default function WelcomeScreen() {
             className="text-white font-bold text-5xl"
             style={{ fontSize: wp(10) }}
           >
-            Traveling made easy!
+            {PREDEFINED_LANGUAGE['tme'][lang]}
           </Text>
           <Text
             className="text-neutral-200 font-medium"
             style={{ fontSize: wp(4) }}
           >
-            Empowering Cultural Diversity in Indian Railways Through Language
-            Inclusivity
+            {PREDEFINED_LANGUAGE['empower'][lang]}
           </Text>
         </View>
         <TouchableOpacity
@@ -121,7 +135,7 @@ export default function WelcomeScreen() {
           className="mx-auto p-3 px-12 rounded-full"
         >
           <Text className="text-white font-bold" style={{ fontSize: wp(5.5) }}>
-            Let's go!
+          {PREDEFINED_LANGUAGE['letsgo'][lang]}
           </Text>
         </TouchableOpacity>
       </View>

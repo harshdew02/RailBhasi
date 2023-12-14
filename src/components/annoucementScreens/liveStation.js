@@ -7,11 +7,11 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Destinations from '../destinations';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MapPinIcon, MicrophoneIcon } from 'react-native-heroicons/solid';
-
-// import { getLongitude } from '../Sensors/GPS';
+import { getLongitude } from '../Sensors/GPS';
 
 import { ArrowPathIcon } from 'react-native-heroicons/outline';
-
+import { getLiveStation, getTrainBetweenStation } from '../Information/ERail';
+import { getTrainSchedules, getStationInfo } from '../Information/Railwayapi';
 // import { MinusCircleIcon } from 'react-native-heroicons/solid';
 
 export default function LiveStation() {
@@ -26,16 +26,16 @@ export default function LiveStation() {
         </View>
         {/* <View className="flex-row justify-start mx-1" style={{ width: wp(30) }}> */}
           <TouchableOpacity className="p-3 rounded-xl bg-blue-500" onPress={() => {  }} mode='elevated' dark={true}>
-            {/* <FontAwesome name="microphone" size={20} color="#fff" /> */}
             <MicrophoneIcon size={20} color="#fff" />
           </TouchableOpacity>
-          <TouchableOpacity className="p-3 rounded-xl bg-blue-500"   onPress={() => {
-              // setLang('mr');
-              getLongitude();
+
+          <TouchableOpacity className="p-3 rounded-xl bg-blue-500"   onPress={async () => {
+            getLongitude();
            }} mode='elevated' dark={true}>
             {/* <Ionicons name="location" size={20} color="#fff"  /> */}
             <MapPinIcon size={20} color="#fff"  />
           </TouchableOpacity>
+
           <TouchableOpacity className="p-3 rounded-xl bg-blue-500"   onPress={() => {
               setLang('mr');
            }} mode='elevated' dark={true}>
