@@ -3,11 +3,11 @@ import { View, Text, TouchableOpacity,StyleSheet, ScrollView } from 'react-nativ
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Card, Button, TextInput } from 'react-native-paper';
 import DropdownComponent from '../dropDrown';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import DropdownComponent1 from '../dropDrown1';
+
 import Destinations from '../destinations';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MapPinIcon, MicrophoneIcon } from 'react-native-heroicons/solid';
-import { getLongitude } from '../Sensors/GPS';
 
 import { ArrowPathIcon } from 'react-native-heroicons/outline';
 import { getLiveStation, getTrainBetweenStation } from '../Information/ERail';
