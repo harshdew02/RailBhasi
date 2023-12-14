@@ -26,30 +26,29 @@ import { setDisable, setGlobalSound } from "../redux/soundSlice";
 import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./Information/Railwayapi";
 // import { getLiveStation } from "./Information/RapidAPI";
 
-export default function Destinations2() {
+// export default function Destinations2() {
 
-  const navigation = useNavigation();
+//   const navigation = useNavigation();
 
-  return (
-    <ScrollView
-      className="mx-0 mt-2 px-2"
-      style={{ height: hp(68), width: wp(100) }}
-    >
-      {/* Yaha Map laga ke sare cards show karna  */}
-      <DestinationCard navigation={navigation} />
-      <DestinationCard navigation={navigation} />
+//   return (
+//     <ScrollView
+//       className="mx-0 mt-2 px-2"
+//       style={{ height: hp(68), width: wp(100) }}
+//     >
+//       {/* Yaha Map laga ke sare cards show karna  */}
+//       <DestinationCard navigation={navigation} />
+//       <DestinationCard navigation={navigation} />
 
-    </ScrollView>
-  );
-}
+//     </ScrollView>
+//   );
+// }
 
-const DestinationCard = ({navigation}) => {
+const DestinationCard = ({ cardData, navigation }) => {
 
   const [isFavourite, toggleFavourite] = useState(false);
   const [isDisabled, toggleDisabled] = useState(false);
   const mySound = useSelector(state => state.currentSound);
   const myDisabled = useSelector(state => state.disabledSound);
-  // console.log("mySound", mySound);
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Destination", { ...item })}
@@ -61,20 +60,24 @@ const DestinationCard = ({navigation}) => {
           style={{ fontSize: wp(2.7) }}
           className="text-white font-semibold"
         >
-          22939
+          {/* 22939 */}
+          {cardData.train_no}
         </Text>
         <Text style={{ fontSize: wp(5) }} className="text-white  font-semibold">
-          HAPA BSP SUP EXP
+          {/* HAPA BSP SUP EXP */}
+          {cardData.train_name}
         </Text>
       </View>
 
       <View className="flex-row justify-between items-center">
         <View className="flex-row justify-between">
           <Text style={{ fontSize: wp(3.8) }} className="text-white mr-4">
-            Arr: 00.50
+            {/* Arr: 00.50 */}
+            {`From : ${cardData.from_time}`}
           </Text>
           <Text style={{ fontSize: wp(3.8) }} className="text-white mx-2">
-            Duration: 02.10
+            {/* Duration: 02.10 */}
+            {`To : ${cardData.to_time}`}
           </Text>
           <Text style={{ fontSize: wp(3.8) }} className="text-white ml-4">
             PF: lorem
@@ -90,3 +93,5 @@ const DestinationCard = ({navigation}) => {
     </TouchableOpacity>
   );
 };
+
+export { DestinationCard };
