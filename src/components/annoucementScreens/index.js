@@ -1,7 +1,8 @@
 
-import StationInfo from "./stationInfo";
-import FromTo from "./fromTo";
-import LiveStation from "./liveStation";
-import LiveTrain from "./liveTrain";
+import Combined from "./Combined";
+import Translation from "./Translation";
+import Speech from "./speech";
+import TTS from "./tts";
+import Model from "./ownModel";
 
-export {LiveTrain , StationInfo , FromTo, LiveStation };
+export {TTS , Combined , Translation, Speech, Model };

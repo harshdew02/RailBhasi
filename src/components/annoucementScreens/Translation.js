@@ -32,7 +32,7 @@ const customButton = (onConfirm) => {
   );
 };
 
-export default function FromTo() {
+export default function Translation() {
 
   const [fromStation, setFromStation] = React.useState("");
   const [toStation, setToStation] = React.useState("");

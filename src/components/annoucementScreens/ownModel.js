@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { getTrainSchedules } from '../Information/Railwayapi'
 
-export default function LiveTrain() {
+export default function Model() {
   const [selectedTrain, setselectedTrain] = useState(13029);
   const [selectedTrainSchedule, setselectedTrainSchedule] = useState(13029);
   useEffect(() => {

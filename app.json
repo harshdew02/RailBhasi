@@ -1,10 +1,9 @@
 {
   "expo": {
-    "name": "RailBhasi",
-    "slug": "RailBhasi",
+    "name": "Translation Engine",
+    "slug": "Translation Engine",
     "version": "1.0.0",
     "orientation": "portrait",
-    // "icon": "./assets/icon.png",
     "icon": "./assets/images_copy/misc/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -23,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.harshdew16.RailBhasi"
+      "package": "com.harshdew16.TranslationEngine"
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -81,9 +81,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.harshdew16.RailBhasi'
+    namespace 'com.harshdew16.TranslationEngine'
     defaultConfig {
-        applicationId 'com.harshdew16.RailBhasi'
+        applicationId 'com.harshdew16.TranslationEngine'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

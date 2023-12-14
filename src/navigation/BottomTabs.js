@@ -64,7 +64,7 @@ export default function BottomTabs() {
                             <View style={{ alignItems: "center", justifyContent: "center" }}>
                                 {/* <Entypo name="home" size={30} color={focused ? "#16247d" : "#9e9d9d"} /> */}
                                 <HomeIcon size={wp(5)} color={focused ? "#16247d" : "#9e9d9d"} />
-                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>HOME</Text>
+                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>Own Model</Text>
                             </View>
                             //  </TouchableOpacity>
                         )
@@ -82,8 +82,8 @@ export default function BottomTabs() {
                             <View style={{ alignItems: "center", justifyContent: "center" }}>
                                 {/* <Entypo name="wallet" size={24} color={focused ? "#16247d": "#9e9d9d"} /> */}
                                 {/* <MaterialIcons name="campaign" size={30} color={focused ? "#16247d" : "#9e9d9d"} /> */}
-                                <MegaphoneIcon size={wp(5)} color={focused ? "#16247d" : "#9e9d9d"} />
-                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>ANNOUNCEMENT</Text>
+                                <MegaphoneIcon size={wp(7)} color={focused ? "#16247d" : "#9e9d9d"} />
+                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>AI4Bharat</Text>
                             </View>
                             //  </TouchableOpacity>
                         )

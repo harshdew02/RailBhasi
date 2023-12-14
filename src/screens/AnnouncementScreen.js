@@ -1,7 +1,7 @@
 import { View, SafeAreaView, Image } from "react-native";
 import * as React from "react";
 import TopBar from "../components/topBar";
-import { LiveStation, StationInfo } from "../components/annoucementScreens";
+import { TTS, Combined, Speech, Translation } from "../components/annoucementScreens";
 
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
@@ -22,83 +22,28 @@ export default function AnnouncementScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <TopBar heading={"Get Announcement"} />
+      <TopBar heading={"AI4Bharat Systems"} />
 
       <Tab.Navigator
-        initialRouteName="LiveStation"
+        initialRouteName="Speech"
         screenOptions={screenOptions}
       >
         <Tab.Screen
-          name="Live Station"
-          component={LiveStation}
-          options={{
-            tabBarIcon: ({ focused }) => {
-              return (
-                <View className="flex-col justify-around items-center bg-neutral-100 rounded-xl mt-3 space-x-1 space-y-1 mb-1">
-                  <Image
-                    source={require("../../assets/images/location_live.png")}
-                    className="rounded"
-                    style={{ width: wp(10), height: wp(10) }}
-                  />
-                </View>
-              );
-            },
-          }}
+          name="ASRCONF & ASRWHISP"
+          component={Speech}
         />
         <Tab.Screen
-          name="Station Info"
-          component={StationInfo}
-          options={{
-            tabBarIcon: ({ focused }) => {
-              return (
-                <View
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
-                  <Image
-                    source={require("../../assets/images/information.png")}
-                    className="rounded"
-                    style={{ width: wp(10), height: wp(10) }}
-                  />
-                </View>
-              );
-            },
-          }}
+          name="NMTv2"
+          component={Translation}
+        
         />
         <Tab.Screen
-          name="Live Station"
-          component={LiveStation}
-          options={{
-            tabBarIcon: ({ focused }) => {
-              return (
-                <View className="flex-col justify-around items-center bg-neutral-100 rounded-xl mt-3 space-x-1 space-y-1 mb-1">
-                  <Image
-                    source={require("../../assets/images/location_live.png")}
-                    className="rounded"
-                    style={{ width: wp(10), height: wp(10) }}
-                  />
-                </View>
-              );
-            },
-          }}
+          name="Text-to-Speech (TTS)"
+          component={TTS}
         />
         <Tab.Screen
-          name="Station Info"
-          component={StationInfo}
-          options={{
-            tabBarIcon: ({ focused }) => {
-              return (
-                <View
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                >
-                  <Image
-                    source={require("../../assets/images/information.png")}
-                    className="rounded"
-                    style={{ width: wp(10), height: wp(10) }}
-                  />
-                </View>
-              );
-            },
-          }}
+          name="Speech to Speech (STS)"
+          component={Combined}
         />
       </Tab.Navigator>
     </SafeAreaView>
