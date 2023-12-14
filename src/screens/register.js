@@ -310,7 +310,7 @@ const RegisterScreen = ({ navigation }) => {
         </View>
 
         <Text style={{ textAlign: "center", color: "#666", marginBottom: 30 }}>
-          Or, register with email ...
+        {PREDEFINED_LANGUAGE['register_with_email'][lang]}
         </Text>
 
         <View

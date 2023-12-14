@@ -45,7 +45,7 @@ const [lang,setLang] = React.useState('en');
       <Tab.Navigator initialRouteName='From To' screenOptions={screenOptions}>
 
         <Tab.Screen
-          name='From To'
+          name={PREDEFINED_LANGUAGE['from_here_to_that'][lang]}
           component={FromTo}
           options={{
             tabBarIcon: ({ focused }) => {

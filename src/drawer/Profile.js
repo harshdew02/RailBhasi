@@ -16,22 +16,40 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { PREDEFINED_LANGUAGE } from "../constants/config";
 
 import CustomButton from "../components/CustomButton";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase.config";
 import { langSelection, stationListEN } from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = ({ navigation }) => {
   const [states,setStates] = useState(null)
   const [station, setStation] = useState(null);
-  const [lang, setLang] = useState(null);
   const [name, setName] = useState(null);
   const [phone, setPhone] = useState(null);
   const [languages, setLanguages] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [lang,setLang] = React.useState('en');
+  React.useEffect( () => {
+     const fetchData = async () => {
+      try{
+        const storedLang = await AsyncStorage.getItem('lang');
+        if(storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      }catch(error)
+      {
+        console.error('Error: ',error);
+      }
+     }
+     fetchData();
+  }, [])
+  React.useEffect(()=>{
+    console.log('Language changed: ', lang);
+  }, [lang])
+
   // // Assume you have a function to fetch existing user data
 
   const fetchUserData = async () => {
@@ -87,7 +105,7 @@ const Profile = ({ navigation }) => {
               marginTop: 30,
             }}
           >
-            Edit Details
+           {PREDEFINED_LANGUAGE['edit_details'][lang]}
           </Text>
         </View>
 
@@ -112,8 +130,8 @@ const Profile = ({ navigation }) => {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder="Select Language"
-          searchPlaceholder="Search..."
+          placeholder={PREDEFINED_LANGUAGE['selectLang'][lang]}
+          searchPlaceholder={PREDEFINED_LANGUAGE['search'][lang]}
           value={languages}
           onChange={(item) => {
             setLanguages(item.value);
@@ -139,7 +157,7 @@ const Profile = ({ navigation }) => {
           <TextInput
             style={styles.input}
             value={name}
-            placeholder="Full Name"
+            placeholder={PREDEFINED_LANGUAGE['fname'][lang]}
             onChangeText={(text) => {
               setName(text);
             }}
@@ -156,8 +174,8 @@ const Profile = ({ navigation }) => {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder="Select nearest station"
-          searchPlaceholder="Search..."
+          placeholder={PREDEFINED_LANGUAGE['sns'][lang]}
+          searchPlaceholder={PREDEFINED_LANGUAGE['search'][lang]}
           value={states}
           onChange={(item) => {
             setStation(item.code);
@@ -207,7 +225,7 @@ const Profile = ({ navigation }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder={PREDEFINED_LANGUAGE['email'][lang]}
             value={email}
             onChangeText={(txt) => setEmail(txt)}
           />
@@ -222,7 +240,7 @@ const Profile = ({ navigation }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder={PREDEFINED_LANGUAGE['password'][lang]}
             value={password}
             secureTextEntry={true}
             onChangeText={(txt) => setPassword(txt)}
@@ -238,7 +256,7 @@ const Profile = ({ navigation }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Mobile Number"
+            placeholder={PREDEFINED_LANGUAGE['mnum'][lang]}
             keyboardType="numeric"
             value={phone}
             onChangeText={(txt) => setPhone(txt)}
@@ -246,7 +264,7 @@ const Profile = ({ navigation }) => {
         </View>
 
         <CustomButton
-          label={"Save Change"}
+          label={PREDEFINED_LANGUAGE['save_changes'][lang]}
           onPress={
             () => signup()
             // navigation.navigate("Login");
