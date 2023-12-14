@@ -5,16 +5,36 @@ import { Dropdown } from 'react-native-element-dropdown';
 import TopBar from '../components/topBar'
 import { LanguageIcon } from 'react-native-heroicons/outline';
 import { langSelection } from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PREDEFINED_LANGUAGE } from '../constants/config';
 
 
 
 export default function SelectLang() {
-
+  const [lang,setLang] = React.useState(null);
+  React.useEffect( () => {
+     const fetchData = async () => {
+      try{
+        const storedLang = await AsyncStorage.getItem('lang');
+        if(storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      }catch(error)
+      {
+        console.error('Error: ',error);
+      }
+     }
+     fetchData();
+  }, [])
+  React.useEffect(()=>{
+    console.log('Language changed: ', lang);
+  }, [lang])
   const [languages, setLanguages] = React.useState('hi');
 
   return (
     <SafeAreaView>
-      <TopBar heading={"Select Your Language"} />
+      <TopBar heading={PREDEFINED_LANGUAGE['selectLang'][lang]} />
 
       <Dropdown
         style={styles. dropdown}
@@ -27,8 +47,8 @@ export default function SelectLang() {
         labelField="label"
         activeColor = "#ADD8E6"
         valueField="code"
-        placeholder="Select Language"
-        searchPlaceholder="Search..."
+        placeholder={PREDEFINED_LANGUAGE['selectLang'][lang]}
+        searchPlaceholder={PREDEFINED_LANGUAGE['search'][lang]}
         value={languages}
         onChange={item => {
           setLanguages(item.code);

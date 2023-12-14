@@ -1,11 +1,13 @@
 import { View, SafeAreaView, Image } from 'react-native';
 import * as React from 'react';
 import TopBar from '../components/topBar';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LiveTrain, FromTo } from '../components/annoucementScreens';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { PREDEFINED_LANGUAGE } from '../constants/config';
 
 const screenOptions = {
   tabBarShowLabel: true,
@@ -16,16 +18,34 @@ const screenOptions = {
 
 export default function HomeScreen() {
   const Tab = createMaterialTopTabNavigator();
-
+const [lang,setLang] = React.useState('en');
+    React.useEffect( () => {
+       const fetchData = async () => {
+        try{
+          const storedLang = await AsyncStorage.getItem('lang');
+          if(storedLang != null)
+            setLang(storedLang);
+          else
+            setLang('en')
+        }catch(error)
+        {
+          console.error('Error: ',error);
+        }
+       }
+       fetchData();
+    }, [])
+    React.useEffect(()=>{
+      console.log('Language changed: ', lang);
+    }, [lang])
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <TopBar heading={"Get Announcement"} />
+      <TopBar heading={PREDEFINED_LANGUAGE['home'][lang]} />
 
 
       <Tab.Navigator initialRouteName='From To' screenOptions={screenOptions}>
 
         <Tab.Screen
-          name='From To'
+          name={PREDEFINED_LANGUAGE['from_here_to_that'][lang]}
           component={FromTo}
           options={{
             tabBarIcon: ({ focused }) => {
@@ -38,7 +58,7 @@ export default function HomeScreen() {
           }} />
 
         <Tab.Screen
-          name='Live Train'
+          name={PREDEFINED_LANGUAGE['live_train'][lang]}
           component={LiveTrain}
           options={{
             tabBarIcon: ({ focused }) => {

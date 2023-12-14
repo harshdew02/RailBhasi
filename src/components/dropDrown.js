@@ -1,20 +1,36 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import AntDesign from "@expo/vector-icons/AntDesign";
+
 import { stationListEN } from "../constants";
 import { CheckIcon } from "react-native-heroicons/solid";
+import { placeholder } from "@babel/types";
+import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import { PREDEFINED_LANGUAGE } from "../constants/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const DropdownComponent = ({setStation}) => {
+
+const DropdownComponent = ({ setStation }) => {
   const [value, setValue] = useState(null);
-  let hardCode = null;
-  if(value === 104)
-    hardCode = 'BSP';
-  else if(value === 4306)
-    hardCode = 'SRWN';
-  else if(value === 168)
-    hardCode = 'NDLS';
-
+  const [lang,setLang] = React.useState(null);
+  React.useEffect( () => {
+    const fetchData = async () => {
+     try{
+       const storedLang = await AsyncStorage.getItem('lang');
+       if(storedLang != null)
+         setLang(storedLang);
+       else
+         setLang('en')
+     }catch(error)
+     {
+       console.error('Error: ',error);
+     }
+    }
+    fetchData();
+ }, [])
+ React.useEffect(()=>{
+   console.log('Language changed: ', lang);
+ }, [lang])
   const url =
     `https://api.railwayapi.site/api/v1/trains/12834`;
   const options = {
@@ -40,7 +56,7 @@ const DropdownComponent = ({setStation}) => {
           //   name="Safety"
           //   size={20}
           // />
-          <CheckIcon 
+          <CheckIcon
             style={styles.icon}
             color="black"
             name="Safety"
@@ -55,6 +71,7 @@ const DropdownComponent = ({setStation}) => {
     <Dropdown
       style={styles.dropdown}
       autoScroll={false}
+
       placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
@@ -64,15 +81,15 @@ const DropdownComponent = ({setStation}) => {
       maxHeight={300}
       labelField="label"
       valueField="value"
-      placeholder="Select item"
+      placeholder={PREDEFINED_LANGUAGE['sstation'][lang]}
       searchPlaceholder="Search..."
       value={value}
       onChange={(item) => {
         setValue(item.value);
-        setStation(item.value);
+        setStation(item.code);
       }}
       renderLeftIcon={() => (
-        <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+        <MagnifyingGlassIcon style={styles.icon} size={20} color="black" />
       )}
       renderItem={renderItem}
     />

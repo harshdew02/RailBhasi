@@ -20,23 +20,23 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { HomeIcon, MegaphoneIcon,SpeakerWaveIcon, ChatBubbleBottomCenterIcon, PhoneIcon } from "react-native-heroicons/solid";
-
+import { PREDEFINED_LANGUAGE } from '../constants/config';
 
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width, height } = Dimensions.get("window")
 
 
 
 const screenOptions = {
-
-
     tabBarShowLabel: false,
     headerShown: false,
     tabBarHideOnKeyboard: true,
-    tabBarStyle: {        
+  
+    tabBarStyle: {
         bottom: 0,
         right: 0,
         left: 0,
@@ -53,7 +53,25 @@ export default function BottomTabs() {
     const onToggleSnackBar = () => setVisible(!visible);
 
     const onDismissSnackBar = () => setVisible(false);
-
+    const [lang,setLang] = React.useState(null);
+    React.useEffect( () => {
+       const fetchData = async () => {
+        try{
+          const storedLang = await AsyncStorage.getItem('lang');
+          if(storedLang != null)
+            setLang(storedLang);
+          else
+            setLang('en')
+        }catch(error)
+        {
+          console.error('Error: ',error);
+        }
+       }
+       fetchData();
+    }, [])
+    React.useEffect(()=>{
+      console.log('Language changed: ', lang);
+    }, [lang])
 
     const Tab = createBottomTabNavigator();
 
@@ -74,8 +92,8 @@ export default function BottomTabs() {
                             // <TouchableOpacity>
                             <View style={{ alignItems: "center", justifyContent: "center" }}>
                                 {/* <Entypo name="home" size={30} color={focused ? "#16247d" : "#9e9d9d"} /> */}
-                                <HomeIcon size={wp(5)} color={focused ? "#16247d" : "#9e9d9d"} />
-                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>HOME</Text>
+                                <HomeIcon size={wp(7)} color={focused ? "#16247d" : "#9e9d9d"} />
+                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>{PREDEFINED_LANGUAGE['home'][lang]}</Text>
                             </View>
                             //  </TouchableOpacity>
                         )
@@ -93,8 +111,8 @@ export default function BottomTabs() {
                             <View style={{ alignItems: "center", justifyContent: "center" }}>
                                 {/* <Entypo name="wallet" size={24} color={focused ? "#16247d": "#9e9d9d"} /> */}
                                 {/* <MaterialIcons name="campaign" size={30} color={focused ? "#16247d" : "#9e9d9d"} /> */}
-                                <MegaphoneIcon size={wp(5)} color={focused ? "#16247d" : "#9e9d9d"} />
-                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>ANNOUNCEMENT</Text>
+                                <MegaphoneIcon size={wp(7)} color={focused ? "#16247d" : "#9e9d9d"} />
+                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>{PREDEFINED_LANGUAGE['geta'][lang]}</Text>
                             </View>
                             //  </TouchableOpacity>
                         )
@@ -134,7 +152,7 @@ export default function BottomTabs() {
                                 }} >
                                     <TouchableOpacity onPress={onToggleSnackBar} classNam={`pt-5`}>
                                     {/* <FontAwesome name="volume-up" size={30} color={visible ? "#9e9d9d":"#fff"} /> */}
-                                    <SpeakerWaveIcon size={wp(5)} color={visible ? "#9e9d9d":"#fff"} />
+                                    <SpeakerWaveIcon size={wp(7)} color={visible ? "#9e9d9d":"#fff"} />
                                     </TouchableOpacity>
                                     {/* <Button  onPress={onToggleSnackBar}>{visible ? 'Hide' : 'Show'}</Button> */}
                                 </View>
@@ -153,8 +171,8 @@ export default function BottomTabs() {
                             // <TouchableOpacity>
                             <View style={{ alignItems: "center", justifyContent: "center" }}>
                                 {/* <MaterialCommunityIcons name="robot" size={30} color={focused ? "#16247d" : "#9e9d9d"} /> */}
-                                <ChatBubbleBottomCenterIcon size={wp(5)} color={focused ? "#16247d" : "#9e9d9d"} />
-                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>CHAT BOT</Text>
+                                <ChatBubbleBottomCenterIcon size={wp(7)} color={focused ? "#16247d" : "#9e9d9d"} />
+                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>{PREDEFINED_LANGUAGE['chatbot'][lang]}</Text>
                             </View>
                             //  </TouchableOpacity>
                         )
@@ -170,8 +188,8 @@ export default function BottomTabs() {
                             // <TouchableOpacity>
                             <View style={{ alignItems: "center", justifyContent: "center" }}>
                                 {/* <Ionicons name="call" size={30} color={focused ? "#16247d" : "#9e9d9d"} /> */}
-                                <PhoneIcon size={wp(5)} color={focused ? "#16247d" : "#9e9d9d"} />
-                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>IVR</Text>
+                                <PhoneIcon size={wp(7)} color={focused ? "#16247d" : "#9e9d9d"} />
+                                <Text style={{ fontSize: 8 }} color={focused ? "#16247d" : "#9e9d9d"}>{PREDEFINED_LANGUAGE['IVR'][lang]}</Text>
                             </View>
                             //  </TouchableOpacity>
                         )
