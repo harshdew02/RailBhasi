@@ -73,13 +73,22 @@ const ChatBotScreen = () => {
 
   const sendBotResponse = (text, quickReply) => {
     let msg;
+    if (quickReply) {
       msg = {
-        _id: messages.length + 1,
+        _id: Math.random().toString(36).substring(7),
         text,
         createdAt: new Date(),
         user: BOT,
         quickReplies: quickReply,
       };
+    } else {
+      msg = {
+        _id: Math.random().toString(36).substring(7),
+        text,
+        createdAt: new Date(),
+        user: BOT,
+      };
+    }
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, [msg])
     );
@@ -104,7 +113,7 @@ const ChatBotScreen = () => {
 
     if (selectedValue) {
       const msg = {
-        _id: messages.length + 1,
+        _id: Math.random().toString(36).substring(7),
         text: selectedValue,
         createdAt: new Date(),
         user: { _id: 1 },
@@ -115,9 +124,20 @@ const ChatBotScreen = () => {
       if (selectedValue == "With Booking")
         sendBotResponse("Here are the options I can help you with", bookingQuickReplies);
       else if (selectedValue == "With Refund Request")
-        sendBotResponse("Here are the options I can help you with");
+        sendBotResponse("Please contact our helpline number for refund request");
       else if (selectedValue == "With PNR/running status/coach position/others")
         sendBotResponse("Here are the options I can help you with", checkQuickReplies);
+        else {
+          handleFurtherConversation(selectedValue);
+        }
+    }
+  };
+
+  const handleFurtherConversation = (selectedValue) => {
+    if (selectedValue === "How to book a ticket") {
+      sendBotResponse("Hey there!! Thanks for trusting Trainman for booking your train ticket. Just follow the mentioned steps to book train tickets in no time\nVisit the Trainman website/app & select the starting & arrival destinations\nSelect a train that you want to book.\nAdd traveler’s details.\nProceed to our easy secure payment gateway.\nEnter your original IRCTC username and password.\nTrain Ticket booking confirmation via Email, SMS, will be sent to you.\nYou can also check confirmed tickets in the My Trips option on our app/website.\n");
+    } else if (selectedValue === "Booking failed") {
+      sendBotResponse("You selected: Booking failed");
     }
   };
 
