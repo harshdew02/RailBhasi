@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity,StyleSheet, ScrollView } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { Card, Button } from 'react-native-paper';
+import { Card, Button, TextInput } from 'react-native-paper';
 import DropdownComponent from '../dropDrown';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Destinations from '../destinations';
@@ -18,34 +18,54 @@ export default function Speech() {
   //use effect for first time rendering only
   const [lang, setLang] = React.useState('en');
   const [station, setStation] = React.useState("");
+
+  const [number, onChangeNumber] = React.useState('');
+
   return (
     <SafeAreaView>
-      <View className="flex-row items-center mx-2 mt-2 justify-between">
-        <View style={{ width: wp(55) }}>
-          <DropdownComponent  setStation={setStation}/>
-        </View>
-        {/* <View className="flex-row justify-start mx-1" style={{ width: wp(30) }}> */}
-          <TouchableOpacity className="p-3 rounded-xl bg-blue-500" onPress={() => {  }} mode='elevated' dark={true}>
+      <ScrollView >
+        <View className="flex-row items-center mx-2 mt-2 justify-between">
+          <View style={{ width: wp(70) }}>
+            <DropdownComponent setStation={setStation} />
+          </View>
+          {/* <View className="flex-row justify-start mx-1" style={{ width: wp(30) }}> */}
+          <TouchableOpacity className="p-3 rounded-xl bg-blue-500" onPress={() => { }} mode='elevated' dark={true}>
             <MicrophoneIcon size={20} color="#fff" />
           </TouchableOpacity>
-          <TouchableOpacity className="p-3 rounded-xl bg-blue-500"   onPress={async () => {
-            getLongitude();
-           }} mode='elevated' dark={true}>
+
+          <TouchableOpacity className="p-3 rounded-xl bg-blue-500" onPress={() => {
+            setLang('mr');
+          }} mode='elevated' dark={true}>
             {/* <Ionicons name="location" size={20} color="#fff"  /> */}
-            <MapPinIcon size={20} color="#fff"  />
+            <ArrowPathIcon size={20} color="#fff" />
           </TouchableOpacity>
-          <TouchableOpacity className="p-3 rounded-xl bg-blue-500"   onPress={() => {
-              setLang('mr');
-           }} mode='elevated' dark={true}>
-            {/* <Ionicons name="location" size={20} color="#fff"  /> */}
-            <ArrowPathIcon size={20} color="#fff"  />
-          </TouchableOpacity>
-        {/* </View> */}
-      </View>
-      <View>
-         {/*Access the data from index.js here then pass it to the destinations using props*/}
-        <Destinations language = {lang} station={station} />
+          {/* </View> */}
+        </View>
+      </ScrollView>
+
+
+      <View className="flex-col items-center">
+        <View style={{ width: wp(70) }}>
+          <DropdownComponent setStation={setStation} />
+        </View>
+        <TextInput
+          className="rounded-lg"
+          style={styles.input}
+          onChangeText={onChangeNumber}
+          value={number}
+          placeholder="Give Train Number"
+        />
       </View>
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  input: {
+    height: hp(40),
+    marginTop: wp(10),
+    width: wp(95),
+    borderWidth: 1,
+    padding: 10,
+  },
+});
