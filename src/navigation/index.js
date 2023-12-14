@@ -16,7 +16,7 @@ function AppNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Welcome"
+        initialRouteName="Main"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Main" component={RightDrawer} />
