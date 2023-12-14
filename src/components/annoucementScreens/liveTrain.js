@@ -6,11 +6,32 @@ import { ArrowPathIcon, MapPinIcon } from 'react-native-heroicons/solid';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ArrowDownCircleIcon, ChevronDoubleDownIcon, ChevronDownIcon, MagnifyingGlassIcon, SpeakerWaveIcon } from 'react-native-heroicons/outline';
 import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PREDEFINED_LANGUAGE } from '../../constants/config';
 
 export default function LiveTrain() {
   const [selectedTrain, setselectedTrain] = useState(13029);
   const [selectedTrainSchedule, setselectedTrainSchedule] = useState(13029);
-  useEffect(() => {
+  const [lang,setLang] = React.useState(null);
+    React.useEffect( () => {
+       const fetchData = async () => {
+        try{
+          const storedLang = await AsyncStorage.getItem('lang');
+          if(storedLang != null)
+            setLang(storedLang);
+          else
+            setLang('en')
+        }catch(error)
+        {
+          console.error('Error: ',error);
+        }
+       }
+       fetchData();
+    }, [])
+    React.useEffect(()=>{
+      console.log('Language changed: ', lang);
+    }, [lang])
+  React.useEffect(() => {
     const getData = async () => {
       // call getTrainSchedules
       const data = await getTrainSchedules(selectedTrain);
@@ -34,7 +55,7 @@ export default function LiveTrain() {
           style={styles.input}
           onChangeText={onChangeNumber}
           value={number}
-          placeholder="Give Train Number"
+          placeholder={PREDEFINED_LANGUAGE['give_train_number'][lang]}
           keyboardType="numeric"
         />
 
@@ -54,9 +75,9 @@ export default function LiveTrain() {
       </View>
 
       <View className="flex-row justify-between py-2 bg-blue-900">
-        <Text className="text-white ml-3">Arrival</Text>
-        <Text className="text-white" >Station Name</Text>
-        <Text className="text-white mr-6" >Departure</Text>
+        <Text className="text-white ml-3">{PREDEFINED_LANGUAGE['arrival'][lang]}</Text>
+        <Text className="text-white" >{PREDEFINED_LANGUAGE['station'][lang]}</Text>
+        <Text className="text-white mr-6" >{PREDEFINED_LANGUAGE['departure'][lang]}</Text>
       </View>
 
       <View className="flex-col items-center" style={{ width: wp(100) }}>
@@ -70,7 +91,7 @@ export default function LiveTrain() {
           <View className="flex-col justify-between align-center">
             <Text className="text-[#16247d] text-[16px] font-medium" >Durg Junction</Text>
             <Text className="text-[14px] font-medium">(DURG)</Text>
-            <Text>PF : </Text>
+            <Text>{PREDEFINED_LANGUAGE['PF'][lang]} : </Text>
           </View>
           <Text className="font-medium text-[16px]" >
             07:11
@@ -92,7 +113,7 @@ export default function LiveTrain() {
           <View className="flex-col justify-between align-center">
             <Text className="text-[#16247d] text-[16px] font-medium" >Durg Junction</Text>
             <Text className="text-[14px] font-medium">(DURG)</Text>
-            <Text>PF : </Text>
+            <Text>{PREDEFINED_LANGUAGE['PF'][lang]} : </Text>
           </View>
           <Text className="font-medium text-[16px]" >
             07:11
@@ -114,7 +135,7 @@ export default function LiveTrain() {
           <View className="flex-col justify-between align-center">
             <Text className="text-[#16247d] text-[16px] font-medium" >Durg Junction</Text>
             <Text className="text-[14px] font-medium">(DURG)</Text>
-            <Text>PF : </Text>
+            <Text>{PREDEFINED_LANGUAGE['PF'][lang]} : </Text>
           </View>
           <Text className="font-medium text-[16px]" >
             07:11

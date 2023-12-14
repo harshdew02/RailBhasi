@@ -18,10 +18,28 @@ const screenOptions = {
 
 export default function HomeScreen() {
   const Tab = createMaterialTopTabNavigator();
-
+const [lang,setLang] = React.useState('en');
+    React.useEffect( () => {
+       const fetchData = async () => {
+        try{
+          const storedLang = await AsyncStorage.getItem('lang');
+          if(storedLang != null)
+            setLang(storedLang);
+          else
+            setLang('en')
+        }catch(error)
+        {
+          console.error('Error: ',error);
+        }
+       }
+       fetchData();
+    }, [])
+    React.useEffect(()=>{
+      console.log('Language changed: ', lang);
+    }, [lang])
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <TopBar heading={PREDEFINED_LANGUAGE['home']['hi']} />
+      <TopBar heading={PREDEFINED_LANGUAGE['home'][lang]} />
 
 
       <Tab.Navigator initialRouteName='From To' screenOptions={screenOptions}>
@@ -40,7 +58,7 @@ export default function HomeScreen() {
           }} />
 
         <Tab.Screen
-          name='Live Train'
+          name={PREDEFINED_LANGUAGE['live_train'][lang]}
           component={LiveTrain}
           options={{
             tabBarIcon: ({ focused }) => {

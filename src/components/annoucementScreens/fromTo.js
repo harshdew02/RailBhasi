@@ -10,6 +10,7 @@ import {
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DatePicker from "react-native-date-ranges";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import DropdownComponent2 from '../dropDown2';
 import DropdownComponent3 from '../dropDown3';
 import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon, CalendarDaysIcon } from 'react-native-heroicons/outline';
@@ -38,9 +39,26 @@ export default function FromTo() {
   const [fromStation, setFromStation] = React.useState("");
   const [toStation, setToStation] = React.useState("");
   const [selectedDate, setDate] = React.useState();
-  const [lang, setLang] = React.useState('en');
   const [station, setStation] = React.useState("");
-
+  const [lang,setLang] = React.useState(null);
+  React.useEffect( () => {
+     const fetchData = async () => {
+      try{
+        const storedLang = await AsyncStorage.getItem('lang');
+        if(storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      }catch(error)
+      {
+        console.error('Error: ',error);
+      }
+     }
+     fetchData();
+  }, [])
+  useEffect(()=>{
+    console.log('Language changed: ', lang);
+  }, [lang])
 
 
   return (
@@ -113,7 +131,7 @@ export default function FromTo() {
           selectedBgColor="#0047AB"
           customButton={(onConfirm) => customButton(onConfirm)}
           allowFontScaling={false}
-          placeholder={"Select Date"}
+          placeholder={PREDEFINED_LANGUAGE['sdate'][lang]}
         />
 
       </Pressable>

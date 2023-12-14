@@ -19,13 +19,24 @@ const screenOptions = {
 export default function AnnouncementScreen() {
 
     const Tab = createMaterialTopTabNavigator();
-    const [lang,setLang] = React.useState('hi');
-
+    const [lang,setLang] = React.useState('en');
     React.useEffect( () => {
-        async function langS () {
-            setLang(await AsyncStorage.getItem('lang'))
+       const fetchData = async () => {
+        try{
+          const storedLang = await AsyncStorage.getItem('lang');
+          if(storedLang != null)
+            setLang(storedLang);
+          else
+            setLang('en')
+        }catch(error)
+        {
+          console.error('Error: ',error);
         }
-        langS()
+       }
+       fetchData();
+    }, [])
+    React.useEffect(()=>{
+      console.log('Language changed: ', lang);
     }, [lang])
     
     return (
@@ -34,7 +45,7 @@ export default function AnnouncementScreen() {
 
             <Tab.Navigator initialRouteName='LiveStation' screenOptions={screenOptions}>
                 <Tab.Screen
-                    name='Live Station'
+                    name={PREDEFINED_LANGUAGE['live_station'][lang]}
                     component={LiveStation}
                     options={{
                         tabBarIcon: ({ focused }) => {
@@ -46,7 +57,7 @@ export default function AnnouncementScreen() {
                         }
                     }} />
                 <Tab.Screen
-                    name='Station Info'
+                    name={PREDEFINED_LANGUAGE['station_information'][lang]}
                     component={StationInfo}
                     options={{
                         tabBarIcon: ({ focused }) => {

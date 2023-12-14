@@ -5,10 +5,31 @@ import { Dropdown } from "react-native-element-dropdown";
 import { stationListEN } from "../constants";
 import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PREDEFINED_LANGUAGE } from "../constants/config";
 import { MagnifyingGlassIcon, MapPinIcon } from "react-native-heroicons/outline";
 
 const DropdownComponent3 = ({ setToStation }) => {
     const [value, setValue] = useState(null);
+    const [lang,setLang] = React.useState(null);
+    React.useEffect( () => {
+       const fetchData = async () => {
+        try{
+          const storedLang = await AsyncStorage.getItem('lang');
+          if(storedLang != null)
+            setLang(storedLang);
+          else
+            setLang('en')
+        }catch(error)
+        {
+          console.error('Error: ',error);
+        }
+       }
+       fetchData();
+    }, [])
+    React.useEffect(()=>{
+      console.log('Language changed: ', lang);
+    }, [lang])
     const renderItem = (item) => {
         return (
             <View style={styles.item}>
@@ -37,7 +58,7 @@ const DropdownComponent3 = ({ setToStation }) => {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder="Select item"
+            placeholder={PREDEFINED_LANGUAGE['sstation'][lang]}
             searchPlaceholder="Search..."
             value={value}
             onChange={(item) => {

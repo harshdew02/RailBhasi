@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import {
   SafeAreaView,
@@ -21,9 +21,10 @@ import CustomButton from "../components/CustomButton";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
 import { langSelection, stationListEN } from "../constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = ({ navigation }) => {
-  const [states, setStates] = useState(null);
+  const [states,setStates] = useState(null)
   const [station, setStation] = useState(null);
   const [lang, setLang] = useState(null);
   const [name, setName] = useState(null);
@@ -31,41 +32,33 @@ const Profile = ({ navigation }) => {
   const [languages, setLanguages] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  {/* // Assume you have a function to fetch existing user data
-  // const fetchUserData = async () => {
-  //   try {
-  //     // Replace the following line with your actual logic to fetch existing user data
-  //     const userData = await fetchUserDataFromAPI(); // Example function to fetch data
+  // // Assume you have a function to fetch existing user data
 
-  //     setStates(userData.states || "");
-  //     setStation(userData.station || "");
-  //     setLang(userData.lang || "");
-  //     setName(userData.name || "");
-  //     setPhone(userData.phone || "");
-  //     setLanguages(userData.languages || "");
-  //     setEmail(userData.email || "");
-  //     setPassword(userData.password || "");
-  //   } catch (error) {
-  //     console.error("Error fetching user data:", error);
-  //     // Handle error fetching user data
-  //   }
-  // };
-  // useEffect(() => {
-  //   // Fetch existing user data when the component mounts
-  //   fetchUserData();
-// }, []); */}
-  const signup = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(station, lang, phone);
-        alert("User created successfully!");
-        navigation.replace("Login");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage);
-      });
+  const fetchUserData = async () => {
+    try {
+      // Replace the following line with your actual logic to fetch existing user data
+      setStation(await AsyncStorage.getItem('sns'))
+      setLang(await AsyncStorage.getItem('lang'))
+      setName(await AsyncStorage.getItem('fname'))
+      setPhone(await AsyncStorage.getItem('phone'))
+      setEmail(await AsyncStorage.getItem('email'))
+      setPassword(await AsyncStorage.getItem('pass'))
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      // Handle error fetching user data
+    }
+  };
+  useEffect(() => {
+    // Fetch existing user data when the component mounts
+    fetchUserData();
+  }, []);
+  const signup = async () => {
+    await AsyncStorage.setItem("lang", lang);
+    await AsyncStorage.setItem("fname", name);
+    // await AsyncStorage.setItem("sns", states);
+    await AsyncStorage.setItem("phone", phone);
+    // await saveData();
+    alert("User updated successfully!");
   };
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
@@ -167,7 +160,6 @@ const Profile = ({ navigation }) => {
           searchPlaceholder="Search..."
           value={states}
           onChange={(item) => {
-            setStates(item.value);
             setStation(item.code);
           }}
           renderLeftIcon={() => (
