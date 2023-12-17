@@ -25,7 +25,7 @@ import { setDisable, setGlobalSound } from "../redux/soundSlice";
 import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./Information/Railwayapi";
 // import { getLiveStation } from "./Information/RapidAPI";
 
-export default function stations({ language, station }) {
+export default function stations({ language, stationData }) {
   const [trainData, setTrainData] = useState([]);
   const [currnetSound, setCurrentSound] = useState(null);
   const [sounds, setSound] = useState(null);
@@ -35,64 +35,64 @@ export default function stations({ language, station }) {
   //use effect will be applied here as language changes
   //get the desired language information from nearStation via props
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
-  useEffect(() => {
-    let index = LANGUAGE_SELECTION(language);
-    const fetchData = async item => {
-      setTrainData([]);
-      // let type = TYPE_SELECTION(
-      //   item.arr,
-      //   [item.late_hour, item.late_min],
-      //   item.from,
-      //   station
-      // );
-      let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
-      let data = info.split('/');
-      let message;
+  // useEffect(() => {
+  //   let index = LANGUAGE_SELECTION(language);
+  //   const fetchData = async item => {
+  //     setTrainData([]);
+  //     // let type = TYPE_SELECTION(
+  //     //   item.arr,
+  //     //   [item.late_hour, item.late_min],
+  //     //   item.from,
+  //     //   station
+  //     // );
+  //     let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
+  //     let data = info.split('/');
+  //     let message;
 
-      // switch (type) {
-      //   case "origination":
-      //     message = PREDEFINED_ANNOUNCEMENT[index].origination;
-      //     break;
-      //   case "arrived":
-      //     message = PREDEFINED_ANNOUNCEMENT[index].arrived;
-      //     break;
-      //   case "arriving":
-      //     message = PREDEFINED_ANNOUNCEMENT[index].arriving;
-      //     break;
-      //   case "late":
-      //     message = PREDEFINED_ANNOUNCEMENT[index].late;
-      //     break;
-      //   case "ontime":
-      //     message = PREDEFINED_ANNOUNCEMENT[index].ontime;
-      //     break;
-      //   case "custom":
-      //     message = PREDEFINED_ANNOUNCEMENT[index].custom;
-      //     break;
-      //   default:
-      //     message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
-      //     break;
-      // }
-      let message1 = PREDEFINED_ANNOUNCEMENT[index]
-      const obj = {
-        nos: "Station code: " + item.nos,
-        train: data[2],
-        type1: message,
-        type2: message1,
-        arr: item.arr,
-        dep: item.dep,
-        platform: item.platform,
-        stop: item.stop + " min",
-        langu: language,
-        image: item.image,
-      };
-      console.log(language, station);
-      setTrainData(prev => (prev ? [...prev, obj] : [obj]));
-    };
+  //     // switch (type) {
+  //     //   case "origination":
+  //     //     message = PREDEFINED_ANNOUNCEMENT[index].origination;
+  //     //     break;
+  //     //   case "arrived":
+  //     //     message = PREDEFINED_ANNOUNCEMENT[index].arrived;
+  //     //     break;
+  //     //   case "arriving":
+  //     //     message = PREDEFINED_ANNOUNCEMENT[index].arriving;
+  //     //     break;
+  //     //   case "late":
+  //     //     message = PREDEFINED_ANNOUNCEMENT[index].late;
+  //     //     break;
+  //     //   case "ontime":
+  //     //     message = PREDEFINED_ANNOUNCEMENT[index].ontime;
+  //     //     break;
+  //     //   case "custom":
+  //     //     message = PREDEFINED_ANNOUNCEMENT[index].custom;
+  //     //     break;
+  //     //   default:
+  //     //     message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
+  //     //     break;
+  //     // }
+  //     let message1 = PREDEFINED_ANNOUNCEMENT[index]
+  //     const obj = {
+  //       nos: "Station code: " + item.nos,
+  //       train: data[2],
+  //       type1: message,
+  //       type2: message1,
+  //       arr: item.arr,
+  //       dep: item.dep,
+  //       platform: item.platform,
+  //       stop: item.stop + " min",
+  //       langu: language,
+  //       image: item.image,
+  //     };
+  //     console.log(language, station);
+  //     setTrainData(prev => (prev ? [...prev, obj] : [obj]));
+  //   };
 
-    destinationData.map((item, index) => {
-      fetchData(item);
-    });
-  }, [language, station]);
+  //   destinationData.map((item, index) => {
+  //     fetchData(item);
+  //   });
+  // }, [language, station]);
 
   const handleCurrnetSound = async item => {
     dispatch(setDisable(true));
@@ -137,24 +137,18 @@ export default function stations({ language, station }) {
       className="mx-0 mt-0 px-2"
       style={{ height: hp(68), width: wp(100) }}
     >
-      {trainData.map((item, index) => {
-        return (
-          <DestinationCard
-            navigation={navigation}
-            item={item}
-            key={index}
-            langu={language}
-            handleCurrnetSound={handleCurrnetSound}
-            currnetSound={currnetSound}
-          />
-        );
-      })}
+      {stationData && <DestinationCard
+        stationData={stationData}
+        langu={language}
+        handleCurrnetSound={handleCurrnetSound}
+        currnetSound={currnetSound}
+      />}
     </ScrollView>
   );
 }
 
 const DestinationCard = ({
-  item,
+  stationData,
   navigation,
   handleCurrnetSound,
   currnetSound,
@@ -166,7 +160,7 @@ const DestinationCard = ({
   // console.log("mySound", mySound);
   useEffect(() => {
     // console.log("Sound changed", mySound);
-    toggleFavourite(mySound == item);
+    toggleFavourite(mySound == stationData);
     toggleDisabled(myDisabled);
   }, [mySound, myDisabled]);
   return (
@@ -181,21 +175,25 @@ const DestinationCard = ({
           className="text-white font-semibold"
         >
           {/* {item.nos} */}
-          Station Code: R
+          {/* Station Code: R */}
+          {`Station Code: ${stationData.stationCode}`}
         </Text>
         <Text style={{ fontSize: wp(7) }} className="text-white  font-semibold">
           {/* {item.train} */}
-          Raipur Junction
+          {/* Raipur Junction */}
+          {stationData.stationName}
         </Text>
       </View>
 
       <View className="flex-row justify-between items-center p-1">
         <View className="flex-column justify-between">
           <Text style={{ fontSize: wp(4.8) }} className="text-white">
-            Number of PFs: 7
+            {/* Number of PFs: 7 */}
+            {`Number of PFs: ${stationData.numberOfPlatforms}`}
           </Text>
           <Text style={{ fontSize: wp(4.8) }} className="text-white w-56">
-            Zone: SECR
+            {/* Zone: SECR */}
+            {`Zone: ${stationData.zones.zoneName}`}
           </Text>
         </View>
         <TouchableOpacity

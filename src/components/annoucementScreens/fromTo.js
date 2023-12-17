@@ -49,7 +49,7 @@ export default function FromTo() {
       if (fromStation && toStation && selectedDate) {
         let data = await getTrainBetweenStation(fromStation, toStation, selectedDate);
         setCardData(data);
-        console.log(cardData);
+        // console.log(cardData);
       }
     }
     listen();

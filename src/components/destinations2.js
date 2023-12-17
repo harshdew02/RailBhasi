@@ -61,7 +61,7 @@ const DestinationCard = ({ cardData, navigation }) => {
           className="text-white font-semibold"
         >
           {/* 22939 */}
-          {cardData.train_no}
+          {`Train No: ${cardData.train_no}`}
         </Text>
         <Text style={{ fontSize: wp(5) }} className="text-white  font-semibold">
           {/* HAPA BSP SUP EXP */}
