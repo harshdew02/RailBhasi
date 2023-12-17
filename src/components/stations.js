@@ -165,7 +165,7 @@ const DestinationCard = ({
   }, [mySound, myDisabled]);
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Station")}
+      // onPress={() => navigation.navigate("Station")}
       style={{ width: wp(94) }}
       className="bg-blue-800 rounded-2xl relative py-7 px-5 space-y-1 mb-2"
     >
