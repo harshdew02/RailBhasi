@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MapPinIcon, MicrophoneIcon } from 'react-native-heroicons/solid';
 
 import { ArrowPathIcon } from 'react-native-heroicons/outline';
+
 import { getLiveStation, getTrainBetweenStation } from '../Information/ERail';
 import { getTrainSchedules, getStationInfo } from '../Information/Railwayapi';
 // import { MinusCircleIcon } from 'react-native-heroicons/solid';
@@ -29,7 +30,9 @@ export default function Speech() {
             <DropdownComponent setStation={setStation} />
           </View>
           {/* <View className="flex-row justify-start mx-1" style={{ width: wp(30) }}> */}
-          <TouchableOpacity className="p-3 rounded-xl bg-blue-500" onPress={() => { }} mode='elevated' dark={true}>
+          <TouchableOpacity className="p-3 rounded-xl bg-blue-500" onPress={() => {
+            
+           }} mode='elevated' dark={true}>
             <MicrophoneIcon size={20} color="#fff" />
           </TouchableOpacity>
 
@@ -46,7 +49,7 @@ export default function Speech() {
 
       <View className="flex-col items-center">
         <View style={{ width: wp(70) }}>
-          <DropdownComponent setStation={setStation} />
+          <DropdownComponent1 setStation={setStation} />
         </View>
         <TextInput
           className="rounded-lg"

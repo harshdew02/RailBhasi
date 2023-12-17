@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
-import { stationListEN } from "../constants";
+import { langSpeech, stationListEN } from "../constants";
+import { langTranslate } from "../constants";
 import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 
 
 const DropdownComponent = ({ setStation }) => {
-  const [value, setValue] = useState(null);
+  const [code, setCode] = useState('en');
+  const [value, setValue] = useState(null)
 
   const url =
     `https://api.railwayapi.site/api/v1/trains/12834`;
@@ -30,12 +32,6 @@ const DropdownComponent = ({ setStation }) => {
       <View style={styles.item}>
         <Text style={styles.textItem}>{item.label}</Text>
         {item.value === value && (
-          // <AntDesign
-          //   style={styles.icon}
-          //   color="black"
-          //   name="Safety"
-          //   size={20}
-          // />
           <CheckIcon
             style={styles.icon}
             color="black"
@@ -51,22 +47,23 @@ const DropdownComponent = ({ setStation }) => {
     <Dropdown
       style={styles.dropdown}
       autoScroll={false}
-
+      
       placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
-      data={stationListEN}
+      data={langSpeech}
       search
       maxHeight={300}
       labelField="label"
       valueField="value"
-      placeholder="Select item"
+      placeholder="Select language"
       searchPlaceholder="Search..."
       value={value}
       onChange={(item) => {
         setValue(item.value);
-        setStation(item.code);
+        setCode(item.code);
+        console.log('code', code);
       }}
       renderLeftIcon={() => (
         <MagnifyingGlassIcon style={styles.icon} size={20} color="black" />

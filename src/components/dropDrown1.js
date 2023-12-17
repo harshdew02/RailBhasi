@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
-import { stationListEN } from "../constants";
+// import { stationListEN } from "../constants";
+import {sampleRate} from "../constants"
 import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
@@ -56,12 +57,12 @@ const DropdownComponent1 = ({ setStation }) => {
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
-      data={stationListEN}
+      data={sampleRate}
       search
       maxHeight={300}
       labelField="label"
       valueField="value"
-      placeholder="Select item"
+      placeholder="Choose sample rate..."
       searchPlaceholder="Search..."
       value={value}
       onChange={(item) => {
