@@ -10,7 +10,7 @@ import {
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DatePicker from "react-native-date-ranges";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import DropdownComponent2 from '../dropDown2';
 import DropdownComponent3 from '../dropDown3';
 import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon, CalendarDaysIcon } from 'react-native-heroicons/outline';

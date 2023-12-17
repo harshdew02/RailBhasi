@@ -6,7 +6,7 @@ import { ArrowPathIcon, MapPinIcon } from 'react-native-heroicons/solid';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ArrowDownCircleIcon, ChevronDoubleDownIcon, ChevronDownIcon, MagnifyingGlassIcon, SpeakerWaveIcon } from 'react-native-heroicons/outline';
 import { ScrollView } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PREDEFINED_LANGUAGE } from '../../constants/config';
 
 export default function LiveTrain() {

@@ -7,7 +7,7 @@ import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import { PREDEFINED_LANGUAGE } from "../constants/config";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const DropdownComponent = ({ setStation }) => {

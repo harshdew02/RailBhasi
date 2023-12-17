@@ -19,6 +19,7 @@ const initialQuickReplies = {
   values: [
     { title: "With Booking", value: "With Booking" },
     { title: "With Refund Request", value: "With Refund Request" },
+    { title: "TDR Request", value: "TDR Request" },
     { title: "With PNR/running status/coach position/others", value: "With PNR/running status/coach position/others" },
   ],
 };
@@ -34,6 +35,16 @@ const bookingQuickReplies = {
   ],
 };
 
+const tdrQuickReplies = {
+  type: "radio",
+  keepIt: true,
+  values: [
+    { title: "Can I cancel a ticket after chart is prepared", value: "Can I cancel a ticket after chart is prepared" },
+    { title: "How can I file TDR", value: "How can I file TDR" },
+    { title: "Check status of TDR", value: "Check status of TDR" },
+  ],
+};
+
 const checkQuickReplies = {
   type: "radio",
   keepIt: true,
@@ -43,6 +54,8 @@ const checkQuickReplies = {
     { title: "Check coach position", value: "Check coach position" },
     { title: "Change passenger details", value: "Change passenger details" },
     { title: "Check running status", value: "Check running status" },
+    { title: "Change boarding point", value: "Check running status" },
+    { title: "How to change passenger details in the ticket", value: "Check running status" },
   ],
 };
 
@@ -123,8 +136,10 @@ const ChatBotScreen = () => {
       );
       if (selectedValue == "With Booking")
         sendBotResponse("Here are the options I can help you with", bookingQuickReplies);
+      else if (selectedValue == "TDR Request")
+        sendBotResponse("Here are the options I can help you with", tdrQuickReplies);
       else if (selectedValue == "With Refund Request")
-        sendBotResponse("Please contact our helpline number for refund request");
+        sendBotResponse("Here are the modes with their respective refund processing time-\n\n\u{1F449}UPI(Instant refund)\n\n\u{1F449}Debit card (8-10 working days)\n\n\u{1F449}Credit card (2-3 working days)\n\n\u{1F449}Net Banking (8-10 working days)\n\n\u{1F449}Paytm Wallet (2-3 working days)");
       else if (selectedValue == "With PNR/running status/coach position/others")
         sendBotResponse("Here are the options I can help you with", checkQuickReplies);
         else {
@@ -134,10 +149,23 @@ const ChatBotScreen = () => {
   };
 
   const handleFurtherConversation = (selectedValue) => {
+
     if (selectedValue === "How to book a ticket") {
-      sendBotResponse("Hey there!! Thanks for trusting Trainman for booking your train ticket. Just follow the mentioned steps to book train tickets in no time\nVisit the Trainman website/app & select the starting & arrival destinations\nSelect a train that you want to book.\nAdd traveler’s details.\nProceed to our easy secure payment gateway.\nEnter your original IRCTC username and password.\nTrain Ticket booking confirmation via Email, SMS, will be sent to you.\nYou can also check confirmed tickets in the My Trips option on our app/website.\n");
+      sendBotResponse("Hey there!! Thanks for trusting Trainman for booking your train ticket. Just follow the mentioned steps to book train tickets in no time\n\n\u{1F449}Visit the Trainman website/app & select the starting & arrival destinations\n\n\u{1F449}Select a train that you want to book.\n\n\u{1F449}Add traveler’s details.\n\n\u{1F449}Proceed to our easy secure payment gateway.\n\n\u{1F449}Enter your original IRCTC username and password.\n\n\u{1F449}Train Ticket booking confirmation via Email, SMS, will be sent to you.\n\n\u{1F449}You can also check confirmed tickets in the My Trips option on our app/website.");
     } else if (selectedValue === "Booking failed") {
-      sendBotResponse("You selected: Booking failed");
+      sendBotResponse("Fret not, Trainman is here to help you. Just follow the steps below:\n\n\u{1F449}Retry your booking by clicking on ‘Retry booking’ after 40 minutes.\n\n\u{1F449}Remember your payment has already been deducted and Seat selected are freezed.\n\n\u{1F449}Don’t create a new booking.\n\n\u{1F449}You can retry booking after 40 minutes until 12 hours after which your money will be automatically refunded.");
+    }else if (selectedValue === "Cancel Booking") {
+      sendBotResponse("Here’s what you can do-\n\n\u{1F449}Login to your Trainman App.\n\n\u{1F449}Go to “Trips Section” and then to “Upcoming Trips”.\n\n\u{1F449}Select the train ticket that you want to cancel.\n\n\u{1F449}Click on the “Cancel Booking” button.\n\n\u{1F449}Refunds will be initiated to the Original Payment Method.");
+    }else if (selectedValue === "Unable to reset password") {
+      sendBotResponse("For that please contact our customer support number or email us");
+    }
+    
+    else if (selectedValue === "Can I cancel a ticket after chart is prepared") {
+      sendBotResponse("Well, sadly no!! E-tickets cannot be canceled after chart preparation. Users are requested to use the online TDR filing for such cases and track the status of the refund case through tracking service provided by IRCTC");
+    }else if (selectedValue === "How can I file TDR") {
+      sendBotResponse("For filing online TDR please follow the following steps:\n\n\u{1F449}Select File Ticket Deposit Receipt (TDR) from menu Services.\n\n\u{1F449}Then select File TDR ink in the left panel under the 'My Transactions' menu. \n\n\u{1F449}IRCTC will forward the claim to Concerned Railways to process the refund.\n\n\u{1F449}The money of refund amount will be credited back to the same account through which payment was made after receiving the same from the concerned Railways.");
+    }else if (selectedValue === "Check status of TDR") {
+      sendBotResponse("Please Look into the link below. Hope it will help you: http://www.refunds.indianrail.gov.in/refund/refund.ref_status");
     }
   };
 
