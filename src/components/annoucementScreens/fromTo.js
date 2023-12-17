@@ -15,6 +15,7 @@ import DropdownComponent3 from '../dropDown3';
 import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon, CalendarDaysIcon } from 'react-native-heroicons/outline';
 import { getTrainBetweenStation } from '../Information/ERail';
 import Destinations2 from '../destinations2';
+import { DestinationCard } from '../destinations2';
 
 // Dropdown module
 
@@ -35,9 +36,25 @@ export default function FromTo() {
 
   const [fromStation, setFromStation] = React.useState("");
   const [toStation, setToStation] = React.useState("");
-  const [selectedDate, setDate] = React.useState();
+  const [selectedDate, setDate] = React.useState('14-12-2023');
+  const [cardData, setCardData] = React.useState();
   const [lang, setLang] = React.useState('en');
   const [station, setStation] = React.useState("");
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    console.log(fromStation, toStation, selectedDate);
+    const listen = async () => {
+      if (fromStation && toStation && selectedDate) {
+        let data = await getTrainBetweenStation(fromStation, toStation, selectedDate);
+        setCardData(data);
+        // console.log(cardData);
+      }
+    }
+    listen();
+
+  }, [fromStation, toStation, selectedDate])
 
 
 
@@ -115,8 +132,11 @@ export default function FromTo() {
         />
 
       </Pressable>
-      <ScrollView>
-        <Destinations2 />
+      <ScrollView className="mx-0 mt-2 px-2"
+        style={{ height: hp(68), width: wp(100) }}>
+        {/* <Destinations2 /> */}
+        {cardData?.map(ele => <DestinationCard key={ele.train_base.train_no} cardData={ele.train_base} navigation={navigation} />)}
+
       </ScrollView>
     </SafeAreaView>
   )
