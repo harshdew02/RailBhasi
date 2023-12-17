@@ -7,7 +7,7 @@ import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
 import { MagnifyingGlassIcon, MapPinIcon } from "react-native-heroicons/outline";
 
-const DropdownComponent4 = ({ setToStation }) => {
+const DropdownComponent4 = ({ setFromStation }) => {
     const [value, setValue] = useState(null);
     const renderItem = (item) => {
         return (
@@ -42,7 +42,7 @@ const DropdownComponent4 = ({ setToStation }) => {
             value={value}
             onChange={(item) => {
                 setValue(item.value);
-                setToStation(item.code);
+                setFromStation(item.code);
             }}
             renderLeftIcon={() => (
                 <MapPinIcon style={styles.icon} size={20} color="#b20000" />

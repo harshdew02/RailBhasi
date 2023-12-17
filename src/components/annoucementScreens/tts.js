@@ -11,24 +11,33 @@ import {
   StyleSheet
 } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { useNavigation, useRoute } from "@react-navigation/native";
-import DatePicker from "react-native-date-ranges";
 import DropdownComponent4 from '../dropDown4';
 import DropdownComponent5 from '../dropDown5';
-import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon, CalendarDaysIcon } from 'react-native-heroicons/outline';
-import { getTrainBetweenStation } from '../Information/ERail';
-import Destinations2 from '../destinations2';
-
+import { getAudio } from '../ASRComponents/TTS';
+import Sound from 'react-native-sound'
+import fs from 'react-native-fs'
 
 export default function TTS() {
 
-  const [fromStation, setFromStation] = React.useState("");
-  const [toStation, setToStation] = React.useState("");
-  const [selectedDate, setDate] = React.useState();
-  const [lang, setLang] = React.useState('en');
-  const [station, setStation] = React.useState("");
+  const [lang, setLang] = React.useState("en");
+  const [gender, setGender] = React.useState("male");
+  const [text, setText] = React.useState('');
 
-  const [number, onChangeNumber] = React.useState('');
+  const handleCurrnetSound = async ()=> {
+      await getAudio(text, lang, gender);
+      let sound = new Sound(
+        `${fs.CachesDirectoryPath}/output.wav`,
+        null,
+        error => {
+          if (error) console.log(error);
+          else {
+            sound.play(() => {
+              console.log('Sound played')
+            });
+          }
+        }
+      );
+  };
 
   return (
     <SafeAreaView>
@@ -38,32 +47,40 @@ export default function TTS() {
           <View className="flex-row items-center mx-2 mt-1 justify-between">
             <View style={{ width: wp(80) }}>
               {/* From */}
-              <DropdownComponent4 setFromStation={setFromStation} />
+              <DropdownComponent4 setFromStation={setLang} />
             </View>
-            <TouchableOpacity className="p-3 ml-1 rounded-xl bg-blue-500" mode='elevated' dark={true}>
+            {/* <TouchableOpacity className="p-3 ml-1 rounded-xl bg-blue-500" mode='elevated' onPress={
+              async () => {
+                setSound(await getAudio(text, lang, gender));
+              }
+            } dark={true}>
               <MapPinIcon size={20} color="#fff" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <TextInput
             className="rounded-lg"
             style={styles.input}
-            onChangeText={onChangeNumber}
-            value={number}
-            placeholder="Give Train Number"
+            onChangeText={setText}
+            value={text}
+            placeholder="Please give your input text here..."
           />
 
           {/* To */}
           <View className="flex-row items-center mx-4 justify-between">
             <View className="mt-4" style={{ width: wp(80) }}>
-              <DropdownComponent5 setToStation={setToStation} />
+              <DropdownComponent5 setToStation={setGender} />
             </View>
-            <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" mode='elevated' dark={true}>
+            {/* <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" mode='elevated' dark={true}>
               <MicrophoneIcon size={20} color="#fff" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
-          <TouchableOpacity className="p-3 mt-4 rounded-xl bg-blue-500" mode='elevated' dark={true}>
+          <TouchableOpacity className="p-3 mt-4 rounded-xl bg-blue-500" onPress={
+            () => {
+              handleCurrnetSound()
+            }
+          } mode='elevated' dark={true}>
             <Text className="text-white">Speaker</Text>
           </TouchableOpacity>
 

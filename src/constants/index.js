@@ -84,8 +84,8 @@ export const sampleRate = [
 ]
 
 export const voiceType = [
-  { label: "Male", code: "Male", value: 1 },
-  { label: "Female", code: "16000", value: 2 },
+  { label: "Male", code: "male", value: 1 },
+  { label: "Female", code: "female", value: 2 },
 ]
 export const categoriesData = [
   {
