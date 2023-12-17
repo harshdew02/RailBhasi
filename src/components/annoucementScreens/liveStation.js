@@ -7,6 +7,7 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Destinations from '../destinations';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MapPinIcon, MicrophoneIcon } from 'react-native-heroicons/solid';
+// import { getLongitude } from '../Sensors/GPS';
 import { getLongitude } from '../Sensors/GPS';
 import { useSelector } from 'react-redux'
 
