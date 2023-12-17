@@ -1,6 +1,6 @@
 import getTranslation from './NMTv2.js'
 
-export const ASROutputO = (asrInput, slanguage) => {
+export const ASROutputO = (asrInput, slanguage, sampleRate) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -13,7 +13,7 @@ export const ASROutputO = (asrInput, slanguage) => {
           value: "transcript",
         },
         audioFormat: "wav",
-        samplingRate: 16000,
+        samplingRate: Number.parseInt(sampleRate),
         postProcessors: null,
       },
       audio: [
