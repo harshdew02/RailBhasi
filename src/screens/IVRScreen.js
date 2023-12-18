@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import React from "react";
 import TopBar from "../components/topBar";
+import { PREDEFINED_LANGUAGE } from "../constants/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MapPinIcon, MicrophoneIcon } from "react-native-heroicons/solid";
 import {
   widthPercentageToDP as wp,
@@ -15,10 +17,29 @@ import {
 } from "react-native-responsive-screen";
 
 const IVRScreen = () => {
+  const [lang,setLang] = React.useState(null);
+    React.useEffect( () => {
+       const fetchData = async () => {
+        try{
+          const storedLang = await AsyncStorage.getItem('lang');
+          if(storedLang != null)
+            setLang(storedLang);
+          else
+            setLang('en')
+        }catch(error)
+        {
+          console.error('Error: ',error);
+        }
+       }
+       fetchData();
+    }, [])
+    React.useEffect(()=>{
+      console.log('Language changed: ', lang);
+    }, [lang])
   return (
     <>
       <SafeAreaView className="flex-1 bg-white">
-        <TopBar heading={"Interactive Voice System"} />
+        <TopBar heading={PREDEFINED_LANGUAGE['IVR'][lang]} />
         <View  style={{height:hp(50)}}>
         <ScrollView className="flex-column m-4 p-0 item-center border-black border-2 rounded bg-slate-100">
           <View className="flex-row items-center justify-center my-1 mx-2 p-0">
@@ -63,6 +84,7 @@ const IVRScreen = () => {
           </View>     
         </ScrollView>
         </View>
+
         <View className="flex-column items-center justify-center">
           <View className="flex-column items-center p-2 mx-2 justify-between">
             <View className="flex-row justify-start mx-1 p-1">

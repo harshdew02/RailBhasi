@@ -9,19 +9,22 @@ import { HeartIcon, SpeakerWaveIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
 import { getTranslation } from "./ASRComponents/NMTv2";
 import { getAudio } from "./ASRComponents/TTS";
+//import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   PREDEFINED_ANNOUNCEMENT,
   LANGUAGE_SELECTION,
   TYPE_SELECTION,
+  PREDEFINED_LANGUAGE,
 } from "../constants/config";
 
 // need to disable
-// import Sound from "react-native-sound";
-// import fs, { stat } from "react-native-fs";
+//import Sound from "react-native-sound";
+//import fs, { stat } from "react-native-fs";
 // 
 
 import { useDispatch, useSelector } from "react-redux";
 import { setDisable, setGlobalSound } from "../redux/soundSlice";
+
 import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./Information/Railwayapi";
 // import { getLiveStation } from "./Information/RapidAPI";
 
@@ -29,6 +32,7 @@ export default function Destinations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
   const [currnetSound, setCurrentSound] = useState(null);
   const [sounds, setSound] = useState(null);
+  const [lang,setLang] = useState('en');
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -36,6 +40,12 @@ export default function Destinations({ language, station }) {
   //get the desired language information from nearStation via props
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
   useEffect(() => {
+    // async function fetchLang() {
+    //   setLang(await AsyncStorage.getItem('lang'));
+    // }
+    // fetchLang()
+    // let langSelect = sessionStorage.getItem('lang');
+    // setLang(sessionStorage.getItem('lang'));
     let index = LANGUAGE_SELECTION(language);
     const fetchStationDetails = async item => {
       //This function will fetch the details from the Railway APIs.
@@ -119,7 +129,7 @@ export default function Destinations({ language, station }) {
 
     if(station == '' || station == null || station == undefined)
     {
-      Alert.prompt('Information','Please select station');
+      // Alert.prompt(PREDEFINED_LANGUAGE['info'][lang],PREDEFINED_LANGUAGE['sstation'][lang]);
     }
     else{
     destinationData.map((item, index) => {
