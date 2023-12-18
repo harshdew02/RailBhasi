@@ -9,7 +9,7 @@ import { HeartIcon, SpeakerWaveIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
 import { getTranslation } from "./ASRComponents/NMTv2";
 import { getAudio } from "./ASRComponents/TTS";
-//import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   PREDEFINED_ANNOUNCEMENT,
   LANGUAGE_SELECTION,
@@ -18,8 +18,8 @@ import {
 } from "../constants/config";
 
 // need to disable
-//import Sound from "react-native-sound";
-//import fs, { stat } from "react-native-fs";
+import Sound from "react-native-sound";
+import fs, { stat } from "react-native-fs";
 // 
 
 import { useDispatch, useSelector } from "react-redux";
