@@ -8,9 +8,9 @@ import { ClockIcon, HeartIcon, MapPinIcon, SpeakerWaveIcon, SunIcon } from 'reac
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../theme';
 const ios = Platform.OS == 'ios';
-const topMargin = ios? '': '';
+const topMargin = ios? '': 'mt-10';
 
-export default function DestinationScreen(props) {
+export default function StationScreen(props) {
     const item = props.route.params;
     const navigation = useNavigation();
     const [isFavourite, toggleFavourite] = useState(false);
@@ -44,37 +44,16 @@ export default function DestinationScreen(props) {
             <ScrollView showsVerticalScrollIndicator={false} className="space-y-5">
                 <View className="flex-row justify-between items-start">
                     <Text style={{fontSize: wp(7)}} className="font-bold flex-1 text-neutral-700">
-                        {item?.train}
+                        R - Raipur Junction
                     </Text>
                     <Text style={{fontSize: wp(7), color: theme.text}} className="font-semibold">
-                        PF: {item?.platform}
+                        PFs: 7
                     </Text>
                 </View>
-                <Text style={{fontSize: wp(3.7)}} className="text-neutral-700 tracking-wide mb-2">{item.type1}</Text>
-                <Text style={{fontSize: wp(3.7)}} className="text-neutral-700 tracking-wide mb-2">{item.type2}</Text>
-                <View className="flex-row justify-between mx-1">
-                    <View className="flex-row space-x-2 items-start">
-                        <ClockIcon size={wp(7)} color="skyblue" />
-                        <View className="flex space-y-2">
-                            <Text style={{fontSize: wp(4.5)}} className="font-bold text-neutral-700">{item.arr}</Text>
-                            <Text className="text-neutral-600 tracking-wide">Arrival</Text>
-                        </View>
-                    </View>
-                    <View className="flex-row space-x-2 items-start">
-                        <MapPinIcon size={wp(7)} color="#f87171" />
-                        <View className="flex space-y-2">
-                            <Text style={{fontSize: wp(4.5)}} className="font-bold text-neutral-700">{item.dep}</Text>
-                            <Text className="text-neutral-600 tracking-wide">Departure</Text>
-                        </View>
-                    </View>
-                    <View className="flex-row space-x-2 items-start">
-                        <SunIcon size={wp(7)} color="orange" />
-                        <View className="flex space-y-2">
-                            <Text style={{fontSize: wp(4.5)}} className="font-bold text-neutral-700">{item.stop}</Text>
-                            <Text className="text-neutral-600 tracking-wide">Stop</Text>
-                        </View>
-                    </View>
-                </View>
+                <Text style={{fontSize: wp(3.7)}} className="text-neutral-700 tracking-wide mb-2">Raipur railway station code is R. Raipur Junction is the main railway station serving the city of Raipur.It is only few of the railway stations in India which has been given the grade 'A-1' by the Indian Railways and is one of the highest revenue earning railway stations in India.
+
+This station is one of the prominent stations on the Howrah-Nagpur-Mumbai line. It is also the originating point of the Raipur-Vizianagarm branch line route.</Text>
+                <Text style={{fontSize: wp(3.7)}} className="text-neutral-700 tracking-wide mb-2">Zone: South East Central Railway</Text>
             </ScrollView>
         </View>
     </View>

@@ -1,6 +1,7 @@
-import { View, Text, TouchableOpacity, Image, ScrollView, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
-import { destinationData } from "../constants";
+import { destinationData, stationListEN } from "../constants";
+// import { destinationData } from "../constants";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -9,12 +10,9 @@ import { HeartIcon, SpeakerWaveIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
 import { getTranslation } from "./ASRComponents/NMTv2";
 import { getAudio } from "./ASRComponents/TTS";
-//import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   PREDEFINED_ANNOUNCEMENT,
   LANGUAGE_SELECTION,
-  TYPE_SELECTION,
-  PREDEFINED_LANGUAGE,
 } from "../constants/config";
 
 // need to disable
@@ -24,95 +22,60 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { setDisable, setGlobalSound } from "../redux/soundSlice";
+import { getStationInfo, getTrainSchedules } from "./Information/Railwayapi";
+import { getLiveTrain, getTrainBetweenStation } from "./Information/ERail";
 
-import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./Information/Railwayapi";
-// import { getLiveStation } from "./Information/RapidAPI";
-
-export default function Destinations({ language, station }) {
+export default function stations({ language, station }) {
   const [trainData, setTrainData] = useState([]);
   const [currnetSound, setCurrentSound] = useState(null);
   const [sounds, setSound] = useState(null);
-  const [lang,setLang] = useState('en');
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   //use effect will be applied here as language changes
   //get the desired language information from nearStation via props
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
-  useEffect(() => {
-    // async function fetchLang() {
-    //   setLang(await AsyncStorage.getItem('lang'));
-    // }
-    // fetchLang()
-    // let langSelect = sessionStorage.getItem('lang');
-    // setLang(sessionStorage.getItem('lang'));
+  useEffect(async () => {
     let index = LANGUAGE_SELECTION(language);
-    const fetchStationDetails = async item => {
-      //This function will fetch the details from the Railway APIs.
-      //This will return the object containing all the required details to display.
-      //Create destinationData type array then map it.
-
-    }
-
-    // let destinationData = fetchStationDetails
-
+    destinationData = await getStationInfo(station);
     const fetchData = async item => {
       setTrainData([]);
       // let type = TYPE_SELECTION(
       //   item.arr,
       //   [item.late_hour, item.late_min],
       //   item.from,
-      //   station,
-        
+      //   station
       // );
-      type = 'ontime'
       let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
       let data = info.split('/');
       let message;
 
-      switch (type) {
-        case "origination":
-          message = PREDEFINED_ANNOUNCEMENT[index].origination;
-          break;
-        case "arrived":
-          message = PREDEFINED_ANNOUNCEMENT[index].arrived;
-          break;
-        case "arriving":
-          message = PREDEFINED_ANNOUNCEMENT[index].arriving;
-          break;
-        case "late":
-          message = PREDEFINED_ANNOUNCEMENT[index].late;
-          break;
-        case "ontime":
-          message = PREDEFINED_ANNOUNCEMENT[index].ontime;
-          break;
-        case "custom":
-          message = PREDEFINED_ANNOUNCEMENT[index].custom;
-          break;
-        default:
-          message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
-          break;
-      }
-
-      message = message
-        .replace("(train_no)", item.nos)
-        .replace("(origin)", data[0])
-        .replace("(destination)", data[1])
-        .replace("(train_name)", data[2])
-        .replace("(PF)", item.platform)
-        .replace("(intime)", item.arr)
-        .replace("(outtime)", item.dep)
-        .replace("(stop)", item.stop)
-        .replace("(ghante)", item.late_hour)
-        .replace("(mintu)", item.late_min);
-
-      let message1 = PREDEFINED_ANNOUNCEMENT[index].additional
-        .replace("(intime)", item.arr)
-        .replace("(outtime)", item.dep)
-        .replace("(stop)", item.stop);
-
+      // switch (type) {
+      //   case "origination":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].origination;
+      //     break;
+      //   case "arrived":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].arrived;
+      //     break;
+      //   case "arriving":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].arriving;
+      //     break;
+      //   case "late":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].late;
+      //     break;
+      //   case "ontime":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].ontime;
+      //     break;
+      //   case "custom":
+      //     message = PREDEFINED_ANNOUNCEMENT[index].custom;
+      //     break;
+      //   default:
+      //     message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
+      //     break;
+      // }
+      let message1 = PREDEFINED_ANNOUNCEMENT[index]
       const obj = {
-        nos: "Train no: " + item.nos,
+        nos: "Station code: " + item.nos,
         train: data[2],
         type1: message,
         type2: message1,
@@ -127,15 +90,9 @@ export default function Destinations({ language, station }) {
       setTrainData(prev => (prev ? [...prev, obj] : [obj]));
     };
 
-    if(station == '' || station == null || station == undefined)
-    {
-      // Alert.prompt(PREDEFINED_LANGUAGE['info'][lang],PREDEFINED_LANGUAGE['sstation'][lang]);
-    }
-    else{
     destinationData.map((item, index) => {
       fetchData(item);
     });
-  }
   }, [language, station]);
 
   const handleCurrnetSound = async item => {
@@ -178,7 +135,7 @@ export default function Destinations({ language, station }) {
 
   return (
     <ScrollView
-      className="mx-0 mt-2 px-2"
+      className="mx-0 mt-0 px-2"
       style={{ height: hp(68), width: wp(100) }}
     >
       {trainData.map((item, index) => {
@@ -215,32 +172,31 @@ const DestinationCard = ({
   }, [mySound, myDisabled]);
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Destination", { ...item })}
+      onPress={() => navigation.navigate("Station")}
       style={{ width: wp(94) }}
-      className="bg-blue-800 rounded-2xl relative p-4 space-y-4 mb-2"
+      className="bg-blue-800 rounded-2xl relative py-7 px-5 space-y-1 mb-2"
     >
       <View>
         <Text
-          style={{ fontSize: wp(2.7) }}
+          style={{ fontSize: wp(4.5) }}
           className="text-white font-semibold"
         >
-          {item.nos}
+          {/* {item.nos} */}
+          Station Code: R
         </Text>
-        <Text style={{ fontSize: wp(5) }} className="text-white  font-semibold">
-          {item.train}
+        <Text style={{ fontSize: wp(7) }} className="text-white  font-semibold">
+          {/* {item.train} */}
+          Raipur Junction
         </Text>
       </View>
 
-      <View className="flex-row justify-between items-center">
-        <View className="flex-row justify-between">
-          <Text style={{ fontSize: wp(3.8) }} className="text-white mr-4">
-            Arr: {item.arr}
+      <View className="flex-row justify-between items-center p-1">
+        <View className="flex-column justify-between">
+          <Text style={{ fontSize: wp(4.8) }} className="text-white">
+            Number of PFs: 7
           </Text>
-          <Text style={{ fontSize: wp(3.8) }} className="text-white mx-2">
-            Dep: {item.dep}
-          </Text>
-          <Text style={{ fontSize: wp(3.8) }} className="text-white ml-4">
-            PF: {item.platform}
+          <Text style={{ fontSize: wp(4.8) }} className="text-white w-56">
+            Zone: SECR
           </Text>
         </View>
         <TouchableOpacity

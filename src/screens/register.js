@@ -22,22 +22,37 @@ import FacebookSVG from "../../assets/images_copy/misc/facebook.svg";
 import CustomButton from "../components/CustomButton";
 import LottieView from "lottie-react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase.config";
 import { langSelection, stationListEN } from "../constants";
+import { collection, addDoc, Firestore } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import firestore from '@react-native-firebase/firestore'
+import { auth, db } from "../../firebase/firebase.config";
+import { PREDEFINED_LANGUAGE } from "../constants/config";
 
 const RegisterScreen = ({ navigation }) => {
   const [states, setStates] = useState(null);
   const [station, setStation] = useState(null);
-  const [lang,setLang]  = useState(null);
-  const [name,setName] = useState(null);
+  const [name, setName] = useState(null);
+  const [lang, setLang] = useState('en');
   const [phone, setPhone] = useState(null);
   const [languages, setLanguages] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+    React.useEffect(()=>{
+      console.log('Language changed: ', lang);
+    }, [lang])
   const signup = () => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(station,lang,phone)
+      .then(async (userCredential) => {
+        // console.log(station, lang, phone);
+        await AsyncStorage.setItem('lang',lang)
+        await AsyncStorage.setItem('fname',name)
+        // await AsyncStorage.setItem('sns',states)
+        await AsyncStorage.setItem('email', email)
+        await AsyncStorage.setItem('pass', password)
+        await AsyncStorage.setItem('phone',Number.toString(phone))
+        
+        // await saveData();
         alert("User created successfully!");
         navigation.replace("Login");
       })
@@ -46,6 +61,24 @@ const RegisterScreen = ({ navigation }) => {
         const errorMessage = error.message;
         alert(errorMessage);
       });
+  };
+  const saveData = async () => {
+    // await firestore()
+    // console.log(db.toJSON())
+    // const users = await firestore().collection('users').get();
+    // console.log(users)
+    const docRef = await addDoc(collection(db, "users"), {
+      FullName: name,
+      Language: lang,
+      Mobile: phone,
+      StationName: states,
+    }).then(response => {
+      console.log(response);
+    }).catch(e => {
+      console.log(console.log('errors:' + e));
+    });
+    console.log(name,lang,phone,states)
+    console.log("Document written with ID: ", docRef.id);
   };
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
@@ -74,7 +107,7 @@ const RegisterScreen = ({ navigation }) => {
               marginTop: 30,
             }}
           >
-            Register
+            {PREDEFINED_LANGUAGE['register'][lang]}
           </Text>
         </View>
 
@@ -123,9 +156,14 @@ const RegisterScreen = ({ navigation }) => {
             color="#2776ff"
             style={{ marginRight: 5 }}
           />
-          <TextInput style={styles.input} value={name} placeholder="Full Name" onChangeText={(text) => {
-            setName(text);
-          }} />
+          <TextInput
+            style={styles.input}
+            value={name}
+            placeholder={PREDEFINED_LANGUAGE['fname'][lang]}
+            onChangeText={(text) => {
+              setName(text);
+            }}
+          />
         </View>
 
         <Dropdown
@@ -138,7 +176,7 @@ const RegisterScreen = ({ navigation }) => {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder="Select nearest station"
+          placeholder={PREDEFINED_LANGUAGE['sns'][lang]}
           searchPlaceholder="Search..."
           value={states}
           onChange={(item) => {
@@ -190,7 +228,7 @@ const RegisterScreen = ({ navigation }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder={PREDEFINED_LANGUAGE['email'][lang]}
             value={email}
             onChangeText={(txt) => setEmail(txt)}
           />
@@ -205,7 +243,7 @@ const RegisterScreen = ({ navigation }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder={PREDEFINED_LANGUAGE['password'][lang]}
             value={password}
             secureTextEntry={true}
             onChangeText={(txt) => setPassword(txt)}
@@ -221,7 +259,7 @@ const RegisterScreen = ({ navigation }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Mobile Number"
+            placeholder={PREDEFINED_LANGUAGE['mnum'][lang]}
             keyboardType="numeric"
             value={phone}
             onChangeText={(txt) => setPhone(txt)}
@@ -229,9 +267,11 @@ const RegisterScreen = ({ navigation }) => {
         </View>
 
         <CustomButton
-          label={"Register"}
+          label={PREDEFINED_LANGUAGE['register'][lang]}
           onPress={
-            () => signup()
+            () => {
+              signup();
+            }
             // navigation.navigate("Login");
           }
         />
@@ -270,7 +310,7 @@ const RegisterScreen = ({ navigation }) => {
         </View>
 
         <Text style={{ textAlign: "center", color: "#666", marginBottom: 30 }}>
-          Or, register with email ...
+        {PREDEFINED_LANGUAGE['register_with_email'][lang]}
         </Text>
 
         <View
@@ -280,9 +320,9 @@ const RegisterScreen = ({ navigation }) => {
             marginBottom: 60,
           }}
         >
-          <Text>Already registered?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text style={{ color: "#2776ff", fontWeight: "700" }}> Login</Text>
+          <Text>{PREDEFINED_LANGUAGE['aregistered'][lang]}</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+            <Text style={{ color: "#2776ff", fontWeight: "700" }}> {PREDEFINED_LANGUAGE['login'][lang]}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

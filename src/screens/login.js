@@ -22,14 +22,34 @@ import LottieView from "lottie-react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PREDEFINED_LANGUAGE } from "../constants/config";
 
 const LoginScreen = ({ navigation }) => {
+  const [lang,setLang] = React.useState(null);
+    React.useEffect( () => {
+       const fetchData = async () => {
+        try{
+          const storedLang = await AsyncStorage.getItem('lang');
+          if(storedLang != null)
+            setLang(storedLang);
+          else
+            setLang('en')
+        }catch(error)
+        {
+          console.error('Error: ',error);
+        }
+       }
+       fetchData();
+    }, [])
+    React.useEffect(()=>{
+      console.log('Language changed: ', lang);
+    }, [lang])
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        AsyncStorage.setItem('byPass','true');
+        AsyncStorage.setItem("byPass", "true");
         navigation.replace("Main");
       })
       .catch((error) => {
@@ -71,7 +91,7 @@ const LoginScreen = ({ navigation }) => {
               marginBottom: 30,
             }}
           >
-            Login
+            {PREDEFINED_LANGUAGE['login'][lang]}
           </Text>
         </View>
 
@@ -84,7 +104,7 @@ const LoginScreen = ({ navigation }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder={PREDEFINED_LANGUAGE['email'][lang]}
             onChangeText={(text) => {
               setEmail(text);
             }}
@@ -110,7 +130,7 @@ const LoginScreen = ({ navigation }) => {
             />
             <TextInput
               style={styles.input}
-              placeholder="Password"
+              placeholder={PREDEFINED_LANGUAGE['password'][lang]}
               secureTextEntry={true}
               onChangeText={(text) => {
                 setPassword(text);
@@ -118,19 +138,17 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
           <TouchableOpacity onPress={() => {}}>
-            <Text style={{ color: "#2776ff", fontWeight: "700" }}>Forgot?</Text>
+            <Text style={{ color: "#2776ff", fontWeight: "700" }}>{PREDEFINED_LANGUAGE['forgot'][lang]}</Text>
           </TouchableOpacity>
         </View>
 
         <CustomButton
-          label={"Login"}
-          onPress={
-            () => login(auth, email, password)
-          }
+          label={PREDEFINED_LANGUAGE['login'][lang]}
+          onPress={() => login(auth, email, password)}
         />
 
         <Text style={{ textAlign: "center", color: "#666", marginBottom: 20 }}>
-          Or, login with ...
+        {PREDEFINED_LANGUAGE['orlogin'][lang]}
         </Text>
 
         <View
@@ -173,11 +191,11 @@ const LoginScreen = ({ navigation }) => {
             marginBottom: 30,
           }}
         >
-          <Text>New to RailBhasi?</Text>
+          <Text>{PREDEFINED_LANGUAGE['ntr'][lang]}</Text>
           <TouchableOpacity onPress={() => navigation.navigate("Register")}>
             <Text style={{ color: "#2776ff", fontWeight: "700" }}>
               {" "}
-              Register
+              {PREDEFINED_LANGUAGE['register'][lang]}
             </Text>
           </TouchableOpacity>
         </View>
