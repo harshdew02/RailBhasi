@@ -11,13 +11,12 @@ import { useNavigation } from "@react-navigation/native";
 import { getTranslation } from "./ASRComponents/NMTv2";
 import { getAudio } from "./ASRComponents/TTS";
 import {
-  PREDEFINED_ANNOUNCEMENT,
   LANGUAGE_SELECTION,
 } from "../constants/config";
 
 // need to disable
-//import Sound from "react-native-sound";
-//import fs, { stat } from "react-native-fs";
+import Sound from "react-native-sound";
+import fs, { stat } from "react-native-fs";
 // 
 
 import { useDispatch, useSelector } from "react-redux";
@@ -49,51 +48,9 @@ export default function stations({ language, stationData }) {
       let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
       let data = info.split('/');
       let message;
-
-  //     // switch (type) {
-  //     //   case "origination":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].origination;
-  //     //     break;
-  //     //   case "arrived":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].arrived;
-  //     //     break;
-  //     //   case "arriving":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].arriving;
-  //     //     break;
-  //     //   case "late":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].late;
-  //     //     break;
-  //     //   case "ontime":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].ontime;
-  //     //     break;
-  //     //   case "custom":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].custom;
-  //     //     break;
-  //     //   default:
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
-  //     //     break;
-  //     // }
-  //     let message1 = PREDEFINED_ANNOUNCEMENT[index]
-  //     const obj = {
-  //       nos: "Station code: " + item.nos,
-  //       train: data[2],
-  //       type1: message,
-  //       type2: message1,
-  //       arr: item.arr,
-  //       dep: item.dep,
-  //       platform: item.platform,
-  //       stop: item.stop + " min",
-  //       langu: language,
-  //       image: item.image,
-  //     };
-  //     console.log(language, station);
-  //     setTrainData(prev => (prev ? [...prev, obj] : [obj]));
-  //   };
-
-  //   destinationData.map((item, index) => {
-  //     fetchData(item);
-  //   });
-  // }, [language, station]);
+    }
+    fetchData();
+  }, [language, stations]);
 
   const handleCurrnetSound = async item => {
     dispatch(setDisable(true));
@@ -148,7 +105,7 @@ export default function stations({ language, stationData }) {
   );
 }
 
-const DestinationCard = ({
+export const DestinationCard = ({
   stationData,
   navigation,
   handleCurrnetSound,
@@ -164,6 +121,7 @@ const DestinationCard = ({
     toggleFavourite(mySound == stationData);
     toggleDisabled(myDisabled);
   }, [mySound, myDisabled]);
+  
   return (
     <TouchableOpacity
       // onPress={() => navigation.navigate("Station")}
@@ -210,4 +168,4 @@ const DestinationCard = ({
       </View>
     </TouchableOpacity>
   );
-};
+}
