@@ -25,7 +25,7 @@ import { setDisable, setGlobalSound } from "../redux/soundSlice";
 import { getStationInfo, getTrainSchedules } from "./Information/Railwayapi";
 import { getLiveTrain, getTrainBetweenStation } from "./Information/ERail";
 
-export default function stations({ language, stationData }) {
+export default function stations({ language, stationData }){
   const [trainData, setTrainData] = useState([]);
   const [currnetSound, setCurrentSound] = useState(null);
   const [sounds, setSound] = useState(null);
@@ -35,8 +35,10 @@ export default function stations({ language, stationData }) {
   //use effect will be applied here as language changes
   //get the desired language information from nearStation via props
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
-  useEffect(async () => {
+  useEffect(() => {
     let index = LANGUAGE_SELECTION(language);
+
+    const listen = async() =>{
     destinationData = await getStationInfo(station);
     const fetchData = async item => {
       setTrainData([]);
@@ -49,51 +51,11 @@ export default function stations({ language, stationData }) {
       let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
       let data = info.split('/');
       let message;
+    }
+    listen();
+    }
 
-  //     // switch (type) {
-  //     //   case "origination":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].origination;
-  //     //     break;
-  //     //   case "arrived":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].arrived;
-  //     //     break;
-  //     //   case "arriving":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].arriving;
-  //     //     break;
-  //     //   case "late":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].late;
-  //     //     break;
-  //     //   case "ontime":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].ontime;
-  //     //     break;
-  //     //   case "custom":
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].custom;
-  //     //     break;
-  //     //   default:
-  //     //     message = PREDEFINED_ANNOUNCEMENT[index].custom_ontime;
-  //     //     break;
-  //     // }
-  //     let message1 = PREDEFINED_ANNOUNCEMENT[index]
-  //     const obj = {
-  //       nos: "Station code: " + item.nos,
-  //       train: data[2],
-  //       type1: message,
-  //       type2: message1,
-  //       arr: item.arr,
-  //       dep: item.dep,
-  //       platform: item.platform,
-  //       stop: item.stop + " min",
-  //       langu: language,
-  //       image: item.image,
-  //     };
-  //     console.log(language, station);
-  //     setTrainData(prev => (prev ? [...prev, obj] : [obj]));
-  //   };
-
-  //   destinationData.map((item, index) => {
-  //     fetchData(item);
-  //   });
-  // }, [language, station]);
+  }, [language, stations]);
 
   const handleCurrnetSound = async item => {
     dispatch(setDisable(true));
@@ -210,4 +172,4 @@ const DestinationCard = ({
       </View>
     </TouchableOpacity>
   );
-};
+}
