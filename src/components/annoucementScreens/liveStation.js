@@ -8,7 +8,6 @@ import Destinations from '../destinations';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MapPinIcon, MicrophoneIcon } from 'react-native-heroicons/solid';
 import { getLongitude } from '../Sensors/GPS';
-import { getLongitude } from '../Sensors/GPS';
 import { useSelector } from 'react-redux'
 import { ArrowPathIcon } from 'react-native-heroicons/outline';
 import { getLiveStation, getTrainBetweenStation } from '../Information/ERail';
