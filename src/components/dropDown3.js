@@ -5,7 +5,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { stationListEN } from "../constants";
 import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PREDEFINED_LANGUAGE } from "../constants/config";
 import { MagnifyingGlassIcon, MapPinIcon } from "react-native-heroicons/outline";
 
