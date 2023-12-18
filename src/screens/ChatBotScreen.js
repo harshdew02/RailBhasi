@@ -4,6 +4,8 @@ import TopBar from "../components/topBar";
 import { GiftedChat } from "react-native-gifted-chat";
 import { Dialogflow_V2 } from "react-native-dialogflow";
 import { dialogflowConfig } from "../../env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PREDEFINED_LANGUAGE } from "../constants/config";
 
 const botAvatar = require("../../assets/images/chatbot.png");
 
@@ -65,6 +67,25 @@ const ChatBotScreen = () => {
       dialogflowConfig.project_id
     );
   }, []);
+  const [lang,setLang] = React.useState(null);
+    React.useEffect( () => {
+       const fetchData = async () => {
+        try{
+          const storedLang = await AsyncStorage.getItem('lang');
+          if(storedLang != null)
+            setLang(storedLang);
+          else
+            setLang('en')
+        }catch(error)
+        {
+          console.error('Error: ',error);
+        }
+       }
+       fetchData();
+    }, [])
+    React.useEffect(()=>{
+      console.log('Language changed: ', lang);
+    }, [lang])
 
   const handleGoogleResponse = (result) => {
     let text = result.queryResult.fulfillmentMessages[0].text.text[0];
@@ -123,7 +144,7 @@ const ChatBotScreen = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <TopBar heading={"Talk With Me"} />
+      <TopBar heading={PREDEFINED_LANGUAGE['twm'][lang]} />
       <GiftedChat
         messages={messages}
         onSend={(newMessages) => onSend(newMessages)}
