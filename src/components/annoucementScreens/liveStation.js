@@ -21,7 +21,7 @@ export default function LiveStation() {
 
   const currentLanguage = useSelector(state => state.language);
   React.useEffect(() => {
-    console.log('live', currentLanguage);
+    console.log('live station', currentLanguage);
   }, [currentLanguage]);
 
   return (

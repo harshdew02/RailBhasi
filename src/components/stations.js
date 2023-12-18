@@ -25,44 +25,54 @@ import { getStationInfo, getTrainSchedules } from "./Information/Railwayapi";
 import { getLiveTrain, getTrainBetweenStation } from "./Information/ERail";
 
 export default function stations({ language, stationData }) {
-  const [trainData, setTrainData] = useState([]);
+  // const [trainData, setTrainData] = useState([]);
   const [currnetSound, setCurrentSound] = useState(null);
   const [sounds, setSound] = useState(null);
-  const navigation = useNavigation();
+  const [desc, setDesc] = useState();
+  // const navigation = useNavigation();
   const dispatch = useDispatch();
 
   //use effect will be applied here as language changes
   //get the desired language information from nearStation via props
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
-  useEffect(async () => {
-    let index = LANGUAGE_SELECTION(language);
-    destinationData = await getStationInfo(station);
-    const fetchData = async item => {
-      setTrainData([]);
-      // let type = TYPE_SELECTION(
-      //   item.arr,
-      //   [item.late_hour, item.late_min],
-      //   item.from,
-      //   station
-      // );
-      let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
-      let data = info.split('/');
-      let message;
-    }
-    fetchData();
-  }, [language, stations]);
+  // useEffect(() => {
+  //   let index = LANGUAGE_SELECTION(language);
+  //   const fetchData = async item => {
+  //     setTrainData([]);
+  //     let type = TYPE_SELECTION(
+  //       item.arr,
+  //       [item.late_hour, item.late_min],
+  //       item.from,
+  //       station
+  //     );
+  //     let info = await getTranslation(`${item.from}/${item.to}/${item.train}`, 'en', language);
+  //     let data = info.split('/');
+  //     let message;
+  //   }
+  //   fetchData();
+  // }, [language, stations]);
 
-  const handleCurrnetSound = async item => {
-    dispatch(setDisable(true));
-    if (sounds == null || currnetSound != item) {
-      if (currnetSound != item && sounds != null) {
-        dispatch(setGlobalSound(null));
-        sounds.stop();
-      }
-      setCurrentSound(item);
-      await getAudio(item.type1 + item.type2, item.langu, "female");
-      dispatch(setDisable(false));
-      dispatch(setGlobalSound(item));
+  // TTS
+  const selectedLanguage = useSelector(state => state.language.currentLanguage);
+
+  useEffect(() => {
+
+    // console.log('sl', selectedLanguage);
+    const listen = async () => {
+      const inputDesc = `Description: Welcome to ${stationData.stationName} in ${stationData.stateName}! As part of the ${stationData.zones.zoneName} (${stationData.zones.zoneCode}) zone, this station offers ${stationData.numberOfPlatforms} platforms for your travel needs.`;
+      let outputDesc = await getTranslation(inputDesc, 'en', selectedLanguage);
+      console.log(outputDesc);
+      setDesc(outputDesc);
+    }
+    listen();
+
+  }, [selectedLanguage]);
+
+  const handleCurrnetSound = async () => {
+    if (sounds == null) {
+
+      // await getAudio(item.type1 + item.type2, item.langu, "female");
+      await getAudio(desc, selectedLanguage, "female");
       // toggleFavourite(true);
       let sound = new Sound(
         `${fs.CachesDirectoryPath}/output.wav`,
@@ -74,19 +84,19 @@ export default function stations({ language, stationData }) {
             sound.play(() => {
               setSound(null);
               // toggleFavourite(false);
-              dispatch(setGlobalSound(null));
-              dispatch(setDisable(false));
+              // dispatch(setGlobalSound(null));
+              // dispatch(setDisable(false));
             });
           }
         }
       );
-    } else if (currnetSound == item) {
+    } else {
       sounds.stop();
       setSound(null);
-      item = null;
+      // item = null;
       // toggleFavourite(false);
-      dispatch(setGlobalSound(null));
-      dispatch(setDisable(null));
+      // dispatch(setGlobalSound(null));
+      // dispatch(setDisable(null));
     }
   };
 
@@ -100,6 +110,7 @@ export default function stations({ language, stationData }) {
         langu={language}
         handleCurrnetSound={handleCurrnetSound}
         currnetSound={currnetSound}
+        desc={desc}
       />}
     </ScrollView>
   );
@@ -109,6 +120,7 @@ export const DestinationCard = ({
   stationData,
   navigation,
   handleCurrnetSound,
+  desc,
   currnetSound,
 }) => {
   const [isFavourite, toggleFavourite] = useState(false);
@@ -121,11 +133,12 @@ export const DestinationCard = ({
     toggleFavourite(mySound == stationData);
     toggleDisabled(myDisabled);
   }, [mySound, myDisabled]);
-  
+
   return (
     <TouchableOpacity
       // onPress={() => navigation.navigate("Station")}
       style={{ width: wp(94) }}
+      disabled={true}
       className="bg-blue-800 rounded-2xl relative py-7 px-5 space-y-1 mb-2"
     >
       <View>
@@ -150,15 +163,24 @@ export const DestinationCard = ({
             {/* Number of PFs: 7 */}
             {`Number of PFs: ${stationData.numberOfPlatforms}`}
           </Text>
+          <Text style={{ fontSize: wp(4.8) }} className="text-white">
+            {/* Number of PFs: 7 */}
+            {`State: ${stationData.stateName}`}
+          </Text>
           <Text style={{ fontSize: wp(4.8) }} className="text-white w-56">
             {/* Zone: SECR */}
             {`Zone: ${stationData.zones.zoneName}`}
+          </Text>
+          <Text style={{ fontSize: wp(4.8) }} className="text-white w-56">
+            {/* Zone: SECR */}
+            {/* {`Description: Welcome to ${stationData.stationName} in ${stationData.stateName}! As part of the ${stationData.zones.zoneName} (${stationData.zones.zoneCode}) zone, this station offers ${stationData.numberOfPlatforms} platforms for your travel needs.`} */}
+            {desc}
           </Text>
         </View>
         <TouchableOpacity
           disabled={isDisabled}
           onPress={() => {
-            handleCurrnetSound(item);
+            handleCurrnetSound();
           }}
           style={{ backgroundColor: "rgba(255,255,255,0.4)" }}
           className="rounded-full p-3"
