@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
 import { stationListEN } from "../constants";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+//import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
 import { PREDEFINED_LANGUAGE } from "../constants/config";
@@ -32,19 +32,19 @@ const DropdownComponent2 = ({ setFromStation }) => {
     }, [lang])
     const renderItem = (item) => {
         return (
-          <View style={styles.item}>
-            <Text style={styles.textItem}>{item.label}</Text>
-            {item.value === value && (
-              <CheckIcon
-                style={styles.icon}
-                color="black"
-                name="Safety"
-                size={20}
-              />
-            )}
-          </View>
+            <View style={styles.item}>
+                <Text style={styles.textItem}>{item.label}</Text>
+                {item.value === value && (
+                    <CheckIcon
+                        style={styles.icon}
+                        color="black"
+                        name="Safety"
+                        size={20}
+                    />
+                )}
+            </View>
         );
-      };
+    };
     return (
         <Dropdown
             style={styles.dropdown}
