@@ -12,25 +12,24 @@ import { PREDEFINED_LANGUAGE } from '../../constants/config';
 export default function LiveTrain() {
   const [selectedTrain, setselectedTrain] = useState(13029);
   const [selectedTrainSchedule, setselectedTrainSchedule] = useState(13029);
-  const [lang,setLang] = React.useState(null);
-    React.useEffect( () => {
-       const fetchData = async () => {
-        try{
-          const storedLang = await AsyncStorage.getItem('lang');
-          if(storedLang != null)
-            setLang(storedLang);
-          else
-            setLang('en')
-        }catch(error)
-        {
-          console.error('Error: ',error);
-        }
-       }
-       fetchData();
-    }, [])
-    React.useEffect(()=>{
-      console.log('Language changed: ', lang);
-    }, [lang])
+  const [lang, setLang] = React.useState(null);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedLang = await AsyncStorage.getItem('lang');
+        if (storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      } catch (error) {
+        console.error('Error: ', error);
+      }
+    }
+    fetchData();
+  }, [])
+  React.useEffect(() => {
+    console.log('Language changed: ', lang);
+  }, [lang])
   React.useEffect(() => {
     const getData = async () => {
       // call getTrainSchedules
