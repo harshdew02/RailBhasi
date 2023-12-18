@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
-import { stationListEN } from "../constants";
-import { destinationData } from "../constants";
+import { destinationData, stationListEN } from "../constants";
+// import { destinationData } from "../constants";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -16,14 +16,14 @@ import {
 } from "../constants/config";
 
 // need to disable
-// import Sound from "react-native-sound";
-// import fs, { stat } from "react-native-fs";
+//import Sound from "react-native-sound";
+//import fs, { stat } from "react-native-fs";
 // 
 
 import { useDispatch, useSelector } from "react-redux";
 import { setDisable, setGlobalSound } from "../redux/soundSlice";
-import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./Information/Railwayapi";
-// import { getLiveStation } from "./Information/RapidAPI";
+import { getStationInfo, getTrainSchedules } from "./Information/Railwayapi";
+import { getLiveTrain, getTrainBetweenStation } from "./Information/ERail";
 
 export default function stations({ language, stationData }) {
   const [trainData, setTrainData] = useState([]);
@@ -35,19 +35,20 @@ export default function stations({ language, stationData }) {
   //use effect will be applied here as language changes
   //get the desired language information from nearStation via props
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
-  // useEffect(() => {
-  //   let index = LANGUAGE_SELECTION(language);
-  //   const fetchData = async item => {
-  //     setTrainData([]);
-  //     // let type = TYPE_SELECTION(
-  //     //   item.arr,
-  //     //   [item.late_hour, item.late_min],
-  //     //   item.from,
-  //     //   station
-  //     // );
-  //     let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
-  //     let data = info.split('/');
-  //     let message;
+  useEffect(async () => {
+    let index = LANGUAGE_SELECTION(language);
+    destinationData = await getStationInfo(station);
+    const fetchData = async item => {
+      setTrainData([]);
+      // let type = TYPE_SELECTION(
+      //   item.arr,
+      //   [item.late_hour, item.late_min],
+      //   item.from,
+      //   station
+      // );
+      let info = await getTranslation(`${item.from}/${item.to}/${item.train}`,'en',language);
+      let data = info.split('/');
+      let message;
 
   //     // switch (type) {
   //     //   case "origination":

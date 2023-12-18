@@ -10,11 +10,13 @@ import {
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DatePicker from "react-native-date-ranges";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import DropdownComponent2 from '../dropDown2';
 import DropdownComponent3 from '../dropDown3';
 import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon, CalendarDaysIcon } from 'react-native-heroicons/outline';
 import { getTrainBetweenStation } from '../Information/ERail';
 import Destinations2 from '../destinations2';
+import { PREDEFINED_LANGUAGE } from '../../constants/config';
 import { DestinationCard } from '../destinations2';
 
 // Dropdown module
@@ -27,7 +29,8 @@ const customButton = (onConfirm) => {
         container: { width: "80%", marginHorizontal: "3%" },
         text: { fontSize: 20 },
       }}
-      title="Submit"
+      primary
+      title={"Submit"}
     />
   );
 };
@@ -38,8 +41,28 @@ export default function FromTo() {
   const [toStation, setToStation] = React.useState("");
   const [selectedDate, setDate] = React.useState('14-12-2023');
   const [cardData, setCardData] = React.useState();
-  const [lang, setLang] = React.useState('en');
   const [station, setStation] = React.useState("");
+  const [lang,setLang] = React.useState('en');
+  
+  React.useEffect( () => {
+     const fetchData = async () => {
+      try{
+        const storedLang = await AsyncStorage.getItem('lang');
+        if(storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      }catch(error)
+      {
+        console.error('Error: ',error);
+      }
+     }
+     fetchData();
+  }, [])
+  useEffect(()=>{
+    console.log('Language changed: ', lang);
+  }, [lang])
+
 
   const navigation = useNavigation();
 
@@ -128,7 +151,7 @@ export default function FromTo() {
           selectedBgColor="#0047AB"
           customButton={(onConfirm) => customButton(onConfirm)}
           allowFontScaling={false}
-          placeholder={"Select Date"}
+          placeholder={PREDEFINED_LANGUAGE['sdate'][lang]}
         />
 
       </Pressable>

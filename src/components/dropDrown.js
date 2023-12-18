@@ -6,11 +6,31 @@ import { stationListEN } from "../constants";
 import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import { PREDEFINED_LANGUAGE } from "../constants/config";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const DropdownComponent = ({ setStation }) => {
   const [value, setValue] = useState(null);
-
+  const [lang,setLang] = React.useState(null);
+  React.useEffect( () => {
+    const fetchData = async () => {
+     try{
+       const storedLang = await AsyncStorage.getItem('lang');
+       if(storedLang != null)
+         setLang(storedLang);
+       else
+         setLang('en')
+     }catch(error)
+     {
+       console.error('Error: ',error);
+     }
+    }
+    fetchData();
+ }, [])
+ React.useEffect(()=>{
+   console.log('Language changed: ', lang);
+ }, [lang])
   const url =
     `https://api.railwayapi.site/api/v1/trains/12834`;
   const options = {
@@ -61,7 +81,7 @@ const DropdownComponent = ({ setStation }) => {
       maxHeight={300}
       labelField="label"
       valueField="value"
-      placeholder="Select item"
+      placeholder={PREDEFINED_LANGUAGE['sstation'][lang]}
       searchPlaceholder="Search..."
       value={value}
       onChange={(item) => {

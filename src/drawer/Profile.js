@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import {
   SafeAreaView,
@@ -16,56 +16,67 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { PREDEFINED_LANGUAGE } from "../constants/config";
 
 import CustomButton from "../components/CustomButton";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase.config";
 import { langSelection, stationListEN } from "../constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = ({ navigation }) => {
-  const [states, setStates] = useState(null);
+  const [states,setStates] = useState(null)
   const [station, setStation] = useState(null);
-  const [lang, setLang] = useState(null);
   const [name, setName] = useState(null);
   const [phone, setPhone] = useState(null);
   const [languages, setLanguages] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  {/* // Assume you have a function to fetch existing user data
-  // const fetchUserData = async () => {
-  //   try {
-  //     // Replace the following line with your actual logic to fetch existing user data
-  //     const userData = await fetchUserDataFromAPI(); // Example function to fetch data
+  const [lang,setLang] = React.useState('en');
+  React.useEffect( () => {
+     const fetchData = async () => {
+      try{
+        const storedLang = await AsyncStorage.getItem('lang');
+        if(storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      }catch(error)
+      {
+        console.error('Error: ',error);
+      }
+     }
+     fetchData();
+  }, [])
+  React.useEffect(()=>{
+    console.log('Language changed: ', lang);
+  }, [lang])
 
-  //     setStates(userData.states || "");
-  //     setStation(userData.station || "");
-  //     setLang(userData.lang || "");
-  //     setName(userData.name || "");
-  //     setPhone(userData.phone || "");
-  //     setLanguages(userData.languages || "");
-  //     setEmail(userData.email || "");
-  //     setPassword(userData.password || "");
-  //   } catch (error) {
-  //     console.error("Error fetching user data:", error);
-  //     // Handle error fetching user data
-  //   }
-  // };
-  // useEffect(() => {
-  //   // Fetch existing user data when the component mounts
-  //   fetchUserData();
-// }, []); */}
-  const signup = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(station, lang, phone);
-        alert("User created successfully!");
-        navigation.replace("Login");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage);
-      });
+  // // Assume you have a function to fetch existing user data
+
+  const fetchUserData = async () => {
+    try {
+      // Replace the following line with your actual logic to fetch existing user data
+      setStation(await AsyncStorage.getItem('sns'))
+      setLang(await AsyncStorage.getItem('lang'))
+      setName(await AsyncStorage.getItem('fname'))
+      setPhone(await AsyncStorage.getItem('phone'))
+      setEmail(await AsyncStorage.getItem('email'))
+      setPassword(await AsyncStorage.getItem('pass'))
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      // Handle error fetching user data
+    }
+  };
+  useEffect(() => {
+    // Fetch existing user data when the component mounts
+    fetchUserData();
+  }, []);
+  const signup = async () => {
+    await AsyncStorage.setItem("lang", lang);
+    await AsyncStorage.setItem("fname", name);
+    // await AsyncStorage.setItem("sns", states);
+    await AsyncStorage.setItem("phone", phone);
+    // await saveData();
+    alert("User updated successfully!");
   };
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
@@ -94,7 +105,7 @@ const Profile = ({ navigation }) => {
               marginTop: 30,
             }}
           >
-            Edit Details
+           {PREDEFINED_LANGUAGE['edit_details'][lang]}
           </Text>
         </View>
 
@@ -119,8 +130,8 @@ const Profile = ({ navigation }) => {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder="Select Language"
-          searchPlaceholder="Search..."
+          placeholder={PREDEFINED_LANGUAGE['selectLang'][lang]}
+          searchPlaceholder={PREDEFINED_LANGUAGE['search'][lang]}
           value={languages}
           onChange={(item) => {
             setLanguages(item.value);
@@ -146,7 +157,7 @@ const Profile = ({ navigation }) => {
           <TextInput
             style={styles.input}
             value={name}
-            placeholder="Full Name"
+            placeholder={PREDEFINED_LANGUAGE['fname'][lang]}
             onChangeText={(text) => {
               setName(text);
             }}
@@ -163,11 +174,10 @@ const Profile = ({ navigation }) => {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder="Select nearest station"
-          searchPlaceholder="Search..."
+          placeholder={PREDEFINED_LANGUAGE['sns'][lang]}
+          searchPlaceholder={PREDEFINED_LANGUAGE['search'][lang]}
           value={states}
           onChange={(item) => {
-            setStates(item.value);
             setStation(item.code);
           }}
           renderLeftIcon={() => (
@@ -215,7 +225,7 @@ const Profile = ({ navigation }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder={PREDEFINED_LANGUAGE['email'][lang]}
             value={email}
             onChangeText={(txt) => setEmail(txt)}
           />
@@ -230,7 +240,7 @@ const Profile = ({ navigation }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder={PREDEFINED_LANGUAGE['password'][lang]}
             value={password}
             secureTextEntry={true}
             onChangeText={(txt) => setPassword(txt)}
@@ -246,7 +256,7 @@ const Profile = ({ navigation }) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Mobile Number"
+            placeholder={PREDEFINED_LANGUAGE['mnum'][lang]}
             keyboardType="numeric"
             value={phone}
             onChangeText={(txt) => setPhone(txt)}
@@ -254,7 +264,7 @@ const Profile = ({ navigation }) => {
         </View>
 
         <CustomButton
-          label={"Save Change"}
+          label={PREDEFINED_LANGUAGE['save_changes'][lang]}
           onPress={
             () => signup()
             // navigation.navigate("Login");

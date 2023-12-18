@@ -8,7 +8,7 @@ import { ClockIcon, HeartIcon, MapPinIcon, SpeakerWaveIcon, SunIcon } from 'reac
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../theme';
 const ios = Platform.OS == 'ios';
-const topMargin = ios? '': 'mt-10';
+const topMargin = ios? '': '';
 
 export default function DestinationScreen(props) {
     const item = props.route.params;

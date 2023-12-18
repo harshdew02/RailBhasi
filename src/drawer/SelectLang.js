@@ -7,20 +7,41 @@ import { setLanguage } from '../redux/languageSlice';
 import TopBar from '../components/topBar'
 import { LanguageIcon } from 'react-native-heroicons/outline';
 import { langSelection } from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PREDEFINED_LANGUAGE } from '../constants/config';
 
 
 
 export default function SelectLang() {
+  const [lang,setLang] = React.useState('en');
+  React.useEffect( () => {
+     const fetchData = async () => {
+      try{
+        const storedLang = await AsyncStorage.getItem('lang');
+        if(storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      }catch(error)
+      {
+        console.error('Error: ',error);
+      }
+     }
+     fetchData();
+  }, [])
+  React.useEffect(()=>{
+    console.log('Language changed: ', lang);
+  }, [lang])
   const dispatch = useDispatch();
-  const [languages, setLanguages] = React.useState('');
+ 
   React.useEffect(() => {
     // console.log(languages);
-    dispatch(setLanguage(languages));
-  }, [languages])
+    dispatch(setLanguage(lang));
+  }, [lang])
 
   return (
     <SafeAreaView>
-      <TopBar heading={"Select Your Language"} />
+      <TopBar heading={PREDEFINED_LANGUAGE['selectLang'][lang]} />
 
       <Dropdown
         style={styles.dropdown}
@@ -33,9 +54,9 @@ export default function SelectLang() {
         labelField="label"
         activeColor="#ADD8E6"
         valueField="code"
-        placeholder="Select Language"
-        searchPlaceholder="Search..."
-        value={languages}
+        placeholder={PREDEFINED_LANGUAGE['selectLang'][lang]}
+        searchPlaceholder={PREDEFINED_LANGUAGE['search'][lang]}
+        value={lang}
         onChange={(item) => setLanguages(item.code)}
         renderLeftIcon={() => (
           <LanguageIcon
