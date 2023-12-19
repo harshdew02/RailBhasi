@@ -19,6 +19,7 @@ import Destinations2 from '../destinations2';
 import { PREDEFINED_LANGUAGE } from '../../constants/config';
 import { DestinationCard } from '../destinations2';
 import { useSelector } from 'react-redux'
+import { getTranslation } from '../ASRComponents/NMTv2';
 
 // Dropdown module
 
@@ -44,6 +45,9 @@ export default function FromTo() {
   const [cardData, setCardData] = React.useState();
   const [station, setStation] = React.useState("");
   const [lang, setLang] = React.useState('en');
+  const [trainName, setTrainName] = React.useState([]);
+
+  const currentLanguage = useSelector(state => state.language.currentLanguage);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -71,13 +75,34 @@ export default function FromTo() {
     const listen = async () => {
       if (fromStation && toStation && selectedDate) {
         let data = await getTrainBetweenStation(fromStation, toStation, selectedDate);
-        setCardData(data);
-        console.log(cardData);
+        // console.log(data);
+        if (data === 'No direct trains found') {
+          setCardData("NO");
+          return
+        }
+        const slicedData = data.slice(0, 5);
+        let inputTT = '';
+        slicedData.forEach((ele) => {
+          inputTT += ele.train_base.train_name;
+          inputTT += '/';
+        })
+
+        inputTT = inputTT.slice(0, inputTT.length - 1);
+        const outputTT = await getTranslation(inputTT, 'en', currentLanguage);
+        // const outputTT = await getTranslation(inputTT, 'en', 'hi');
+
+        console.log('Output TT', outputTT);
+        setTrainName(outputTT.split("/"));
+        console.log(trainName);
+
+        setCardData(slicedData);
+        // console.log(cardData);
+        // console.log('inputTT', inputTT);
       }
     }
     listen();
 
-  }, [fromStation, toStation, selectedDate])
+  }, [fromStation, toStation, selectedDate, currentLanguage])
 
 
 
@@ -158,7 +183,7 @@ export default function FromTo() {
       <ScrollView className="mx-0 mt-2 px-2"
         style={{ height: hp(68), width: wp(100) }}>
         {/* <Destinations2 /> */}
-        {cardData?.map(ele => <DestinationCard key={ele.train_base.train_no} cardData={ele.train_base} navigation={navigation} />)}
+        {(cardData != 'NO') && cardData?.map((ele, indx) => <DestinationCard key={ele.train_base.train_no} trainName={trainName[indx]} cardData={ele.train_base} navigation={navigation} />)}
 
       </ScrollView>
     </SafeAreaView>
