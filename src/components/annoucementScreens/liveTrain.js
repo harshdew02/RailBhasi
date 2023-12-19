@@ -6,31 +6,30 @@ import { ArrowPathIcon, MapPinIcon } from 'react-native-heroicons/solid';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ArrowDownCircleIcon, ChevronDoubleDownIcon, ChevronDownIcon, MagnifyingGlassIcon, SpeakerWaveIcon } from 'react-native-heroicons/outline';
 import { ScrollView } from 'react-native-gesture-handler';
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PREDEFINED_LANGUAGE } from '../../constants/config';
 
 export default function LiveTrain() {
   const [selectedTrain, setselectedTrain] = useState(13029);
   const [selectedTrainSchedule, setselectedTrainSchedule] = useState(13029);
-  const [lang,setLang] = React.useState(null);
-    React.useEffect( () => {
-       const fetchData = async () => {
-        try{
-          const storedLang = await AsyncStorage.getItem('lang');
-          if(storedLang != null)
-            setLang(storedLang);
-          else
-            setLang('en')
-        }catch(error)
-        {
-          console.error('Error: ',error);
-        }
-       }
-       fetchData();
-    }, [])
-    React.useEffect(()=>{
-      console.log('Language changed: ', lang);
-    }, [lang])
+  const [lang, setLang] = React.useState(null);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedLang = await AsyncStorage.getItem('lang');
+        if (storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      } catch (error) {
+        console.error('Error: ', error);
+      }
+    }
+    fetchData();
+  }, [])
+  React.useEffect(() => {
+    console.log('Language changed: ', lang);
+  }, [lang])
   React.useEffect(() => {
     const getData = async () => {
       // call getTrainSchedules

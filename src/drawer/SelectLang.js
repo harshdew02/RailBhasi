@@ -13,31 +13,28 @@ import { PREDEFINED_LANGUAGE } from '../constants/config';
 
 
 export default function SelectLang() {
-  const [lang,setLang] = React.useState('en');
-  React.useEffect( () => {
-     const fetchData = async () => {
-      try{
+  const [lang, setLang] = React.useState('en');
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
         const storedLang = await AsyncStorage.getItem('lang');
-        if(storedLang != null)
+        if (storedLang != null)
           setLang(storedLang);
         else
           setLang('en')
-      }catch(error)
-      {
-        console.error('Error: ',error);
+      } catch (error) {
+        console.error('Error: ', error);
       }
-     }
-     fetchData();
+    }
+    fetchData();
   }, [])
-  React.useEffect(()=>{
-    console.log('Language changed: ', lang);
-  }, [lang])
+
+
   const dispatch = useDispatch();
- 
-  React.useEffect(() => {
-    // console.log(languages);
-    dispatch(setLanguage(lang));
-  }, [lang])
+  // React.useEffect(() => {
+  //   console.log('Language changed: ', lang);
+  //   // dispatch(setLanguage(lang));
+  // }, [lang])
 
   return (
     <SafeAreaView>
@@ -57,7 +54,10 @@ export default function SelectLang() {
         placeholder={PREDEFINED_LANGUAGE['selectLang'][lang]}
         searchPlaceholder={PREDEFINED_LANGUAGE['search'][lang]}
         value={lang}
-        onChange={(item) => setLanguages(item.code)}
+        onChange={(item) => {
+          setLang(item.code);
+          dispatch(setLanguage(item.code));
+        }}
         renderLeftIcon={() => (
           <LanguageIcon
             name="language-outline"

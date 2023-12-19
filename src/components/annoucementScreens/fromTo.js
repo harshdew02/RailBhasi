@@ -18,6 +18,7 @@ import { getTrainBetweenStation } from '../Information/ERail';
 import Destinations2 from '../destinations2';
 import { PREDEFINED_LANGUAGE } from '../../constants/config';
 import { DestinationCard } from '../destinations2';
+import { useSelector } from 'react-redux'
 
 // Dropdown module
 
@@ -42,24 +43,23 @@ export default function FromTo() {
   const [selectedDate, setDate] = React.useState('14-12-2023');
   const [cardData, setCardData] = React.useState();
   const [station, setStation] = React.useState("");
-  const [lang,setLang] = React.useState('en');
-  
-  React.useEffect( () => {
-     const fetchData = async () => {
-      try{
+  const [lang, setLang] = React.useState('en');
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
         const storedLang = await AsyncStorage.getItem('lang');
-        if(storedLang != null)
+        if (storedLang != null)
           setLang(storedLang);
         else
           setLang('en')
-      }catch(error)
-      {
-        console.error('Error: ',error);
+      } catch (error) {
+        console.error('Error: ', error);
       }
-     }
-     fetchData();
+    }
+    fetchData();
   }, [])
-  useEffect(()=>{
+  useEffect(() => {
     console.log('Language changed: ', lang);
   }, [lang])
 
@@ -72,7 +72,7 @@ export default function FromTo() {
       if (fromStation && toStation && selectedDate) {
         let data = await getTrainBetweenStation(fromStation, toStation, selectedDate);
         setCardData(data);
-        // console.log(cardData);
+        console.log(cardData);
       }
     }
     listen();

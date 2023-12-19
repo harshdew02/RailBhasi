@@ -7,7 +7,9 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Destinations from '../destinations';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MapPinIcon, MicrophoneIcon } from 'react-native-heroicons/solid';
-import { getLongitude } from '../Sensors/GPS';
+
+// import { getLongitude } from '../Sensors/GPS';
+
 import { useSelector } from 'react-redux'
 import { ArrowPathIcon } from 'react-native-heroicons/outline';
 import { getLiveStation, getTrainBetweenStation } from '../Information/ERail';
@@ -21,7 +23,7 @@ export default function LiveStation() {
 
   const currentLanguage = useSelector(state => state.language);
   React.useEffect(() => {
-    console.log('live', currentLanguage);
+    console.log('live station', currentLanguage);
   }, [currentLanguage]);
 
   return (

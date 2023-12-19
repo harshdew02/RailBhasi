@@ -10,7 +10,7 @@ import { PREDEFINED_LANGUAGE } from "../constants/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-const DropdownComponent = ({ setStation }) => {
+const DropdownComponentLive = ({ setStation }) => {
   const [value, setValue] = useState(null);
   const [lang,setLang] = React.useState(null);
   React.useEffect( () => {
@@ -96,7 +96,7 @@ const DropdownComponent = ({ setStation }) => {
   );
 };
 
-export default DropdownComponent;
+export default DropdownComponentLive;
 
 const styles = StyleSheet.create({
   dropdown: {
