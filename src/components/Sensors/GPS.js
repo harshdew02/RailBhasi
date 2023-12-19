@@ -16,7 +16,7 @@ export const getLongitude = async () => {
         console.log(error.code, error.message);
     },{
         enableHighAccuracy: false,
-        timeout:20000,
+        timeout:200000,
         maximumAge: 100000
     });
     return address;

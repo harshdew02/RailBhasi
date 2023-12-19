@@ -7,6 +7,7 @@ import DropdownComponentLive from '../components/dropDrownLive';
 import { destinationData } from '../constants';
 import { useSelector } from 'react-redux';
 import { getTranslation } from '../components/ASRComponents/NMTv2';
+import { getLongitude } from '../components/Sensors/GPS';
 
 
 
@@ -21,7 +22,8 @@ const XTransaction = () => {
   useEffect(() => {
 
     const listen = async () => {
-      const slicedData = destinationData.slice(0, 5);
+      console.log('GPS xt : ', await getLongitude());
+      const slicedData = destinationData.slice(0, destinationData.length);
       let inputTT = '';
       slicedData.forEach((ele) => {
         inputTT += ele.train;
@@ -29,11 +31,11 @@ const XTransaction = () => {
       })
 
       inputTT = inputTT.slice(0, inputTT.length - 1);
-      console.log('inputTT xt ', inputTT);
+      // console.log('inputTT xt ', inputTT);
 
       // language handling
       const outputTT = await getTranslation(inputTT, 'en', currentLanguage);
-      console.log('outputTT xt ', outputTT);
+      // console.log('outputTT xt ', outputTT);
       setDData(slicedData);
       setTrainName(outputTT.split("/"));
     }
@@ -71,7 +73,8 @@ const XTransaction = () => {
         </View>
       </View> */}
 
-      <ScrollView>
+      <ScrollView className="mx-0 mt-2 px-2"
+        style={{ height: hp(68), width: wp(100) }}>
         {dData.map((cardData, idx) =>
           <View key={idx} style={{ flexDirection: 'row', marginLeft: 1, marginRight: 1 }}>
             <View style={{ width: wp(16), backgroundColor: 'lightyellow', height: hp(10), justifyContent: 'center', borderWidth: 1 }}>
