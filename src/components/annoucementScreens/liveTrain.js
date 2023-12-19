@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PREDEFINED_LANGUAGE } from '../../constants/config';
 
 export default function LiveTrain() {
+
   const [trainSchedule, setTrainSchedule] = useState(13029);
   const [lang, setLang] = React.useState(null);
   React.useEffect(() => {
