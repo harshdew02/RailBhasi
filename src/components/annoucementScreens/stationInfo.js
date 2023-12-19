@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import DropdownComponent from '../dropDrown';
 
@@ -16,6 +17,7 @@ export default function StationInfo() {
   const [lang, setLang] = React.useState('en');
   const [station, setStation] = React.useState("");
   const [cardData, setCardData] = React.useState("");
+  const selectedLanguage = useSelector(state => state.language.currentLanguage);
 
   useEffect(() => {
     const listen = async () => {
