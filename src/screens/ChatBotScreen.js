@@ -156,13 +156,6 @@ const ChatBotScreen = () => {
         user: BOT,
         quickReplies: quickReply,
       };
-    } else if (text == "booking") {
-      msg = {
-        _id: Math.random().toString(36).substring(7),
-        text: "Thanks for trusting RailBhasi for booking your train ticket. Just follow the mentioned steps to book train tickets in no time\n\n\u{1F449}Visit the RailBhasi website/app & select the starting & arrival destinations\n\n\u{1F449}Select a train that you want to book.\n\n\u{1F449}Add traveler’s details.\n\n\u{1F449}Proceed to our easy secure payment gateway.\n\n\u{1F449}Enter your original IRCTC username and password.\n\n\u{1F449}Train Ticket booking confirmation via Email, SMS, will be sent to you.\n\n\u{1F449}You can also check confirmed tickets in the My Trips option on our app/website.",
-        createdAt: new Date(),
-        user: BOT,
-      };
     } else {
       msg = {
         _id: Math.random().toString(36).substring(7),
