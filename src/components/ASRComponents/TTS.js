@@ -1,4 +1,4 @@
-import fs from "react-native-fs";
+// import fs from "react-native-fs";
 
 // Uncomment this for backend
 

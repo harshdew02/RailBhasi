@@ -11,6 +11,7 @@ import { PREDEFINED_LANGUAGE } from '../../constants/config';
 
 export default function LiveTrain() {
   const [trainSchedule, setTrainSchedule] = useState([]);
+
   const [lang, setLang] = React.useState(null);
   React.useEffect(() => {
     const fetchData = async () => {
