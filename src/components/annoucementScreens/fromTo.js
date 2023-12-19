@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Button,
+  Text,
   SafeAreaView
 } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -20,6 +21,7 @@ import { PREDEFINED_LANGUAGE } from '../../constants/config';
 import { DestinationCard } from '../destinations2';
 import { useSelector } from 'react-redux'
 import { getTranslation } from '../ASRComponents/NMTv2';
+import { ActivityIndicator } from 'react-native'
 
 // Dropdown module
 
@@ -46,6 +48,7 @@ export default function FromTo() {
   const [station, setStation] = React.useState("");
   const [lang, setLang] = React.useState('en');
   const [trainName, setTrainName] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   const currentLanguage = useSelector(state => state.language.currentLanguage);
 
@@ -74,30 +77,34 @@ export default function FromTo() {
     // console.log(fromStation, toStation, selectedDate);
     const listen = async () => {
       if (fromStation && toStation && selectedDate) {
+        setLoading(true);
+        setCardData('');
         let data = await getTrainBetweenStation(fromStation, toStation, selectedDate);
         // console.log(data);
         if (data === 'No direct trains found') {
           setCardData("NO");
-          return
         }
-        const slicedData = data.slice(0, 5);
-        let inputTT = '';
-        slicedData.forEach((ele) => {
-          inputTT += ele.train_base.train_name;
-          inputTT += '/';
-        })
+        else {
+          const slicedData = data.slice(0, 5);
+          let inputTT = '';
+          slicedData.forEach((ele) => {
+            inputTT += ele.train_base.train_name;
+            inputTT += '/';
+          })
 
-        inputTT = inputTT.slice(0, inputTT.length - 1);
-        const outputTT = await getTranslation(inputTT, 'en', currentLanguage);
-        // const outputTT = await getTranslation(inputTT, 'en', 'hi');
+          inputTT = inputTT.slice(0, inputTT.length - 1);
+          const outputTT = await getTranslation(inputTT, 'en', currentLanguage);
+          // const outputTT = await getTranslation(inputTT, 'en', 'hi');
 
-        // console.log('Output TT', outputTT);
-        setTrainName(outputTT.split("/"));
-        // console.log(trainName);
+          // console.log('Output TT', outputTT);
+          setTrainName(outputTT.split("/"));
+          // console.log(trainName);
 
-        setCardData(slicedData);
-        // console.log(cardData);
-        // console.log('inputTT', inputTT);
+          setCardData(slicedData);
+          // console.log(cardData);
+          // console.log('inputTT', inputTT);
+        }
+        setLoading(false);
       }
     }
     listen();
@@ -183,8 +190,9 @@ export default function FromTo() {
       <ScrollView className="mx-0 mt-2 px-2"
         style={{ height: hp(68), width: wp(100) }}>
         {/* <Destinations2 /> */}
-        {(cardData != 'NO') && cardData?.map((ele, indx) => <DestinationCard key={ele.train_base.train_no} trainName={trainName[indx]} cardData={ele.train_base} navigation={navigation} />)}
-
+        {(cardData != 'NO' && !loading) && cardData?.map((ele, indx) => <DestinationCard key={ele.train_base.train_no} trainName={trainName[indx]} cardData={ele.train_base} navigation={navigation} />)}
+        {(cardData == 'NO' && !loading) && <View><Text>No direct Trains avaliable</Text></View>}
+        {(!cardData && loading) && <ActivityIndicator />}
       </ScrollView>
     </SafeAreaView>
   )
