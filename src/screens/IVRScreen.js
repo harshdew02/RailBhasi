@@ -202,7 +202,7 @@ const IVRScreen = () => {
                   0
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity className="p-3 mx-2 rounded-xl bg-blue-500" onPress={() => handleNumericInput('#')}>
+              <TouchableOpacity className="p-3 mx-2 rounded-xl bg-blue-500" style={{width: wp(16) , height: wp(16)}} onPress={() => handleNumericInput('#')}>
                 <Text className="text-center text-4xl text-white font-bold w-15 h-15">
                   #
                 </Text>
