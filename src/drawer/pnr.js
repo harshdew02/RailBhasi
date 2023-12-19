@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { setLanguage } from '../redux/languageSlice';
 import CustomButton from "../components/CustomButton";
-
-
 import TopBar from '../components/topBar'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PREDEFINED_LANGUAGE } from '../constants/config';
 import {
   SafeAreaView,
   View,
-  Text,
   TextInput,
-  TouchableOpacity,
   StyleSheet,
   Image,
 } from "react-native";
@@ -48,8 +44,6 @@ export default function pnr() {
     dispatch(setLanguage(lang));
   }, [lang])
   
- 
-
   return (
     <SafeAreaView>
       <TopBar heading={PREDEFINED_LANGUAGE['pnr'][lang]} />

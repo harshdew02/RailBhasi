@@ -6,10 +6,7 @@ import TopBar from "../components/topBar";
 import { Dialogflow_V2 } from "react-native-dialogflow";
 import { dialogflowConfig } from "../../env";
 
-
 const botAvatar = require("../../assets/images/chatbot.png");
-
-
 
 const BOT = {
   _id: 2,
