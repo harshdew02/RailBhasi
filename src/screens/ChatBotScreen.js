@@ -7,11 +7,10 @@ import { Dialogflow_V2 } from "react-native-dialogflow";
 import { dialogflowConfig } from "../../env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PREDEFINED_LANGUAGE } from "../constants/config";
+import { ScrollView } from "react-native";
 
 
 const botAvatar = require("../../assets/images/chatbot.png");
-
-
 
 const BOT = {
   _id: 2,
@@ -78,13 +77,24 @@ const checkQuickReplies = {
 };
 
 const ChatBotScreen = () => {
+
+  
   const renderInputToolbar = (props) => (
     <InputToolbar
       {...props}
+      containerStyle={{
+        marginRight:10,
+        flexDirection:"row",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 10,
+      }}
       renderAccessory={() => (
-        <TouchableOpacity onPress={handleMicButtonPress}>
-          <Icon name="microphone" size={24} color="black" />
-        </TouchableOpacity>
+        <View style={{ marginTop: 10 }}> 
+          <TouchableOpacity onPress={handleMicButtonPress}>
+            <Icon name="microphone" size={18} color="#2776ff" />
+          </TouchableOpacity>
+        </View>
       )}
     />
   );
@@ -254,7 +264,7 @@ const ChatBotScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "white", paddingBottom: 15 }}
+      style={{ flex: 1, backgroundColor: "white", paddingBottom: 20 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 30}
     >
