@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { View, KeyboardAvoidingView, Platform } from "react-native";
+import { View, KeyboardAvoidingView, Platform, TouchableOpacity } from "react-native";
+import { GiftedChat, InputToolbar } from "react-native-gifted-chat";
+import Icon from "react-native-vector-icons/FontAwesome";
 import TopBar from "../components/topBar";
-import { GiftedChat } from "react-native-gifted-chat";
 import { Dialogflow_V2 } from "react-native-dialogflow";
 import { dialogflowConfig } from "../../env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PREDEFINED_LANGUAGE } from "../constants/config";
 
+
 const botAvatar = require("../../assets/images/chatbot.png");
+
+
 
 const BOT = {
   _id: 2,
@@ -74,6 +78,21 @@ const checkQuickReplies = {
 };
 
 const ChatBotScreen = () => {
+  const renderInputToolbar = (props) => (
+    <InputToolbar
+      {...props}
+      renderAccessory={() => (
+        <TouchableOpacity onPress={handleMicButtonPress}>
+          <Icon name="microphone" size={24} color="black" />
+        </TouchableOpacity>
+      )}
+    />
+  );
+
+  const handleMicButtonPress = () => {
+    
+  };
+
   const [messages, setMessages] = useState([
     {
       _id: 1,
@@ -127,14 +146,14 @@ const ChatBotScreen = () => {
         user: BOT,
         quickReplies: quickReply,
       };
-    }else if(text=="booking"){
+    } else if (text == "booking") {
       msg = {
         _id: Math.random().toString(36).substring(7),
-        text:"Thanks for trusting RailBhasi for booking your train ticket. Just follow the mentioned steps to book train tickets in no time\n\n\u{1F449}Visit the RailBhasi website/app & select the starting & arrival destinations\n\n\u{1F449}Select a train that you want to book.\n\n\u{1F449}Add traveler’s details.\n\n\u{1F449}Proceed to our easy secure payment gateway.\n\n\u{1F449}Enter your original IRCTC username and password.\n\n\u{1F449}Train Ticket booking confirmation via Email, SMS, will be sent to you.\n\n\u{1F449}You can also check confirmed tickets in the My Trips option on our app/website.",
+        text: "Thanks for trusting RailBhasi for booking your train ticket. Just follow the mentioned steps to book train tickets in no time\n\n\u{1F449}Visit the RailBhasi website/app & select the starting & arrival destinations\n\n\u{1F449}Select a train that you want to book.\n\n\u{1F449}Add traveler’s details.\n\n\u{1F449}Proceed to our easy secure payment gateway.\n\n\u{1F449}Enter your original IRCTC username and password.\n\n\u{1F449}Train Ticket booking confirmation via Email, SMS, will be sent to you.\n\n\u{1F449}You can also check confirmed tickets in the My Trips option on our app/website.",
         createdAt: new Date(),
         user: BOT,
       };
-    }else {
+    } else {
       msg = {
         _id: Math.random().toString(36).substring(7),
         text,
@@ -235,7 +254,7 @@ const ChatBotScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "white", paddingBottom: "15px" }}
+      style={{ flex: 1, backgroundColor: "white", paddingBottom: 15 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 30}
     >
@@ -246,6 +265,7 @@ const ChatBotScreen = () => {
           onSend={(newMessages) => onSend(newMessages)}
           onQuickReply={(quickReply) => onQuickReply(quickReply)}
           user={{ _id: 1 }}
+          renderInputToolbar={renderInputToolbar}
         />
       </View>
     </KeyboardAvoidingView>
