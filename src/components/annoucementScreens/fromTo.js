@@ -71,7 +71,7 @@ export default function FromTo() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log(fromStation, toStation, selectedDate);
+    // console.log(fromStation, toStation, selectedDate);
     const listen = async () => {
       if (fromStation && toStation && selectedDate) {
         let data = await getTrainBetweenStation(fromStation, toStation, selectedDate);
@@ -91,9 +91,9 @@ export default function FromTo() {
         const outputTT = await getTranslation(inputTT, 'en', currentLanguage);
         // const outputTT = await getTranslation(inputTT, 'en', 'hi');
 
-        console.log('Output TT', outputTT);
+        // console.log('Output TT', outputTT);
         setTrainName(outputTT.split("/"));
-        console.log(trainName);
+        // console.log(trainName);
 
         setCardData(slicedData);
         // console.log(cardData);

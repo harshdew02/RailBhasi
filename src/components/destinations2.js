@@ -93,15 +93,15 @@ const DestinationCard = ({ cardData, trainName, navigation }) => {
 
       <View className="flex-row justify-between items-center">
         <View className="flex-row justify-between">
-          <Text style={{ fontSize: wp(2.8) }} className="text-white mr-4">
+          <Text style={{ fontSize: wp(2.8), width: wp(20) }} className="text-white mr-4">
             {/* Arr: 00.50 */}
             {`${PREDEFINED_LANGUAGE['departure'][lang]} : ${cardData.from_time}`}
           </Text>
-          <Text style={{ fontSize: wp(2.8) }} className="text-white mx-2">
+          <Text style={{ fontSize: wp(2.8), width: wp(20) }} className="text-white mx-2">
             {/* Duration: 02.10 */}
             {`${PREDEFINED_LANGUAGE['arrival'][lang]} : ${cardData.to_time} hours`}
           </Text>
-          <Text style={{ fontSize: wp(2.8) }} className="text-white ml-4">
+          <Text style={{ fontSize: wp(2.8), width: wp(20) }} className="text-white ml-4">
             {`${PREDEFINED_LANGUAGE['duration'][lang]} : ${cardData.travel_time} hours`}
           </Text>
         </View>
