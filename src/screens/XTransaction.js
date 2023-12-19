@@ -8,8 +8,10 @@ import { destinationData } from '../constants';
 import { useSelector } from 'react-redux';
 import { getTranslation } from '../components/ASRComponents/NMTv2';
 import { getLongitude } from '../components/Sensors/GPS';
-
-
+import { PREDEFINED_ANNOUNCEMENT } from '../constants/config';
+import Sound from "react-native-sound";
+import fs, { stat } from "react-native-fs";
+import { getAudio } from '../components/ASRComponents/TTS';
 
 
 const XTransaction = () => {
@@ -22,8 +24,8 @@ const XTransaction = () => {
   useEffect(() => {
 
     const listen = async () => {
-      console.log('GPS xt : ', await getLongitude());
-      const slicedData = destinationData.slice(0, destinationData.length);
+      // console.log('GPS xt : ', await getLongitude());
+      const slicedData = handleTime();
       let inputTT = '';
       slicedData.forEach((ele) => {
         inputTT += ele.train;
@@ -38,9 +40,72 @@ const XTransaction = () => {
       // console.log('outputTT xt ', outputTT);
       setDData(slicedData);
       setTrainName(outputTT.split("/"));
+      setTimeout(() => handleSound(slicedData), 2000);
     }
     listen();
   }, [currentLanguage])
+
+  const handleTime = () => {
+    let currentDate = new Date();
+    console.log('now : ', currentDate);
+    let time = currentDate.getHours() + ":" + currentDate.getMinutes();
+    const arrData = destinationData.filter((ele) => ele.arr >= time);
+    console.log('(xtrans) current time : ', time);
+    console.log('(xtrans) current time : ', arrData);
+    return arrData;
+  }
+
+  const handleSound = (sData) => {
+    let currentDate1 = new Date();
+    let currentDate2 = new Date();
+
+    console.log('handle sound ', sData);
+
+    sData.forEach(async (ele) => {
+      console.log(ele);
+      const [hour, min] = ele.arr.split(':');
+      currentDate2.setHours(hour);
+      currentDate2.setMinutes(min);
+
+      const timediff = Math.abs(currentDate2 - currentDate1);
+      console.log('diff ', timediff);
+      // <5 minutes
+      if (timediff < 300_000) {
+        // console.log('less than 5 min')
+        console.log('xtran ',)
+      }
+      // <30 minutes
+      if (timediff <= 1_800_000) {
+        console.log('less than 30 min')
+      }
+      else {
+        console.log('more than 30 min')
+        let inputTT = ele.from + '/' + ele.to + '/' + ele.train;
+        let outputTT = await getTranslation(inputTT, 'en', currentLanguage);
+        outputTT = outputTT.split("/")
+        console.log(outputTT);
+        console.log('xtran ', inputTT);
+        console.log('xtran ', PREDEFINED_ANNOUNCEMENT[currentLanguage]['arriving'].replace("(train_no)", ele.nos).replace("(origin)", outputTT[0]).replace("(destination)", outputTT[1]).replace("(train_name)", outputTT[2]).replace("(PF)", ele.platform));
+        inputTT = PREDEFINED_ANNOUNCEMENT[currentLanguage]['arriving'].replace("(train_no)", ele.nos).replace("(origin)", outputTT[0]).replace("(destination)", outputTT[1]).replace("(train_name)", outputTT[2]).replace("(PF)", ele.platform);
+        await getAudio(inputTT, currentLanguage, 'female');
+        
+
+        let sound = new Sound(
+          `${fs.CachesDirectoryPath}/output.wav`,
+          null,
+          error => {
+            if (error) console.log(error);
+            else {
+              sound.play(() => {
+                console.log('play !');
+              });
+            }
+          }
+        );
+      }
+    })
+
+  }
 
   return (
     <SafeAreaView>
