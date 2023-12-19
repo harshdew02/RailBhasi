@@ -77,8 +77,6 @@ const checkQuickReplies = {
 };
 
 const ChatBotScreen = () => {
-
-  
   const renderInputToolbar = (props) => (
     <InputToolbar
       {...props}
