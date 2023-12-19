@@ -1,10 +1,12 @@
 import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import TopBar from '../components/topBar'
 import { PREDEFINED_LANGUAGE } from '../constants/config';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import DropdownComponentLive from '../components/dropDrownLive';
 import { destinationData } from '../constants';
+import { useSelector } from 'react-redux';
+import { getTranslation } from '../components/ASRComponents/NMTv2';
 
 
 
@@ -12,10 +14,35 @@ import { destinationData } from '../constants';
 const XTransaction = () => {
 
   const [lang, setLang] = React.useState(null);
+  const [dData, setDData] = React.useState([]);
+  const [trainName, setTrainName] = React.useState([]);
+  const currentLanguage = useSelector(state => state.language.currentLanguage);
+
+  useEffect(() => {
+
+    const listen = async () => {
+      const slicedData = destinationData.slice(0, 5);
+      let inputTT = '';
+      slicedData.forEach((ele) => {
+        inputTT += ele.train;
+        inputTT += '/';
+      })
+
+      inputTT = inputTT.slice(0, inputTT.length - 1);
+      console.log('inputTT xt ', inputTT);
+
+      // language handling
+      const outputTT = await getTranslation(inputTT, 'en', currentLanguage);
+      console.log('outputTT xt ', outputTT);
+      setDData(slicedData);
+      setTrainName(outputTT.split("/"));
+    }
+    listen();
+  }, [currentLanguage])
 
   return (
     <SafeAreaView>
-
+      <TopBar heading={PREDEFINED_LANGUAGE["IVR"][lang]} />
       <DropdownComponentLive />
 
       <View className="flex-row justify-between py-2 bg-blue-900" style={{ justifyContent: 'center', height: hp(5) }}>
@@ -45,7 +72,7 @@ const XTransaction = () => {
       </View> */}
 
       <ScrollView>
-        {destinationData.map((cardData, idx) =>
+        {dData.map((cardData, idx) =>
           <View key={idx} style={{ flexDirection: 'row', marginLeft: 1, marginRight: 1 }}>
             <View style={{ width: wp(16), backgroundColor: 'lightyellow', height: hp(10), justifyContent: 'center', borderWidth: 1 }}>
               {/* <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>12633</Text> */}
@@ -53,7 +80,7 @@ const XTransaction = () => {
             </View>
             <View style={{ width: wp(48), backgroundColor: 'lightpink', height: hp(10), justifyContent: 'center', borderWidth: 1 }}>
               {/* <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>KANYAKUMARI EXP</Text> */}
-              <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>{cardData.train}</Text>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>{trainName[idx]}</Text>
             </View>
             <View style={{ width: wp(16), backgroundColor: 'lightblue', height: hp(10), justifyContent: 'center', borderWidth: 1 }}>
               {/* <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>11:20</Text> */}
@@ -65,8 +92,8 @@ const XTransaction = () => {
             <View style={{ width: wp(9), backgroundColor: 'lightgreen', height: hp(10), justifyContent: 'center', borderWidth: 1 }}>
               <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>{cardData.platform}</Text>
             </View>
-          </View>
-        )}
+          </View>)
+        }
       </ScrollView>
 
 
