@@ -80,8 +80,8 @@ export default function FromTo() {
         setLoading(true);
         setCardData('');
         let data = await getTrainBetweenStation(fromStation, toStation, selectedDate);
-        // console.log(data);
-        if (data === 'No direct trains found') {
+        console.log('(fromTo.js )',data);
+        if (data === 'No direct trains found' || data.length == 0) {
           setCardData("NO");
         }
         else {
