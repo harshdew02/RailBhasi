@@ -9,6 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import React from "react";
+import some from "../components/sounds/en.wav"
 import TopBar from "../components/topBar";
 import { PREDEFINED_LANGUAGE } from "../constants/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,6 +19,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import Sound from 'react-native-sound'
+
+
 
 const IVRScreen = () => {
   // const [customText, setCustomText] = React.useState('');
@@ -41,6 +45,7 @@ const IVRScreen = () => {
   //       break;
   //   }
   // };
+  const [sound, setSound] = React.useState(null);
   
   const navigation = useNavigation();
   React.useEffect(() => {
@@ -54,7 +59,15 @@ const IVRScreen = () => {
       }
     };
     fetchData();
+    setSound(new Sound("E:/Learn React/React-native/Production/RailBhasi/src/components/sounds/en.wav", Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('Error loading sound: ', error);
+      }
+    }))
   }, []);
+
+  
+  
   React.useEffect(() => {
     console.log("Language changed: ", lang);
   }, [lang]);
@@ -211,7 +224,15 @@ const IVRScreen = () => {
           </View>
         </View>
         <View className="flex-column items-center justify-center">
-        <TouchableOpacity style={{width: wp(17) , height: wp(17), borderRadius: 400, paddingTop: 18, paddingLeft:20 }} className="p-3 mx-2 bg-green-500" onPress={() => handleNumericInput('#')}>
+        <TouchableOpacity onPressIn={async ()=>{
+          await sound.play((success) => {
+            if (success) {
+              console.log('Sound played successfully');
+            } else {
+              console.log('Error playing sound');
+            }
+          });
+        }} style={{width: wp(17) , height: wp(17), borderRadius: 400, paddingTop: 18, paddingLeft:20 }} className="p-3 mx-2 bg-green-500" onPress={() => handleNumericInput('#')}>
                   <PhoneIcon size={35} color="#fff"/>
               </TouchableOpacity>
         </View>
