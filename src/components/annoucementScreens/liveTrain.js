@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PREDEFINED_LANGUAGE } from '../../constants/config';
 
 export default function LiveTrain() {
-  const [trainSchedule, setTrainSchedule] = useState(13029);
+  const [trainSchedule, setTrainSchedule] = useState([]);
   const [lang, setLang] = React.useState(null);
   React.useEffect(() => {
     const fetchData = async () => {
@@ -29,20 +29,22 @@ export default function LiveTrain() {
   React.useEffect(() => {
     console.log('Language changed: ', lang);
   }, [lang])
-  // React.useEffect(() => {
-  //   const getData = async () => {
-  //     // call getTrainSchedules
-  //     const data = await getTrainSchedules(selectedTrain);
-  //     const schedule = data.schedule;
-  //     console.log(schedule);
-  //     setselectedTrainSchedule();
-  //   }
-  //   getData();
-  // }, [selectedTrain])
 
-  // schedule handler
   const handleSchedule = async () => {
-    if (number) {
+    setTrainSchedule([]);
+    if (number.length) {
+
+      // time date 
+      // let currentDate = new Date();
+      // let cDay = currentDate.getDate()
+      // let cMonth = currentDate.getMonth() + 1
+      // let cYear = currentDate.getFullYear()
+      // let time = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+      // console.log(cDay);
+      // console.log(cMonth);
+      // console.log(cYear)
+      // console.log(time);
+      // time date 
       const data = await getTrainSchedules(number);
       setTrainSchedule(data.schedule);
       console.log(`(liveTrain.js) ${number} schedule `, trainSchedule);
@@ -90,53 +92,12 @@ export default function LiveTrain() {
       </View>
 
       {/* green */}
-      <Green />
-
-      {/* blue */}
       <ScrollView>
-        <TouchableOpacity pointerEvents='none' style={{ width: wp(100), height: wp(18) }} className="flex-row justify-between font-semibold bg-blue-200 items-center px-3" >
-          <View style={{ width: wp(24) }} className="flex-row items-center justify-between">
-            <Text className="font-medium text-[16px]">
-              07:02
-            </Text>
-            <ChevronDoubleDownIcon size={30} className="font-thin" color="#16247d" />
-          </View>
-          <View className="flex-col justify-between align-center">
-            <Text className="text-[#16247d] text-[16px] font-medium" >Durg Junction</Text>
-            <Text className="text-[14px] font-medium">(DURG)</Text>
-            <Text>{PREDEFINED_LANGUAGE['PF'][lang]} : </Text>
-          </View>
-          <Text className="font-medium text-[16px]" >
-            07:11
-          </Text>
-          <TouchableOpacity className="rounded-3xl p-2 bg-blue-600">
-            <SpeakerWaveIcon size={20} color="#fff" />
-          </TouchableOpacity>
-        </TouchableOpacity>
-      </ScrollView>
+        {/* <Green /> */}
+        {(trainSchedule) && trainSchedule.map((cardData, idx) => <Blue key={idx} cardData={cardData} />)}
 
-      {/* red */}
-      <View>
-        <TouchableOpacity pointerEvents='none' style={{ width: wp(100), height: wp(18) }} className="flex-row justify-between font-semibold bg-red-200 items-center px-3" >
-          <View style={{ width: wp(24) }} className="flex-row items-center justify-between">
-            <Text className="font-medium text-[16px]">
-              07:03
-            </Text>
-            <ChevronDoubleDownIcon size={30} className="font-thin" color="#16247d" />
-          </View>
-          <View className="flex-col justify-between align-center">
-            <Text className="text-[#16247d] text-[16px] font-medium" >Durg Junction</Text>
-            <Text className="text-[14px] font-medium">(DURG)</Text>
-            <Text>{PREDEFINED_LANGUAGE['PF'][lang]} : </Text>
-          </View>
-          <Text className="font-medium text-[16px]" >
-            07:11
-          </Text>
-          <TouchableOpacity className="rounded-3xl p-2 bg-red-600">
-            <SpeakerWaveIcon size={20} color="#fff" />
-          </TouchableOpacity>
-        </TouchableOpacity>
-      </View>
+        {/* <Red /> */}
+      </ScrollView>
 
     </SafeAreaView >
   )
@@ -184,6 +145,86 @@ const Green = () => {
         07:11
       </Text>
       <TouchableOpacity className="rounded-3xl p-2 bg-green-600">
+        <SpeakerWaveIcon size={20} color="#fff" />
+      </TouchableOpacity>
+    </TouchableOpacity>
+  </View>
+}
+
+const Blue = ({ cardData }) => {
+  const [lang, setLang] = React.useState(null);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedLang = await AsyncStorage.getItem('lang');
+        if (storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      } catch (error) {
+        console.error('Error: ', error);
+      }
+    }
+    fetchData();
+  }, [])
+  return <TouchableOpacity pointerEvents='none' style={{ width: wp(100), height: wp(18) }} className="flex-row justify-between font-semibold bg-blue-200 items-center px-3" >
+    <View style={{ width: wp(24) }} className="flex-row items-center justify-between">
+      <Text className="font-medium text-[16px]">
+        {/* 07:02 */}
+        {cardData.arrivalTime}
+      </Text>
+      <ChevronDoubleDownIcon size={30} className="font-thin" color="#16247d" />
+    </View>
+    <View className="flex-col justify-between align-center">
+      {/* <Text className="text-[#16247d] text-[16px] font-medium" >Durg Junction</Text> */}
+      <Text className="text-[#16247d] text-[16px] font-medium" >{cardData.stationName}</Text>
+      {/* <Text className="text-[14px] font-medium">(DURG)</Text> */}
+      <Text className="text-[14px] font-medium">{`(${cardData.stationCode})`}</Text>
+      <Text>{PREDEFINED_LANGUAGE['PF'][lang]} : {cardData.platform}</Text>
+    </View>
+    <Text className="font-medium text-[16px]" >
+      {/* 07:11 */}
+      {cardData.departureTime}
+    </Text>
+    <TouchableOpacity className="rounded-3xl p-2 bg-blue-600">
+      <SpeakerWaveIcon size={20} color="#fff" />
+    </TouchableOpacity>
+  </TouchableOpacity>
+}
+
+const Red = () => {
+  const [lang, setLang] = React.useState(null);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedLang = await AsyncStorage.getItem('lang');
+        if (storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      } catch (error) {
+        console.error('Error: ', error);
+      }
+    }
+    fetchData();
+  }, [])
+  return <View>
+    <TouchableOpacity pointerEvents='none' style={{ width: wp(100), height: wp(18) }} className="flex-row justify-between font-semibold bg-red-200 items-center px-3" >
+      <View style={{ width: wp(24) }} className="flex-row items-center justify-between">
+        <Text className="font-medium text-[16px]">
+          07:03
+        </Text>
+        <ChevronDoubleDownIcon size={30} className="font-thin" color="#16247d" />
+      </View>
+      <View className="flex-col justify-between align-center">
+        <Text className="text-[#16247d] text-[16px] font-medium" >Durg Junction</Text>
+        <Text className="text-[14px] font-medium">(DURG)</Text>
+        <Text>{PREDEFINED_LANGUAGE['PF'][lang]} : </Text>
+      </View>
+      <Text className="font-medium text-[16px]" >
+        07:11
+      </Text>
+      <TouchableOpacity className="rounded-3xl p-2 bg-red-600">
         <SpeakerWaveIcon size={20} color="#fff" />
       </TouchableOpacity>
     </TouchableOpacity>
