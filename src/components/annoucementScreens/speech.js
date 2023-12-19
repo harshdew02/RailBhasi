@@ -41,17 +41,18 @@ export default function Speech() {
   const [slang, setSlang] = React.useState("en");
   const [sample, setSample] = React.useState('16000');
   const [text, setText] = React.useState('');
+  const [isActive, setIsActive] = React.useState(false);
   // const [AudioRecord, setAudio]
   React.useEffect(() => {
     const options = {
-        sampleRate: 16000,
-        channels: 1,
-        bitsPerSample: 16,
-        wavFile: 'test.wav',
-      }
+      sampleRate: 16000,
+      channels: 1,
+      bitsPerSample: 16,
+      wavFile: 'test.wav',
+    }
     AudioRecord.init(options)
   }, [])
-  
+
   return (
     <SafeAreaView>
       <ScrollView >
@@ -60,19 +61,22 @@ export default function Speech() {
             <DropdownComponent setStation={setSlang} />
           </View>
           {/* <View className="flex-row justify-start mx-1" style={{ width: wp(30) }}> */}
-          <TouchableOpacity className="p-3 rounded-xl bg-blue-500" onPress={async () => {
+          <TouchableOpacity className={`p-3 rounded-xl ${isActive ? "bg-red-500" : "bg-blue-500"}`} disabled={isActive} onPress={async () => {
             //This section for recording the voice
             await start();
+            setIsActive(!isActive);
           }} mode='elevated' dark={true}>
             <MicrophoneIcon size={20} color="#fff" />
           </TouchableOpacity>
 
-          <TouchableOpacity className="p-3 rounded-xl bg-blue-500" onPress={async() => {
+          <TouchableOpacity className={`p-3 rounded-xl ${!isActive ? "bg-red-500" : "bg-blue-500"}`} disabled={!isActive} onPress={async () => {
             //This section is for stopping the recording voice
             if (slang == 'en')
               setText(await ASROutputE(await stop(), sample))
             else
               setText(await ASROutputO(await stop(), slang, sample))
+
+            setIsActive(!isActive);
           }} mode='elevated' dark={true}>
             {/* <Ionicons name="location" size={20} color="#fff"  /> */}
             <ArrowPathIcon size={20} color="#fff" />

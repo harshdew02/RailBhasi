@@ -58,3 +58,5 @@ import fs, { stat } from "react-native-fs";
 ```js
 import { getLongitude } from "../Sensors/GPS";
 ```
+
+keytool -genkey -v -keystore translationEngine.keystore -alias engine -keyalg RSA -keysize 2048 -validity 10000

@@ -41,6 +41,8 @@ export default function Combined() {
   const [gender, setGender] = React.useState('male');
   const [text, setText] = React.useState('');
   const [trans, setTrans] = React.useState('');
+  const [isActive, setIsActive] = React.useState(false);
+  const [isSpeakerActive, setIsSpeakerActive] = React.useState(true);
 
   const handleCurrnetSound = async () => {
     await getAudio(trans, flang, gender);
@@ -76,9 +78,11 @@ export default function Combined() {
               {/* From */}
               <DropdownComponent6 setFromStation={setSlang} />
             </View>
-            <TouchableOpacity className="p-3 ml-1 rounded-xl bg-blue-500" mode='elevated' onPress={
+            <TouchableOpacity className={`p-3 ml-2 rounded-xl ${isActive ? "bg-red-500" : "bg-blue-500"}`} disabled={isActive} mode='elevated' onPress={
               async () => {
+                setIsSpeakerActive(true);
                 await start();
+                setIsActive(!isActive);
               }
             } dark={true}>
 
@@ -91,7 +95,7 @@ export default function Combined() {
             <View className="mt-4" style={{ width: wp(80) }}>
               <DropdownComponent7 setToStation={setFlang} />
             </View>
-            <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" mode='elevated' onPress={async () => {
+            <TouchableOpacity disabled={!isActive} className={`p-3 ml-2 rounded-xl ${!isActive ? "bg-red-500" : "bg-blue-500"}`} mode='elevated' onPress={async () => {
               console.log('Console: ', slang, flang);
               // setText(null)
               // setTrans(null)
@@ -102,6 +106,8 @@ export default function Combined() {
                 setText(await ASROutputO(await stop(), slang, '16000'))
               console.log(text);
               setTrans(await getTranslation(text, slang, flang))
+              setIsActive(!isActive);
+              setIsSpeakerActive(false);
 
               console.log('done')
             }} dark={true}>
@@ -113,7 +119,7 @@ export default function Combined() {
             <DropdownComponent8 setToStation={setGender} />
           </View>
 
-          <TouchableOpacity className="p-3 mt-4 rounded-xl bg-blue-500" mode='elevated' onPress={() => {
+          <TouchableOpacity className={`p-3 mt-4 rounded-xl ${isSpeakerActive ? "bg-red-500" : "bg-blue-500" }`} mode='elevated' disabled={isSpeakerActive} onPress={() => {
             handleCurrnetSound();
           }} dark={true}>
             <Text className="text-white">Speaker</Text>
