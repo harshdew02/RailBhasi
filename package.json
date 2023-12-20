@@ -45,6 +45,7 @@
     "react-native-geocoding": "^0.5.0",
     "react-native-geolocation-service": "^5.3.1",
     "react-native-gesture-handler": "~2.12.0",
+    "react-native-get-sms-android": "^2.1.0",
     "react-native-gifted-chat": "^2.4.0",
     "react-native-heroicons": "^3.2.0",
     "react-native-html-parser": "^0.1.0",

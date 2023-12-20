@@ -8,9 +8,18 @@ import { ArrowDownCircleIcon, ChevronDoubleDownIcon, ChevronDownIcon, Magnifying
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PREDEFINED_LANGUAGE } from '../../constants/config';
+import { getTranslation } from '../ASRComponents/NMTv2';
+import Sound from "react-native-sound";
+import fs, { stat } from "react-native-fs";
+import { useSelector } from 'react-redux';
+import { getAudio } from '../ASRComponents/TTS';
+import SmsAndroid from 'react-native-get-sms-android';
 
 export default function LiveTrain() {
   const [trainSchedule, setTrainSchedule] = useState(null);
+  const [boarding, setBoarding] = useState();
+  const currentLanguage = useSelector(state => state.language.currentLanguage);
+  const [liveText, setLiveText] = useState("");
 
   const [lang, setLang] = React.useState(null);
   React.useEffect(() => {
@@ -31,30 +40,169 @@ export default function LiveTrain() {
     console.log('Language changed: ', lang);
   }, [lang])
 
-  const handleSchedule = async () => {
-    setTrainSchedule([]);
-    if (number.length) {
 
-      // time date 
-      // let currentDate = new Date();
-      // let cDay = currentDate.getDate()
-      // let cMonth = currentDate.getMonth() + 1
-      // let cYear = currentDate.getFullYear()
-      // let time = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
-      // console.log(cDay);
-      // console.log(cMonth);
-      // console.log(cYear)
-      // console.log(time);
-      // time date 
-      // const data = await getTrainSchedules(number);
-      const data = [{ "arrivalTime": null, "boardingDisabled": false, "dayCount": 1, "departureTime": "20:30", "distance": "0.0", "haltTime": null, "platform": "1", "speed": "0.0", "srNo": "1", "stationCode": "RJPB", "stationId": 850, "stationName": "Rajendra Nagar Terminal" }, { "arrivalTime": "20:42", "boardingDisabled": false, "dayCount": 1, "departureTime": "20:46", "distance": "7.3", "haltTime": "00:04", "platform": "1", "speed": "36.5", "srNo": "2", "stationCode": "PNC", "stationId": 331, "stationName": "Patna Saheb" }, { "arrivalTime": "20:53", "boardingDisabled": false, "dayCount": 1, "departureTime": "20:55", "distance": "19.2", "haltTime": "00:02", "platform": "2", "speed": "102.0", "srNo": "3", "stationCode": "FUT", "stationId": 596, "stationName": "Fatuha Junction" }, { "arrivalTime": "21:03", "boardingDisabled": false, "dayCount": 1, "departureTime": "21:05", "distance": "27.9", "haltTime": "00:02", "platform": "1", "speed": "65.3", "srNo": "4", "stationCode": "KOO", "stationId": 1154, "stationName": "Khusropur" }, { "arrivalTime": "21:21", "boardingDisabled": false, "dayCount": 1, "departureTime": "21:23", "distance": "42.8", "haltTime": "00:02", "platform": "1", "speed": "55.9", "srNo": "5", "stationCode": "BKP", "stationId": 595, "stationName": "Bakhtiyarpur Junction" }, { "arrivalTime": "21:33", "boardingDisabled": false, "dayCount": 1, "departureTime": "21:35", "distance": "60.8", "haltTime": "00:02", "platform": "1", "speed": "108.0", "srNo": "6", "stationCode": "BARH", "stationId": 594, "stationName": "Barh" }, { "arrivalTime": "22:10", "boardingDisabled": false, "dayCount": 1, "departureTime": "22:15", "distance": "86.6", "haltTime": "00:05", "platform": "1", "speed": "44.2", "srNo": "7", "stationCode": "MKA", "stationId": 330, "stationName": "Mokama" }, { "arrivalTime": "22:21", "boardingDisabled": false, "dayCount": 1, "departureTime": "22:23", "distance": "94.7", "haltTime": "00:02", "platform": "1", "speed": "81.0", "srNo": "8", "stationCode": "HTZ", "stationId": 593, "stationName": "Hathidah Junction" }, { "arrivalTime": "22:32", "boardingDisabled": false, "dayCount": 1, "departureTime": "22:34", "distance": "104.3", "haltTime": "00:02", "platform": "1", "speed": "64.0", "srNo": "9", "stationCode": "BRYA", "stationId": 592, "stationName": "Barhiya" }, { "arrivalTime": "22:48", "boardingDisabled": false, "dayCount": 1, "departureTime": "22:50", "distance": "119.5", "haltTime": "00:02", "platform": "2", "speed": "65.1", "srNo": "10", "stationCode": "LKR", "stationId": 591, "stationName": "Luckeesarai Junction" }, { "arrivalTime": "23:00", "boardingDisabled": false, "dayCount": 1, "departureTime": "23:05", "distance": "120.7", "haltTime": "00:05", "platform": "5", "speed": "7.2", "srNo": "11", "stationCode": "KIUL", "stationId": 329, "stationName": "Kiul Junction" }, { "arrivalTime": "23:26", "boardingDisabled": false, "dayCount": 1, "departureTime": "23:28", "distance": "148.1", "haltTime": "00:02", "platform": "2", "speed": "78.3", "srNo": "12", "stationCode": "JMU", "stationId": 589, "stationName": "Jamui" }, { "arrivalTime": "00:35", "boardingDisabled": false, "dayCount": 2, "departureTime": "00:40", "distance": "174.2", "haltTime": "00:05", "platform": "2", "speed": "23.4", "srNo": "13", "stationCode": "JAJ", "stationId": 328, "stationName": "Jhajha" }, { "arrivalTime": "01:12", "boardingDisabled": false, "dayCount": 2, "departureTime": "01:17", "distance": "218.2", "haltTime": "00:05", "platform": "1", "speed": "82.5", "srNo": "14", "stationCode": "JSME", "stationId": 327, "stationName": "Jasidih Junction" }, { "arrivalTime": "01:42", "boardingDisabled": false, "dayCount": 2, "departureTime": "01:46", "distance": "247.2", "haltTime": "00:04", "platform": "3", "speed": "69.6", "srNo": "15", "stationCode": "MDP", "stationId": 326, "stationName": "Madhupur Junction" }, { "arrivalTime": "02:33", "boardingDisabled": false, "dayCount": 2, "departureTime": "02:35", "distance": "303.6", "haltTime": "00:02", "platform": "2", "speed": "72.0", "srNo": "16", "stationCode": "CRJ", "stationId": 583, "stationName": "Chittaranjan" }, { "arrivalTime": "03:25", "boardingDisabled": false, "dayCount": 2, "departureTime": "03:45", "distance": "328.8", "haltTime": "00:20", "platform": "5", "speed": "30.2", "srNo": "17", "stationCode": "ASN", "stationId": 7, "stationName": "Asansol Junction" }, { "arrivalTime": "04:33", "boardingDisabled": false, "dayCount": 2, "departureTime": "04:35", "distance": "365.9", "haltTime": "00:02", "platform": "2,3", "speed": "46.4", "srNo": "18", "stationCode": "JOC", "stationId": 1462, "stationName": "Joychandi Pahar Junction" }, { "arrivalTime": "04:54", "boardingDisabled": false, "dayCount": 2, "departureTime": "04:56", "distance": "379.2", "haltTime": "00:02", "platform": null, "speed": "42.0", "srNo": "19", "stationCode": "ANR", "stationId": 1531, "stationName": "Anara" }, { "arrivalTime": "05:25", "boardingDisabled": false, "dayCount": 2, "departureTime": "05:30", "distance": "404.9", "haltTime": "00:05", "platform": "3", "speed": "53.2", "srNo": "20", "stationCode": "PRR", "stationId": 1463, "stationName": "Purulia Junction" }, { "arrivalTime": "05:58", "boardingDisabled": false, "dayCount": 2, "departureTime": "06:00", "distance": "436.7", "haltTime": "00:02", "platform": "1", "speed": "68.1", "srNo": "21", "stationCode": "BBM", "stationId": 1530, "stationName": "Barabhum" }, { "arrivalTime": "06:57", "boardingDisabled": false, "dayCount": 2, "departureTime": "06:58", "distance": "483.2", "haltTime": "00:01", "platform": "3", "speed": "48.9", "srNo": "22", "stationCode": "GMH", "stationId": 1583, "stationName": "Gamharia Junction" }, { "arrivalTime": "07:35", "boardingDisabled": false, "dayCount": 2, "departureTime": "08:05", "distance": "493.9", "haltTime": "00:30", "platform": "2,4", "speed": "17.4", "srNo": "23", "stationCode": "TATA", "stationId": 168, "stationName": "Tatanagar Junction" }, { "arrivalTime": "08:27", "boardingDisabled": false, "dayCount": 2, "departureTime": "08:28", "distance": "520.6", "haltTime": "00:01", "platform": "2", "speed": "72.8", "srNo": "24", "stationCode": "SINI", "stationId": 2033, "stationName": "Sini Junction" }, { "arrivalTime": "09:00", "boardingDisabled": false, "dayCount": 2, "departureTime": "09:05", "distance": "556.0", "haltTime": "00:05", "platform": "1", "speed": "66.4", "srNo": "25", "stationCode": "CKP", "stationId": 169, "stationName": "Chakradharpur" }, { "arrivalTime": "09:55", "boardingDisabled": false, "dayCount": 2, "departureTime": "09:57", "distance": "617.2", "haltTime": "00:02", "platform": "1", "speed": "73.4", "srNo": "26", "stationCode": "MOU", "stationId": 2029, "stationName": "Manoharpur" }, { "arrivalTime": "10:35", "boardingDisabled": false, "dayCount": 2, "departureTime": "10:50", "distance": "657.0", "haltTime": "00:15", "platform": "1", "speed": "62.8", "srNo": "27", "stationCode": "ROU", "stationId": 170, "stationName": "Rourkela Junction" }, { "arrivalTime": "11:16", "boardingDisabled": false, "dayCount": 2, "departureTime": "11:17", "distance": "686.9", "haltTime": "00:01", "platform": "1", "speed": "69.0", "srNo": "28", "stationCode": "GP", "stationId": 171, "stationName": "Rajgangpur" }, { "arrivalTime": "11:45", "boardingDisabled": false, "dayCount": 2, "departureTime": "11:47", "distance": "721.7", "haltTime": "00:02", "platform": null, "speed": "74.6", "srNo": "29", "stationCode": "BMB", "stationId": 172, "stationName": "Bamra" }, { "arrivalTime": "12:02", "boardingDisabled": false, "dayCount": 2, "departureTime": "12:04", "distance": "737.4", "haltTime": "00:02", "platform": null, "speed": "62.8", "srNo": "30", "stationCode": "BEH", "stationId": 2037, "stationName": "Bagdehi" }, { "arrivalTime": "13:10", "boardingDisabled": false, "dayCount": 2, "departureTime": "13:15", "distance": "758.2", "haltTime": "00:05", "platform": null, "speed": "18.9", "srNo": "31", "stationCode": "JSG", "stationId": 173, "stationName": "Jharsuguda Junction" }, { "arrivalTime": "13:28", "boardingDisabled": false, "dayCount": 2, "departureTime": "13:30", "distance": "769.8", "haltTime": "00:02", "platform": null, "speed": "53.5", "srNo": "32", "stationCode": "BRJN", "stationId": 174, "stationName": "Brajrajnagar" }, { "arrivalTime": "14:13", "boardingDisabled": false, "dayCount": 2, "departureTime": "14:18", "distance": "829.8", "haltTime": "00:05", "platform": "2", "speed": "83.7", "srNo": "33", "stationCode": "RIG", "stationId": 176, "stationName": "Raigarh" }, { "arrivalTime": "14:41", "boardingDisabled": false, "dayCount": 2, "departureTime": "14:43", "distance": "863.7", "haltTime": "00:02", "platform": null, "speed": "88.4", "srNo": "34", "stationCode": "KHS", "stationId": 177, "stationName": "Kharsia" }, { "arrivalTime": "14:56", "boardingDisabled": false, "dayCount": 2, "departureTime": "14:58", "distance": "879.2", "haltTime": "00:02", "platform": null, "speed": "71.5", "srNo": "35", "stationCode": "SKT", "stationId": 2013, "stationName": "Sakti" }, { "arrivalTime": "15:22", "boardingDisabled": false, "dayCount": 2, "departureTime": "15:27", "distance": "909.6", "haltTime": "00:05", "platform": null, "speed": "76.0", "srNo": "36", "stationCode": "CPH", "stationId": 179, "stationName": "Champa Junction" }, { "arrivalTime": "15:45", "boardingDisabled": false, "dayCount": 2, "departureTime": "15:47", "distance": "935.3", "haltTime": "00:02", "platform": null, "speed": "85.7", "srNo": "37", "stationCode": "AKT", "stationId": 181, "stationName": "Akaltara" }, { "arrivalTime": "17:35", "boardingDisabled": false, "dayCount": 2, "departureTime": "17:50", "distance": "962.1", "haltTime": "00:15", "platform": "4", "speed": "14.9", "srNo": "38", "stationCode": "BSP", "stationId": 182, "stationName": "Bilaspur Junction" }, { "arrivalTime": "18:28", "boardingDisabled": false, "dayCount": 2, "departureTime": "18:30", "distance": "1008.8", "haltTime": "00:02", "platform": null, "speed": "73.7", "srNo": "39", "stationCode": "BYT", "stationId": 183, "stationName": "Bhatapara" }, { "arrivalTime": "18:51", "boardingDisabled": false, "dayCount": 2, "departureTime": "18:53", "distance": "1034.9", "haltTime": "00:02", "platform": null, "speed": "74.6", "srNo": "40", "stationCode": "TLD", "stationId": 184, "stationName": "Tilda Neora" }, { "arrivalTime": "19:35", "boardingDisabled": false, "dayCount": 2, "departureTime": "19:40", "distance": "1073.0", "haltTime": "00:05", "platform": "1", "speed": "54.4", "srNo": "41", "stationCode": "R", "stationId": 185, "stationName": "Raipur Junction" }, { "arrivalTime": "20:06", "boardingDisabled": false, "dayCount": 2, "departureTime": "20:08", "distance": "1101.1", "haltTime": "00:02", "platform": "2", "speed": "64.8", "srNo": "42", "stationCode": "BPHB", "stationId": 186, "stationName": "Bhilai Power House" }, { "arrivalTime": "20:40", "boardingDisabled": false, "dayCount": 2, "departureTime": null, "distance": "1110.0", "haltTime": null, "platform": "1", "speed": "16.7", "srNo": "43", "stationCode": "DURG", "stationId": 187, "stationName": "Durg Junction" }];
+
+  const handleSchedule = async () => {
+    if (number.length) {
+      let data = [
+        {
+          "srNo": "1",
+          "stationId": 35,
+          "stationName": "MGR Chennai Central",
+          "stationCode": "MAS",
+          "arrivalTime": null,
+          "departureTime": "07:10",
+          "distance": "0.0",
+          "haltTime": null,
+          "dayCount": 1,
+          "platform": "2A",
+          "boardingDisabled": false,
+          "speed": "0.0"
+        },
+        {
+          "srNo": "2",
+          "stationId": 36,
+          "stationName": "Katpadi Junction",
+          "stationCode": "KPD",
+          "arrivalTime": "08:48",
+          "departureTime": "08:50",
+          "distance": "129.6",
+          "haltTime": "00:02",
+          "dayCount": 1,
+          "platform": "1",
+          "boardingDisabled": false,
+          "speed": "79.3"
+        },
+        {
+          "srNo": "3",
+          "stationId": 37,
+          "stationName": "Jolarpettai Junction",
+          "stationCode": "JTJ",
+          "arrivalTime": "09:58",
+          "departureTime": "10:00",
+          "distance": "214.1",
+          "haltTime": "00:02",
+          "dayCount": 1,
+          "platform": "1",
+          "boardingDisabled": false,
+          "speed": "74.6"
+        },
+        {
+          "srNo": "4",
+          "stationId": 38,
+          "stationName": "Salem Junction",
+          "stationCode": "SA",
+          "arrivalTime": "11:28",
+          "departureTime": "11:30",
+          "distance": "334.5",
+          "haltTime": "00:02",
+          "dayCount": 1,
+          "platform": "1",
+          "boardingDisabled": false,
+          "speed": "82.1"
+        },
+        {
+          "srNo": "5",
+          "stationId": 39,
+          "stationName": "Erode Junction",
+          "stationCode": "ED",
+          "arrivalTime": "12:22",
+          "departureTime": "12:25",
+          "distance": "394.2",
+          "haltTime": "00:03",
+          "dayCount": 1,
+          "platform": "2",
+          "boardingDisabled": false,
+          "speed": "68.9"
+        },
+        {
+          "srNo": "6",
+          "stationId": 40,
+          "stationName": "Tiruppur",
+          "stationCode": "TUP",
+          "arrivalTime": "13:08",
+          "departureTime": "13:10",
+          "distance": "444.5",
+          "haltTime": "00:02",
+          "dayCount": 1,
+          "platform": "1",
+          "boardingDisabled": false,
+          "speed": "70.2"
+        },
+        {
+          "srNo": "7",
+          "stationId": 41,
+          "stationName": "Coimbatore Junction",
+          "stationCode": "CBE",
+          "arrivalTime": "14:15",
+          "departureTime": null,
+          "distance": "495.0",
+          "haltTime": null,
+          "dayCount": 1,
+          "platform": "4",
+          "boardingDisabled": false,
+          "speed": "46.6"
+        }
+      ]
       setTrainSchedule(null);
       setTimeout(() => {
-        setTrainSchedule(data);
-
-      }, 1000)
+        // let currentDate = new Date();
+        // let time = '0' + currentDate.getHours() + ":" + currentDate.getMinutes();
+        let time = '09:00';
+        console.log('now : ', time);
+        // setTrainSchedule(data.filter((ele) => ele.arrivalTime >= time));
+        const newData = data.filter(ele => {
+          // console.log(ele.arrivalTime, ' ', time, ' ', time >= ele.arrivalTime);
+          return ele.arrivalTime >= time
+        });
+        // console.log('newData ', newData)
+        setTrainSchedule(newData);
+      }, 100)
       // console.log(`(liveTrain.js) ${number} schedule `, trainSchedule);
     }
+  }
+
+
+  const handleAnnouncement = async () => {
+    const message = [
+      "Attention dear passenger! Train number 12243 MAS CBE SHATABDI Express booked under mobile number 9399435543 is scheduled to arrive at the Salem Junction on 27th December 7:40 AM at platform number 5 and will reach Tiruppur Junction on 21st December 18:00.Your seat number is 22 in the B3 coach of the train.",
+      "Attention dear passenger! Train number 12243 MAS CBE SHATABDI Express booked under mobile number 9399435543 scheduled to depart from Salem Junction on 27th December at 07:10 and going to Tiruppur junction via Erode Junction has been delayed by 2 hours 30 minutes. The inconvenience caused is highly regretted.",
+      "Attention dear passenger! Train number 12243 MAS CBE SHATABDI Express booked under mobile number 9399435543 departed from Salem Junction on 27th December at 7:40 AM and going to Tiruppur junction via Salem, Erode has the next stoppage as Tiruppur Junction which is 20 KM ahead with a halt of 5minutes.",
+    ]
+
+    let rndIdx = Math.abs(Math.floor(Math.random() * 3));
+    let inputTT = await getTranslation(message[rndIdx], 'en', currentLanguage);
+    const sendm = () => {
+      SmsAndroid.autoSend(
+        '9399435543',
+        inputTT,
+        (fail) => {
+          console.log('Failed with this error: ' + fail);
+        },
+        (success) => {
+          console.log('SMS sent successfully');
+        },
+      );
+    }
+    sendm();
+    console.log(inputTT)
+    await getAudio(inputTT, currentLanguage, 'female');
+    setLiveText(inputTT);
+
+    let sound = new Sound(
+      `${fs.CachesDirectoryPath}/output.wav`,
+      null,
+      error => {
+        if (error) console.log(error);
+        else {
+          sound.play(() => {
+            console.log('play !');
+            setLiveText('');
+          });
+        }
+      }
+    );
+
   }
   // For Search Bar
   const [number, onChangeNumber] = React.useState('');
@@ -70,6 +218,7 @@ export default function LiveTrain() {
           style={styles.input}
           onChangeText={onChangeNumber}
           value={number}
+
           placeholder={PREDEFINED_LANGUAGE['give_train_number'][lang]}
           keyboardType="numeric"
         />
@@ -85,12 +234,22 @@ export default function LiveTrain() {
 
         {/* Refresh */}
         <TouchableOpacity className="p-3 rounded-xl ml-2 bg-blue-500" onPress={() => {
-          setLang('mr');
+
         }} mode='elevated' dark={true}>
           <ArrowPathIcon size={20} color="#fff" />
         </TouchableOpacity>
       </View>
-
+      <View className="flex-row">
+        <ScrollView className="border-2 border-black h-44 m-4" style={{ width: '70%' }}><Text>{liveText}</Text></ScrollView>
+        <View className="flex-row items-center justify-center mr-4">
+          {/* <TouchableOpacity
+            onPress={() => {}}
+            className="rounded-3xl p-2 flex-row justify-center items-center bg-blue-600 w-12 h-12"
+          >
+            <SpeakerWaveIcon size={20} color="#fff" />
+          </TouchableOpacity> */}
+        </View>
+      </View>
       <View className="flex-row justify-between py-2 bg-blue-900">
         <Text className="text-white ml-3">{PREDEFINED_LANGUAGE['arrival'][lang]}</Text>
         <Text className="text-white" >{PREDEFINED_LANGUAGE['station'][lang]}</Text>
@@ -98,15 +257,15 @@ export default function LiveTrain() {
       </View>
 
       {/* green */}
-      {trainSchedule && <Green cardData={trainSchedule[0]} />}
+      {trainSchedule && <Green cardData={trainSchedule[0]} handleAnnouncement={handleAnnouncement} />}
       <ScrollView>
         {(trainSchedule) && trainSchedule.map((cardData, idx) => {
           if (idx > 0 && idx < trainSchedule.length - 1)
-            return <Blue key={idx} cardData={cardData} />
+            return <Blue key={idx} cardData={cardData} handleAnnouncement={handleAnnouncement} />
         })}
 
       </ScrollView>
-      {trainSchedule && <Red cardData={trainSchedule[trainSchedule.length - 1]} />}
+      {trainSchedule && <Red cardData={trainSchedule[trainSchedule.length - 1]} handleAnnouncement={handleAnnouncement} />}
 
     </SafeAreaView >
   )
@@ -121,7 +280,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Green = ({ cardData }) => {
+const Green = ({ cardData, handleAnnouncement}) => {
   const [lang, setLang] = React.useState(null);
   React.useEffect(() => {
     const fetchData = async () => {
@@ -154,16 +313,14 @@ const Green = ({ cardData }) => {
       <Text className="font-medium text-[16px]" >
         {cardData.departureTime}
       </Text>
-      <TouchableOpacity className="rounded-3xl p-2 bg-green-600" onPress={() => {
-        console.log('click');
-      }}>
+      <TouchableOpacity className="rounded-3xl p-2 bg-green-600" onPress={handleAnnouncement}>
         <SpeakerWaveIcon size={20} color="#fff" />
       </TouchableOpacity>
     </TouchableOpacity>
   </View>
 }
 
-const Blue = ({ cardData }) => {
+const Blue = ({ cardData, handleAnnouncement }) => {
   const [lang, setLang] = React.useState(null);
   React.useEffect(() => {
     const fetchData = async () => {
@@ -199,12 +356,12 @@ const Blue = ({ cardData }) => {
       {cardData.departureTime}
     </Text>
     <TouchableOpacity className="rounded-3xl p-2 bg-blue-600">
-      <SpeakerWaveIcon size={20} color="#fff" />
+      <SpeakerWaveIcon size={20} color="#fff" onPress={handleAnnouncement}/>
     </TouchableOpacity>
   </TouchableOpacity>
 }
 
-const Red = ({ cardData }) => {
+const Red = ({ cardData, handleAnnouncement }) => {
   const [lang, setLang] = React.useState(null);
   React.useEffect(() => {
     const fetchData = async () => {
@@ -237,7 +394,7 @@ const Red = ({ cardData }) => {
         {cardData.departureTime}
       </Text>
       <TouchableOpacity className="rounded-3xl p-2 bg-red-600">
-        <SpeakerWaveIcon size={20} color="#fff" />
+        <SpeakerWaveIcon size={20} color="#fff" onPress={handleAnnouncement}/>
       </TouchableOpacity>
     </TouchableOpacity>
   </View>
