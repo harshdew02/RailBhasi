@@ -3,6 +3,7 @@ import {
   Pressable,
   ScrollView,
   View,
+  Text,
   TouchableOpacity,
   Button,
   SafeAreaView,
@@ -11,22 +12,17 @@ import {
 } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation, useRoute } from "@react-navigation/native";
-import DatePicker from "react-native-date-ranges";
 import DropdownComponent2 from '../dropDown2';
 import DropdownComponent3 from '../dropDown3';
-import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon, CalendarDaysIcon } from 'react-native-heroicons/outline';
-import { getTrainBetweenStation } from '../Information/ERail';
-import Destinations2 from '../destinations2';
+import { MicrophoneIcon, MapPinIcon } from 'react-native-heroicons/outline';
+import { getTranslation } from '../ASRComponents/NMTv2';
 
 
 export default function Translation() {
 
   const [fromStation, setFromStation] = React.useState("");
   const [toStation, setToStation] = React.useState("");
-  const [selectedDate, setDate] = React.useState();
-  const [lang, setLang] = React.useState('en');
-  const [station, setStation] = React.useState("");
-
+  const [trans, setTrans] = React.useState("");
   const [number, onChangeNumber] = React.useState('');
 
   return (
@@ -39,7 +35,10 @@ export default function Translation() {
               {/* From */}
               <DropdownComponent2 setFromStation={setFromStation} />
             </View>
-            <TouchableOpacity className="p-3 ml-1 rounded-xl bg-blue-500" mode='elevated' dark={true}>
+            <TouchableOpacity onPress={async ()=>{
+              setTrans(await getTranslation(number, fromStation, toStation ))
+              // console.log(fromStation, toStation, number);
+            }} className="p-3 ml-1 rounded-xl bg-blue-500" mode='elevated' dark={true}>
               <MapPinIcon size={20} color="#fff" />
             </TouchableOpacity>
           </View>
@@ -49,7 +48,7 @@ export default function Translation() {
             style={styles.input}
             onChangeText={onChangeNumber}
             value={number}
-            placeholder="Give Train Number"
+            placeholder="Write any text here"
           />
 
           {/* To */}
@@ -57,19 +56,28 @@ export default function Translation() {
             <View className="mt-4" style={{ width: wp(80) }}>
               <DropdownComponent3 setToStation={setToStation} />
             </View>
-            <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" mode='elevated' dark={true}>
+            {/* <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" mode='elevated' dark={true}>
               <MicrophoneIcon size={20} color="#fff" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
-
-          <TextInput
-
+          <Text
+          selectable={true}
+          multiline={true}
+          showSoftInputOnFocus={false}
+          className="rounded-lg"
+          style={styles.output}
+          onChangeText={setTrans}
+          value={trans}
+          placeholder="Output text is here"
+        >{trans}</Text>
+          {/* <TextInput
+            showSoftInputOnFocus={false}
             className="rounded-lg"
             style={styles.input}
-            onChangeText={onChangeNumber}
-            value={number}
+            onChangeText={setTrans}
+            value={trans}
             placeholder="Give Train Number"
-          />
+          /> */}
 
         </View>
       </ScrollView>
@@ -79,6 +87,15 @@ export default function Translation() {
 
 
 const styles = StyleSheet.create({
+  output:{
+    height: hp(30),
+    marginTop: wp(10),
+    overflow: 'visible',
+    width: wp(80),
+    borderWidth: 1,
+    padding: 15,
+    fontSize: wp(5),
+  },
   input: {
     height: hp(20),
     marginTop: wp(2),

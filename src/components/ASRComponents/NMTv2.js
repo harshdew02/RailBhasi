@@ -54,6 +54,7 @@ export const getTranslation = async (inputString, sLang, tLang) => {
     })
     .then(response => {
       let res = JSON.parse(response);
+      // console.log(res);
       return res["output"][0]["target"];
     })
     .catch(error => console.log("error", error));

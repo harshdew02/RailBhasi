@@ -1,34 +1,74 @@
 import React, { useEffect } from 'react'
 import {
-  Pressable,
   ScrollView,
   View,
   TouchableOpacity,
-  Button,
   Text,
   SafeAreaView,
-  TextInput,
   StyleSheet
 } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { useNavigation, useRoute } from "@react-navigation/native";
-import DatePicker from "react-native-date-ranges";
 import DropdownComponent6 from '../dropDown6';
 import DropdownComponent7 from '../dropDown7';
 import DropdownComponent8 from '../dropDown8';
-import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon, CalendarDaysIcon } from 'react-native-heroicons/outline';
-import { getTrainBetweenStation } from '../Information/ERail';
-import Destinations2 from '../destinations2';
+import { MicrophoneIcon, MapPinIcon } from 'react-native-heroicons/outline';
+import AudioRecord from 'react-native-audio-record';
+import { ASROutputE } from '../ASRComponents/ASRWhisper';
+import { ASROutputO } from '../ASRComponents/ASRConformer';
+import { getTranslation } from '../ASRComponents/NMTv2';
+import { getAudio } from '../ASRComponents/TTS';
+import Sound from 'react-native-sound'
+import fs from 'react-native-fs'
+
+const start = async () => {
+  console.log('start record')
+  // this.setState({ audioFile: '', recording: true, loaded: false })
+  AudioRecord.start()
+}
+
+const stop = async () => {
+  // if (!this.state.recording) return
+  console.log('stop record')
+  let audioFile = await AudioRecord.stop()
+  let baseAudio = await fs.readFile(audioFile, 'base64')
+  // console.log(baseAudio);
+  return baseAudio;
+}
 
 export default function Combined() {
-  const [fromStation, setFromStation] = React.useState("");
-  const [toStation, setToStation] = React.useState("");
-  const [selectedDate, setDate] = React.useState();
-  const [lang, setLang] = React.useState('en');
-  const [station, setStation] = React.useState("");
+  const [slang, setSlang] = React.useState("en");
+  const [flang, setFlang] = React.useState("en");
+  const [gender, setGender] = React.useState('male');
+  const [text, setText] = React.useState('');
+  const [trans, setTrans] = React.useState('');
+  const [isActive, setIsActive] = React.useState(false);
+  const [isSpeakerActive, setIsSpeakerActive] = React.useState(true);
 
-  const [number, onChangeNumber] = React.useState('');
+  const handleCurrnetSound = async () => {
+    await getAudio(trans, flang, gender);
+    let sound = new Sound(
+      `${fs.CachesDirectoryPath}/output.wav`,
+      null,
+      error => {
+        if (error) console.log(error);
+        else {
+          sound.play(() => {
+            console.log('Sound played')
+          });
+        }
+      }
+    );
+  };
 
+  React.useEffect(() => {
+    const options = {
+      sampleRate: 16000,
+      channels: 1,
+      bitsPerSample: 16,
+      wavFile: 'test.wav',
+    }
+    AudioRecord.init(options)
+  }, [])
   return (
     <SafeAreaView>
       <ScrollView>
@@ -36,28 +76,52 @@ export default function Combined() {
           <View className="flex-row items-center mx-2 mt-1 justify-between">
             <View style={{ width: wp(80) }}>
               {/* From */}
-              <DropdownComponent6 setFromStation={setFromStation} />
+              <DropdownComponent6 setFromStation={setSlang} />
             </View>
-            <TouchableOpacity className="p-3 ml-1 rounded-xl bg-blue-500" mode='elevated' dark={true}>
-              <MapPinIcon size={20} color="#fff" />
+            <TouchableOpacity className={`p-3 ml-2 rounded-xl ${isActive ? "bg-red-500" : "bg-blue-500"}`} disabled={isActive} mode='elevated' onPress={
+              async () => {
+                setIsSpeakerActive(true);
+                await start();
+                setIsActive(!isActive);
+              }
+            } dark={true}>
+
+              <MicrophoneIcon size={20} color="#fff" />
             </TouchableOpacity>
           </View>
 
           {/* To */}
           <View className="flex-row items-center mx-4 justify-between">
             <View className="mt-4" style={{ width: wp(80) }}>
-              <DropdownComponent7 setToStation={setToStation} />
+              <DropdownComponent7 setToStation={setFlang} />
             </View>
-            <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" mode='elevated' dark={true}>
-              <MicrophoneIcon size={20} color="#fff" />
+            <TouchableOpacity disabled={!isActive} className={`p-3 ml-2 rounded-xl ${!isActive ? "bg-red-500" : "bg-blue-500"}`} mode='elevated' onPress={async () => {
+              console.log('Console: ', slang, flang);
+              // setText(null)
+              // setTrans(null)
+              //This section is for stopping the recording voice
+              if (slang == 'en')
+                setText(await ASROutputE(await stop(), '16000'))
+              else
+                setText(await ASROutputO(await stop(), slang, '16000'))
+              console.log(text);
+              setTrans(await getTranslation(text, slang, flang))
+              setIsActive(!isActive);
+              setIsSpeakerActive(false);
+
+              console.log('done')
+            }} dark={true}>
+              <MapPinIcon size={20} color="#fff" />
             </TouchableOpacity>
           </View>
 
           <View className="mt-4" style={{ width: wp(80) }}>
-            <DropdownComponent8 setToStation={setToStation} />
+            <DropdownComponent8 setToStation={setGender} />
           </View>
 
-          <TouchableOpacity className="p-3 mt-4 rounded-xl bg-blue-500" mode='elevated' dark={true}>
+          <TouchableOpacity className={`p-3 mt-4 rounded-xl ${isSpeakerActive ? "bg-red-500" : "bg-blue-500" }`} mode='elevated' disabled={isSpeakerActive} onPress={() => {
+            handleCurrnetSound();
+          }} dark={true}>
             <Text className="text-white">Speaker</Text>
           </TouchableOpacity>
 

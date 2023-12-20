@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-
+import { langSTS } from "../constants";
 import { stationListEN } from "../constants";
 import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
@@ -32,12 +32,12 @@ const DropdownComponent7 = ({ setToStation }) => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={stationListEN}
+            data={langSTS}
             search
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder="Select item"
+            placeholder="Select language"
             searchPlaceholder="Search..."
             value={value}
             onChange={(item) => {

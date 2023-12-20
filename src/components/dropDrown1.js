@@ -2,40 +2,20 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
-import { stationListEN } from "../constants";
+// import { stationListEN } from "../constants";
+import {sampleRate} from "../constants"
 import { CheckIcon } from "react-native-heroicons/solid";
-import { placeholder } from "@babel/types";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 
 
 const DropdownComponent1 = ({ setStation }) => {
   const [value, setValue] = useState(null);
 
-  const url =
-    `https://api.railwayapi.site/api/v1/trains/12834`;
-  const options = {
-    method: "GET",
-  };
-
-  try {
-    fetch(url, options).then((result) => {
-      // console.log(result);
-    });
-  } catch (error) {
-    // console.error(error);
-  }
-
   const renderItem = (item) => {
     return (
       <View style={styles.item}>
         <Text style={styles.textItem}>{item.label}</Text>
         {item.value === value && (
-          // <AntDesign
-          //   style={styles.icon}
-          //   color="black"
-          //   name="Safety"
-          //   size={20}
-          // />
           <CheckIcon
             style={styles.icon}
             color="black"
@@ -56,12 +36,12 @@ const DropdownComponent1 = ({ setStation }) => {
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
-      data={stationListEN}
+      data={sampleRate}
       search
       maxHeight={300}
       labelField="label"
       valueField="value"
-      placeholder="Select item"
+      placeholder="Choose sample rate..."
       searchPlaceholder="Search..."
       value={value}
       onChange={(item) => {

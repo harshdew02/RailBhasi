@@ -33,14 +33,18 @@ export const ASROutputO = (asrInput, slanguage, sampleRate) => {
       redirect: "follow",
     };
 
-    fetch(
+    const output = fetch(
       "https://demo-api.models.ai4bharat.org/inference/asr/conformer",
       requestOptions
     )
       .then(response => response.text())
       .then(result => {
         var apiResponse = JSON.parse(result);
-        console.log(apiResponse.output[0].source);
+        // console.log(apiResponse.output[0].source)
+        return apiResponse.output[0].source;
+        // console.log(apiResponse.output[0].source);
       })
       .catch(error => console.log("error", error));
+
+      return output;
   }

@@ -5,9 +5,10 @@ import { Dropdown } from "react-native-element-dropdown";
 import { stationListEN } from "../constants";
 import { CheckIcon } from "react-native-heroicons/solid";
 import { placeholder } from "@babel/types";
+import { langSTS } from "../constants";
 import { MagnifyingGlassIcon, MapPinIcon } from "react-native-heroicons/outline";
 
-const DropdownComponent6 = ({ setToStation }) => {
+const DropdownComponent6 = ({ setFromStation }) => {
     const [value, setValue] = useState(null);
     const renderItem = (item) => {
         return (
@@ -32,17 +33,17 @@ const DropdownComponent6 = ({ setToStation }) => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={stationListEN}
+            data={langSTS}
             search
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder="Select item"
+            placeholder="Select language"
             searchPlaceholder="Search..."
             value={value}
             onChange={(item) => {
                 setValue(item.value);
-                setToStation(item.code);
+                setFromStation(item.code);
             }}
             renderLeftIcon={() => (
                 <MapPinIcon style={styles.icon} size={20} color="#b20000" />

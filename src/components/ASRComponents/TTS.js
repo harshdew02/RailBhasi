@@ -1,9 +1,9 @@
-// import fs from "react-native-fs";
+import fs from "react-native-fs";
 
 // Uncomment this for backend
 
 export const getAudio = async (inputString, Language, Voice) => {
-
+  // console.log(inputString,Language,Voice)
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -29,11 +29,13 @@ export const getAudio = async (inputString, Language, Voice) => {
     redirect: "follow",
   })
     .then((response) => {
+      // console.log(response.text())
       return response.text();
     })
     .then(async (response) => {
       let apiResult = JSON.parse(response);
       let audioContent = apiResult["audio"][0]["audioContent"];
+      
       const path = `${fs.CachesDirectoryPath}/output.wav`;
       await fs.writeFile(path, audioContent, "base64");
     })
