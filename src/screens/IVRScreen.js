@@ -67,7 +67,6 @@ const IVRScreen = () => {
   }, []);
 
   
-  
   React.useEffect(() => {
     console.log("Language changed: ", lang);
   }, [lang]);
