@@ -1,6 +1,6 @@
 import {getTranslation} from './NMTv2.js'
 
-export const ASROutputE = (asrInput) => {
+export const ASROutputE = async (asrInput, sampleRate) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -13,7 +13,7 @@ export const ASROutputE = (asrInput) => {
           value: "transcript",
         },
         audioFormat: "wav",
-        samplingRate: 16000,
+        samplingRate: Number.parseInt(sampleRate),
         postProcessors: null,
       },
       audio: [
@@ -33,15 +33,17 @@ export const ASROutputE = (asrInput) => {
       redirect: "follow",
     };
 
-    fetch(
+    const output =await fetch(
       "https://demo-api.models.ai4bharat.org/inference/asr/whisper",
       requestOptions
     )
       .then(response => response.text())
       .then(result => {
         var apiResponse = JSON.parse(result);
-        let input = apiResponse.output[0].source;
-        getTranslation(input, "en", "hi");
+        // console.log(apiResponse.output[0].source)
+        return apiResponse.output[0].source;
       })
       .catch(error => console.log("error", error));
+
+      return output;
 }
