@@ -90,14 +90,17 @@ export default function Speech() {
         <View style={{ width: wp(70) }}>
           <DropdownComponent1 setStation={setSample} />
         </View>
-        <TextInput
+        <Text
+          selectable={true}
+          multiline={true}
           showSoftInputOnFocus={false}
+          
           className="rounded-lg"
           style={styles.input}
           onChangeText={setText}
           value={text}
           placeholder="Output text is here"
-        />
+        >{text}</Text>
       </View>
     </SafeAreaView>
   )
@@ -105,10 +108,12 @@ export default function Speech() {
 
 const styles = StyleSheet.create({
   input: {
-    height: hp(40),
+    height: hp(50),
     marginTop: wp(10),
-    width: wp(95),
+    overflow: 'visible',
+    width: wp(80),
     borderWidth: 1,
-    padding: 10,
+    padding: 15,
+    fontSize: wp(5),
   },
 });

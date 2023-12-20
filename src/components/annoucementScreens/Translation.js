@@ -3,6 +3,7 @@ import {
   Pressable,
   ScrollView,
   View,
+  Text,
   TouchableOpacity,
   Button,
   SafeAreaView,
@@ -47,7 +48,7 @@ export default function Translation() {
             style={styles.input}
             onChangeText={onChangeNumber}
             value={number}
-            placeholder="Give Train Number"
+            placeholder="Write any text here"
           />
 
           {/* To */}
@@ -59,15 +60,24 @@ export default function Translation() {
               <MicrophoneIcon size={20} color="#fff" />
             </TouchableOpacity> */}
           </View>
-
-          <TextInput
+          <Text
+          selectable={true}
+          multiline={true}
+          showSoftInputOnFocus={false}
+          className="rounded-lg"
+          style={styles.output}
+          onChangeText={setTrans}
+          value={trans}
+          placeholder="Output text is here"
+        >{trans}</Text>
+          {/* <TextInput
             showSoftInputOnFocus={false}
             className="rounded-lg"
             style={styles.input}
             onChangeText={setTrans}
             value={trans}
             placeholder="Give Train Number"
-          />
+          /> */}
 
         </View>
       </ScrollView>
@@ -77,6 +87,15 @@ export default function Translation() {
 
 
 const styles = StyleSheet.create({
+  output:{
+    height: hp(30),
+    marginTop: wp(10),
+    overflow: 'visible',
+    width: wp(80),
+    borderWidth: 1,
+    padding: 15,
+    fontSize: wp(5),
+  },
   input: {
     height: hp(20),
     marginTop: wp(2),
