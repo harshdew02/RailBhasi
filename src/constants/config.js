@@ -1497,12 +1497,12 @@ const PREDEFINED_LANGUAGE = {
     te: "స్టేషన్ సమాచారం",
     ur: "اسٹیشن انفارمیشن",
   },
-  give_train_number: {
+  Enter_Mobile_number: {
     as: "ট্ৰেন নম্বৰ দিও",
     bn: "ট্রেন নম্বর দাও",
     brx: "ট্ৰেন নম্বৰ দি",
     doi: "ਟ੍ਰੇਨ ਨੰਬਰ ਦਿਓ",
-    en: "Give Train Number",
+    en: "Enter Mobile Number",
     gom: "ट्रेन नंबर दा",
     gu: "ટ્રેન નંબર આપો",
     hi: "ट्रेन नंबर दो",
@@ -1526,6 +1526,7 @@ const PREDEFINED_LANGUAGE = {
     ur: "ٹرین نمبر دو",
   },
 };
+
 
 const TYPE_SELECTION = (api_time, late, origin, station, isCustom) => {
   //calculation part here
