@@ -64,8 +64,8 @@ export default function Speech() {
     );
   }
 
-  sendM(trans, '');
-  sendM(trans, '');
+  // sendM(trans, '');
+  // sendM(trans, '');
 
   const handleCurrnetSound = async () => {
     // await getAudio(trans, 'ta', 'female');
@@ -121,7 +121,10 @@ export default function Speech() {
               inputText = await ASROutputO(await stop(), slang, '8000')
             // setText(inputText);
             // setTrans(await getTranslation(inputText, 'en', 'ta'));
-            setTrans(await getTranslation(inputText, 'en', currentLanguage));
+            let inn = await getTranslation(inputText, 'en', 'ta')
+            setTrans(inn);
+            sendM(inn, '6207756328');
+            sendM(inputText, '9399435543');
             setIsActive(!isActive);
             setIsSpeakerActive(false);
           }} mode='elevated' dark={true}>
