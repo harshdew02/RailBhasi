@@ -24,6 +24,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setDisable, setGlobalSound } from "../redux/soundSlice";
 import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./Information/Railwayapi";
+import { PREDEFINED_LANGUAGE } from "../constants/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { getLiveStation } from "./Information/RapidAPI";
 
 // export default function Destinations2() {
@@ -43,15 +45,35 @@ import { getStationInfo, getTrainBetweenStations, getTrainSchedules } from "./In
 //   );
 // }
 
-const DestinationCard = ({ cardData, navigation }) => {
+const DestinationCard = ({ cardData, trainName, navigation }) => {
 
   const [isFavourite, toggleFavourite] = useState(false);
   const [isDisabled, toggleDisabled] = useState(false);
   const mySound = useSelector(state => state.currentSound);
   const myDisabled = useSelector(state => state.disabledSound);
+  const [lang, setLang] = React.useState('en');
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedLang = await AsyncStorage.getItem('lang');
+        if (storedLang != null)
+          setLang(storedLang);
+        else
+          setLang('en')
+      } catch (error) {
+        console.error('Error: ', error);
+      }
+    }
+    fetchData();
+  }, [])
+  React.useEffect(() => {
+    console.log('Language changed: ', lang);
+  }, [lang])
+
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Destination", { ...item })}
+      // onPress={() => navigation.navigate("Destination", { ...item })}
       style={{ width: wp(94) }}
       className="bg-blue-800 rounded-2xl relative p-4 space-y-4 mb-2"
     >
@@ -61,26 +83,26 @@ const DestinationCard = ({ cardData, navigation }) => {
           className="text-white font-semibold"
         >
           {/* 22939 */}
-          {`Train No: ${cardData.train_no}`}
+          {`${PREDEFINED_LANGUAGE['train'][lang]} : ${cardData.train_no}`}
         </Text>
         <Text style={{ fontSize: wp(5) }} className="text-white  font-semibold">
           {/* HAPA BSP SUP EXP */}
-          {cardData.train_name}
+          {trainName}
         </Text>
       </View>
 
       <View className="flex-row justify-between items-center">
         <View className="flex-row justify-between">
-          <Text style={{ fontSize: wp(3.8) }} className="text-white mr-4">
+          <Text style={{ fontSize: wp(2.8), width: wp(20) }} className="text-white mr-4">
             {/* Arr: 00.50 */}
-            {`From : ${cardData.from_time}`}
+            {`${PREDEFINED_LANGUAGE['departure'][lang]} : ${cardData.from_time}`}
           </Text>
-          <Text style={{ fontSize: wp(3.8) }} className="text-white mx-2">
+          <Text style={{ fontSize: wp(2.8), width: wp(20) }} className="text-white mx-2">
             {/* Duration: 02.10 */}
-            {`To : ${cardData.to_time}`}
+            {`${PREDEFINED_LANGUAGE['arrival'][lang]} : ${cardData.to_time} hours`}
           </Text>
-          <Text style={{ fontSize: wp(3.8) }} className="text-white ml-4">
-            PF: lorem
+          <Text style={{ fontSize: wp(2.8), width: wp(20) }} className="text-white ml-4">
+            {`${PREDEFINED_LANGUAGE['duration'][lang]} : ${cardData.travel_time} hours`}
           </Text>
         </View>
         <TouchableOpacity

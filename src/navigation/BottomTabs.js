@@ -146,13 +146,14 @@ export default function BottomTabs() {
                                     alignItems: "center",
                                     justifyContent: "center",
                                     backgroundColor: "#16247d",
-                                    width: Platform.OS == "ios" ? 30 : 40,
-                                    height: Platform.OS == "ios" ? 30 : 40,
+                                    width: Platform.OS == "ios" ? 50 : 60,
+                                    height: Platform.OS == "ios" ? 50 : 60,
+                                    top: Platform.OS == "ios" ? -10 : -20,
                                     borderRadius: Platform.OS == "ios" ? 25 : 30
                                 }} >
                                     <TouchableOpacity onPress={onToggleSnackBar} classNam={`pt-5`}>
                                     {/* <FontAwesome name="volume-up" size={30} color={visible ? "#9e9d9d":"#fff"} /> */}
-                                    <SpeakerWaveIcon size={wp(7)} color={visible ? "#9e9d9d":"#fff"} />
+                                    <SpeakerWaveIcon size={wp(7)} color={focused ? "#fff":"#9e9d9d"} />
                                     </TouchableOpacity>
                                     {/* <Button  onPress={onToggleSnackBar}>{visible ? 'Hide' : 'Show'}</Button> */}
                                 </View>

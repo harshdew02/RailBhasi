@@ -12,7 +12,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 // Drawer
 import BottomTabs from "./BottomTabs";
-import { Help, Profile, SelectLang, Settings } from "../drawer";
+import { Help, Profile, SelectLang, Settings, pnr } from "../drawer";
 import {
   ChevronUpDownIcon,
   Cog6ToothIcon,
@@ -97,6 +97,19 @@ export default function RightDrawer() {
             ),
           }}
         />
+
+        <Drawer.Screen
+          name={"PNR"}
+          component={pnr}
+          options={{
+            drawerLabel: `${PREDEFINED_LANGUAGE['pnr'][lang]}`,
+            drawerIcon: ({ focused, size, color }) => (
+              // <MaterialCommunityIcons name="firewire" color={color} size={size} />
+              <UserIcon color={color} size={size} />
+            ),
+          }}
+        />
+
         <Drawer.Screen
           name={"SelectLang"}
           component={SelectLang}

@@ -15,8 +15,8 @@ import {
 } from "../constants/config";
 
 // need to disable
-import Sound from "react-native-sound";
-import fs, { stat } from "react-native-fs";
+// import Sound from "react-native-sound";
+// import fs, { stat } from "react-native-fs";
 // 
 
 import { useDispatch, useSelector } from "react-redux";
@@ -24,8 +24,10 @@ import { setDisable, setGlobalSound } from "../redux/soundSlice";
 import { getStationInfo, getTrainSchedules } from "./Information/Railwayapi";
 import { getLiveTrain, getTrainBetweenStation } from "./Information/ERail";
 
+
 export default function stations({ language, stationData }) {
   // const [trainData, setTrainData] = useState([]);
+
   const [currnetSound, setCurrentSound] = useState(null);
   const [sounds, setSound] = useState(null);
   const [desc, setDesc] = useState();
@@ -35,6 +37,7 @@ export default function stations({ language, stationData }) {
   //use effect will be applied here as language changes
   //get the desired language information from nearStation via props
   //now useEffect will be called so inside that we will call NMTv2 translation engine to translate into desired lang,
+
   // useEffect(() => {
   //   let index = LANGUAGE_SELECTION(language);
   //   const fetchData = async item => {
@@ -65,6 +68,7 @@ export default function stations({ language, stationData }) {
       setDesc(outputDesc);
     }
     listen();
+
 
   }, [selectedLanguage]);
 
