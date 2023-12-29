@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-} from "react-native";
+import { View, KeyboardAvoidingView, Platform, TouchableOpacity } from "react-native";
 import { GiftedChat, InputToolbar } from "react-native-gifted-chat";
 import Icon from "react-native-vector-icons/FontAwesome";
 import TopBar from "../components/topBar";
@@ -105,7 +100,10 @@ const ChatBotScreen = () => {
     />
   );
 
-  const handleMicButtonPress = () => {};
+  const handleMicButtonPress = () => {
+    
+  };
+
   const [messages, setMessages] = useState([
     {
       _id: 1,
