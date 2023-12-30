@@ -62,7 +62,6 @@ const customButton = (onConfirm) => {
 export default function FromTo() {
   const [fromStation, setFromStation] = React.useState("");
   const [toStation, setToStation] = React.useState("");
-  // const [selectedDate, setDate] = React.useState('14-12-2023');
   const [cardData, setCardData] = React.useState();
   const [station, setStation] = React.useState("");
   const [lang, setLang] = React.useState("en");
@@ -84,17 +83,25 @@ export default function FromTo() {
   }, [lang]);
 
   const navigation = useNavigation();
-
+  const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
+  const today = new Date();
+  const startDate = getFormatedDate(
+    today.setDate(today.getDate() + 1),
+    "YYYY/MM/DD"
+  );
+  const [selectedStartDate, setSelectedStartDate] = useState("14-12-2023");
+  const [startedDate, setStartedDate] = useState("14-12-2023");
   useEffect(() => {
     // console.log(fromStation, toStation, selectedDate);
     const listen = async () => {
-      if (fromStation && toStation && selectedDate) {
-        setLoading(true);
+      if (fromStation && toStation && startedDate) {
+        // setLoading(true);
+        console.log(startedDate)
         setCardData("");
         let data = await getTrainBetweenStation(
           fromStation,
           toStation,
-          selectedDate
+          startedDate
         );
         console.log("(fromTo.js) ", data);
         if (data === "No direct trains found" || data.length == 0) {
@@ -109,18 +116,8 @@ export default function FromTo() {
         }
       }
     };
-    listen()
-  }, [fromStation, toStation, selectedDate]);
-
-  const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
-  const today = new Date();
-  const startDate = getFormatedDate(
-    today.setDate(today.getDate() + 1),
-    "YYYY/MM/DD"
-  );
-  const [selectedStartDate, setSelectedStartDate] = useState("2023/12/19");
-  const [startedDate, setStartedDate] = useState("12/12/2023");
-
+    listen();
+  }, [fromStation, toStation, startedDate]);
   function handleChangeStartDate(propDate) {
     setStartedDate(propDate);
   }
