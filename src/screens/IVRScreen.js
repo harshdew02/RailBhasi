@@ -252,7 +252,7 @@ const IVRScreen = () => {
   return (
     <>
       <SafeAreaView className="flex-1 bg-white">
-        <TopBar heading={PREDEFINED_LANGUAGE["IVR"][lang]} />
+        <TopBar heading={`IVRS (Under development)`} />
         <View
           className="flex-column items-center justify-center"
           style={{ height: hp(20) }}

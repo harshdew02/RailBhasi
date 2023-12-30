@@ -123,8 +123,8 @@ export default function Speech() {
             // setTrans(await getTranslation(inputText, 'en', 'ta'));
             let inn = await getTranslation(inputText, 'en', 'ta')
             setTrans(inn);
-            sendM(inn, '6207756328');
-            sendM(inputText, '9399435543');
+            // sendM(inn, '6207756328');
+            // sendM(inputText, '9399435543');
             setIsActive(!isActive);
             setIsSpeakerActive(false);
           }} mode='elevated' dark={true}>
