@@ -1497,12 +1497,12 @@ const PREDEFINED_LANGUAGE = {
     te: "స్టేషన్ సమాచారం",
     ur: "اسٹیشن انفارمیشن",
   },
-  give_train_number: {
+  Enter_Mobile_number: {
     as: "ট্ৰেন নম্বৰ দিও",
     bn: "ট্রেন নম্বর দাও",
     brx: "ট্ৰেন নম্বৰ দি",
     doi: "ਟ੍ਰੇਨ ਨੰਬਰ ਦਿਓ",
-    en: "Give Train Number",
+    en: "Enter Mobile Number",
     gom: "ट्रेन नंबर दा",
     gu: "ટ્રેન નંબર આપો",
     hi: "ट्रेन नंबर दो",
@@ -1524,6 +1524,34 @@ const PREDEFINED_LANGUAGE = {
     ta: "ரீதியான எண் அளிக்கவும்",
     te: "ట్రైన్ నెంబర్ ఇవ్వండి",
     ur: "ٹرین نمبر دو",
+  },
+  pgtn: {
+    as: "অনুগ্ৰহ কৰি ট্ৰেনৰ নম্বৰ দিও",
+    bn: "অনুগ্রহ করে ট্রেন নম্বর দিন",
+    brx: "দয়া কৰি ট্ৰেনৰ নম্বৰ দাও",
+    doi: "ਇਕ ਗੁਣਾਹਗਾਰ ਟਰੇਨ ਨੰਬਰ ਦਿਓ",
+    en: "Please give train number",
+    gom: "कृपया रेल्वे नंबर द्या",
+    gu: "કૃપા કરીને ટ્રેન નંબર આપો",
+    hi: "कृपया ट्रेन नंबर दें",
+    kn: "ದಯವಿಟ್ಟು ರೈಲು ಸಂಖ್ಯೆ ನೀಡಿ",
+    ks: "مہربانی کرکے ٹرین نمبر دو",
+    ks_Deva: "कृपया ट्रेन नंबर दो",
+    mai: "कृपया ट्रेन नंबर दे",
+    ml: "ദയവായി റെയിൽ നമ്പർ നൽകുക",
+    mni: "লবোউ ট্রেনৰ নাম্বাৰ ইয়াজাও",
+    mni_Beng: "অনুগ্ৰহ কৰি ট্ৰেনৰ নম্বৰ দিও",
+    mr: "कृपया ट्रेन नंबर द्या",
+    ne: "कृपया ट्रेन नम्बर दिनुहोस्",
+    or: "ଦୟାକରି ଟ୍ରେନ ନମ୍ବର ଦିଅନ୍ତୁ",
+    pa: "ਕਿਰਪਾ ਕਰਕੇ ਰੇਲ ਨੰਬਰ ਦਿਓ",
+    sa: "कृपया रेल्वे नंबरं दत्तवानि",
+    sat: "ᱠᱟᱭ ᱨᱚᱨᱜ ᱨᱚᱨ ᱜᱮᱛ",
+    sd: "مهرباني ڪري ٽرين نمبر ڏيو",
+    sd_Deva: "कृपया ट्रेन नंबर दो",
+    ta: "தயவுசெய்து இருந்து ரயில் எண் கொடுக்கவும்",
+    te: "దయచేసి రైలు సంఖ్య ఇవ్వండి",
+    ur: "براہ کرم ٹرین نمبر دیں",
   },
 };
 
@@ -1636,8 +1664,8 @@ const LANGUAGE_SELECTION = (code) => {
   return index;
 };
 
-const PREDEFINED_ANNOUNCEMENT = [
-  {
+const PREDEFINED_ANNOUNCEMENT = {
+  hi: {
     origination:
       "यात्रीगण कृप्या ध्यान दीजिए, गाड़ी संख्या (train_no), (origin) से चलकर (destination) को जाने वाली, (train_name) कुछ ही देर मे प्लेटफॉर्म संख्या (PF) से चलने वाली है | ",
     arriving:
@@ -1658,7 +1686,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "रुकिए",
     word_no: "गाड़ी संख्या",
   },
-  {
+  en: {
     origination:
       "May I have your attention please, train number (train_no) from (origin) to (destination), (train_name) is about to depart from platform number (PF).",
     arriving:
@@ -1679,7 +1707,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "Stop",
     word_no: "Train no.",
   },
-  {
+  as: {
     additional:
       "এই ট্ৰেইনখন (intime) ত আহিব আৰু (outtime) ত (stop) মিনিটৰ পিছত প্রস্থান কৰিব।",
     arrived:
@@ -1701,7 +1729,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "ৰাখক",
     word_no: "ট্ৰেইনৰ নম্বৰ",
   },
-  {
+  bn: {
     additional:
       "এই ট্রেনটি (intime)-এ পৌঁছবে এবং (outtime)-এ (stop) মিনিট পর ছেড়ে যাবে।",
     arrived:
@@ -1724,7 +1752,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_no: "ট্রেনের নম্বর",
   },
 
-  {
+  brx: {
     additional:
       "बे ट्रेना (intime) आव सौगोन आरो (stop) मिनिटनि उनाव (outtime) आव ओंखारगोन।",
     arrived:
@@ -1746,7 +1774,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "थाद",
     word_no: "ट्रेननि नम्बर",
   },
-  {
+  doi: {
     additional:
       "एह् रेलगड्डी (intime) पर औग ते (stop) मिंटें परैंत्त (outtime) पर रवाना होग।",
     arrived:
@@ -1768,7 +1796,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "रुको",
     word_no: "रेलगड्डी नंबर",
   },
-  {
+  gom: {
     additional:
       "ही ट्रेन (intime) चेर येतली आनी (stop) मिण्टां उपरांत (outtime) भायर वतली.",
     arrived:
@@ -1790,7 +1818,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "थांबो",
     word_no: "रेल्वे क्रमांक",
   },
-  {
+  gu: {
     additional:
       "આ ટ્રેન (intime) પર પહોંચશે અને (outtime) પર (stop) મિનિટ પછી ઉપડશે.",
     arrived:
@@ -1812,7 +1840,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "બંધ કરો",
     word_no: "ટ્રેન નંબર",
   },
-  {
+  kn: {
     additional:
       "ಈ ರೈಲು (intime) ತಲುಪುತ್ತದೆ ಮತ್ತು (stop) ನಿಮಿಷಗಳ ನಂತರ (outtime) ಹೊರಡುತ್ತದೆ.",
     arrived:
@@ -1834,7 +1862,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "ನಿಲ್ಲಿಸಿ",
     word_no: "ರೈಲು ಸಂಖ್ಯೆ",
   },
-  {
+  ks: {
     additional:
       "یہ ٹرین آسہٕ (intime) پؠٹھ تہٕ گژھن (stop) منٹن پتہٕ (outtime) پؠٹھ۔",
     arrived:
@@ -1856,7 +1884,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "رک۔",
     word_no: " ریل نمبر",
   },
-  {
+  ks_Deva: {
     additional: "ये ट्रेन औ (intime) ते रटन (stop) मिनट्स पथ (outtime).",
     arrived:
       "ट्रेन नंबर (train_no) (origin) से (destination), (train_name) बस प्लेटफार्म नंबर (PF) पे आया.",
@@ -1877,7 +1905,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "रुक जाये",
     word_no: "ट्रेन नंबर",
   },
-  {
+  mai: {
     additional:
       "ई ट्रेन (intime) पर पहुँचेगी आ (stop) मिनटक बाद (outtime) पर रवाना होयत।",
     arrived:
@@ -1899,7 +1927,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "रुकू",
     word_no: "ट्रेनक नम्बर",
   },
-  {
+  ml: {
     additional:
       "ഈ ട്രെയിൻ (intime) എത്തിച്ചേരുകയും (stop) മിനിറ്റിനുശേഷം (outtime) പുറപ്പെടുകയും ചെയ്യും.",
     arrived:
@@ -1921,7 +1949,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "നിർത്തുക",
     word_no: "ട്രെയിൻ നമ്പർ",
   },
-  {
+  mni: {
     additional:
       "ꯇ ꯭ ꯔꯦꯟ ꯑꯁꯤ (intime) ꯗ ꯂꯥꯛꯀꯅꯤ ꯑꯃꯁꯨꯡ (outtime) ꯗ ꯃꯤꯅꯤꯠ (stop) ꯒꯤ ꯃꯇꯨꯡꯗ ꯊꯥꯗꯣꯛꯀꯅꯤ ꯫",
     arrived:
@@ -1943,7 +1971,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "ꯂꯦꯞꯄꯨ",
     word_no: " ꯇ ꯭ ꯔꯦꯟ ꯅꯝꯕꯔ",
   },
-  {
+  mni_Beng: {
     additional:
       "হায়রিবা ত্রেন অসি (intime) দা লাক্কনি অমসুং (outtime) দা মিনিট (stop) গী মতুংদা চৎকনি।",
     arrived:
@@ -1965,7 +1993,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "থিংলুবা",
     word_no: " ত্রেন নম্বর",
   },
-  {
+  mr: {
     additional:
       "ही गाडी (intime) वर येईल आणि (outtime) वर (stop) मिनिटांनंतर निघेल.",
     arrived:
@@ -1987,7 +2015,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "थांबा",
     word_no: "गाडीचा क्रमांक",
   },
-  {
+  ne: {
     additional:
       "यो रेल (intime) मा आइपुग्नेछ र (outtime) मा (stop) मिनेट पछि प्रस्थान गर्नेछ।",
     arrived:
@@ -2009,7 +2037,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "रोक्नुहोस्",
     word_no: "रेल नम्बर",
   },
-  {
+  or: {
     additional:
       "ଏହି ଟ୍ରେନ୍ (intime) ରେ ପହଞ୍ଚିବ ଏବଂ (outtime) ରେ (stop) ମିନିଟ୍ ପରେ ପ୍ରସ୍ଥାନ କରିବ।",
     arrived:
@@ -2031,7 +2059,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "ଅଟକି ଯାଆନ୍ତୁ",
     word_no: "ଟ୍ରେନ୍ ନମ୍ବର",
   },
-  {
+  pa: {
     additional:
       "ਇਹ ਰੇਲਗੱਡੀ (intime) ਉੱਤੇ ਪਹੁੰਚੇਗੀ ਅਤੇ (outtime) ਉੱਤੇ (stop) ਮਿੰਟ ਬਾਅਦ ਰਵਾਨਾ ਹੋਵੇਗੀ।",
     arrived:
@@ -2053,7 +2081,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "ਰੁਕੋ",
     word_no: "ਰੇਲਗੱਡੀ ਨੰਬਰ",
   },
-  {
+  sa: {
     additional:
       "इयं रेलगाडी (intime) मध्ये आगमिष्यति, (stop) निमेषानन्तरं (outtime) निर्गमिष्यति।",
     arrived:
@@ -2075,7 +2103,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "स्थगयतु",
     word_no: "रेलयानसङ्ख्या",
   },
-  {
+  sat: {
     additional:
       "ᱱᱚᱶᱟ ᱴᱮᱨᱮᱱ ᱫᱚ (intime) ᱨᱮ ᱥᱮᱴᱮᱨᱚᱜᱼᱟ ᱟᱨ (stop) ᱴᱤᱲᱤᱡ ᱛᱟᱭᱚᱢ (outtime) ᱨᱮ ᱪᱟᱞᱟᱣᱚᱜᱼᱟ ᱾",
     arrived:
@@ -2097,7 +2125,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "ᱵᱚᱱᱚᱫᱚᱞ ᱢᱮ ᱾",
     word_no: "ᱴᱮᱨᱮᱱ ᱱᱚᱢᱵᱚᱨ",
   },
-  {
+  sd: {
     additional:
       "ہی ٽرین (intime) تی ایندی ۽ (stop) منٽن کان پوء (outtime) تی روانگی ٿیندی",
     arrived:
@@ -2120,7 +2148,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_no: "ٽرین نمبر",
   },
 
-  {
+  sd_Deva: {
     additional:
       "ही ट्रेन (intime) ते पहुचंदो ऐं (stop) मिनटनि खां पोइ (outtime) ते रवाना थींदो",
     arrived:
@@ -2142,7 +2170,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "रूको",
     word_no: "ट्रेन जो नम्बरु",
   },
-  {
+  ta: {
     additional:
       "இந்த ரயில் (intime) வந்து (outtime) மணிக்கு (stop) நிமிடங்களுக்குப் பிறகு புறப்படும்.",
     arrived:
@@ -2164,7 +2192,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "நிறுத்துங்கள்",
     word_no: "ரயில் எண்",
   },
-  {
+  te: {
     additional:
       "ఈ రైలు (intime) లో వచ్చి (outtime) వద్ద (stop) నిమిషాల తర్వాత బయలుదేరుతుంది.",
     arrived:
@@ -2186,14 +2214,14 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "ఆపండి",
     word_no: "రైలు సంఖ్య",
   },
-  {
+  ur: {
     additional:
       "ہی ٽرین (intime) تی ایندی ۽ (stop) منٽن کان پوء (outtime) تی روانگی ٿیندی",
     arrived:
       "ڇا مان توہان جو ڌیان ڏیندس، ٽرین نمبر (train_no) (origin) کان (destination)، (train_name) بس پلیٽ فارم نمبر (PF) تی پہتو",
     arriving:
       "مہربانی ڪری مان توہان جو ڌیان ڏیندس، ٽرین نمبر (train_no) (origin) کان (destination)، (train_name) جلد ئی پلیٽ فارم نمبر (PF) تی اچی رھیو آھی",
-    code: "sd",
+    code: "ur",
     custom:
       "ٹرین نمبر (train_no)، (train_name)، فی الحال (ghante) گھنٹہ اور (mintu) منٹ کی تاخیر سے چل رہی ہے۔ اس کے پلیٹ فارم نمبر (PF) پر (intime) پر (stop) منٹ کے طے شدہ اسٹاپ کے ساتھ (next_station) پر پہنچنے کی توقع ہے۔",
     custom_ontime:
@@ -2208,7 +2236,7 @@ const PREDEFINED_ANNOUNCEMENT = [
     word_stop: "رک جائیں",
     word_no: "ٹرین کا نمبر",
   },
-];
+};
 
 //ASR Language Configs
 const ASR_LANGUAGE_CONFIGS = {

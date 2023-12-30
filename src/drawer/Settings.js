@@ -16,6 +16,7 @@ import {
 import { ArrowRightOnRectangleIcon } from "react-native-heroicons/solid";
 import { PREDEFINED_LANGUAGE } from "../constants/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Settings() {
   const [isSwitchOn1, setIsSwitchOn1] = React.useState(false);
@@ -39,6 +40,7 @@ export default function Settings() {
     console.log("Language changed: ", lang);
   }, [lang]);
 
+  const navigation = useNavigation();
   return (
     <SafeAreaView>
       <TopBar heading={PREDEFINED_LANGUAGE['settings'][lang]} />
@@ -121,7 +123,10 @@ export default function Settings() {
           </TouchableOpacity>
           {/* elements */}
           <TouchableOpacity
-            onPress={() => setIsSwitchOn4(!isSwitchOn4)}
+            onPress={() => {
+              AsyncStorage.removeItem('byPass');
+              navigation.navigate("Welcome");
+            }}
             pointerEvents="none"
             style={{ width: wp(50), height: wp(12) }}
             className="flex-row justify-center border-2 border-[#ff2400] rounded-xl font-semibold  bg-red-100 mt-10 items-center px-1"

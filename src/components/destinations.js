@@ -18,8 +18,8 @@ import {
 } from "../constants/config";
 
 // need to disable
-// import Sound from "react-native-sound";
-// import fs, { stat } from "react-native-fs";
+import Sound from "react-native-sound";
+import fs, { stat } from "react-native-fs";
 // 
 
 import { useDispatch, useSelector } from "react-redux";

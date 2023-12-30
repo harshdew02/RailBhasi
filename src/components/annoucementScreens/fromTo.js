@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -10,40 +10,44 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  Modal
+  Modal,
 } from "react-native";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import DropdownComponent2 from '../dropDown2';
-import DropdownComponent3 from '../dropDown3';
-import { MicrophoneIcon, MapPinIcon, ArrowPathIcon, MapIcon, CalendarDaysIcon } from 'react-native-heroicons/outline';
-import { getTrainBetweenStation } from '../Information/ERail';
-import Destinations2 from '../destinations2';
-import { PREDEFINED_LANGUAGE } from '../../constants/config';
-import { DestinationCard } from '../destinations2';
-import { useSelector } from 'react-redux'
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import DropdownComponent2 from "../dropDown2";
+import DropdownComponent3 from "../dropDown3";
+import {
+  MicrophoneIcon,
+  MapPinIcon,
+  ArrowPathIcon,
+  MapIcon,
+  CalendarDaysIcon,
+} from "react-native-heroicons/outline";
+import { getTrainBetweenStation } from "../Information/ERail";
+import Destinations2 from "../destinations2";
+import { PREDEFINED_LANGUAGE } from "../../constants/config";
+import { DestinationCard } from "../destinations2";
+import { useSelector } from "react-redux";
 
 // Dropdown module
 import DatePicker from "react-native-modern-datepicker";
 import { getFormatedDate } from "react-native-modern-datepicker";
 
-
-
 // const calpik = (onConfirm) => {
 //   console.log(onConfirm)
 // }
 
-
 const customButton = (onConfirm) => {
-
   return (
     <Button
       onPress={() => {
         const selectedDate = onConfirm();
 
-        console.log('Selected Date:', selectedDate.startDate);
-
+        console.log("Selected Date:", selectedDate.startDate);
       }}
       style={{
         container: { width: "80%", marginHorizontal: "3%" },
@@ -56,60 +60,64 @@ const customButton = (onConfirm) => {
 };
 
 export default function FromTo() {
-
   const [fromStation, setFromStation] = React.useState("");
   const [toStation, setToStation] = React.useState("");
-  // const [selectedDate, setDate] = React.useState('14-12-2023');
   const [cardData, setCardData] = React.useState();
   const [station, setStation] = React.useState("");
-  const [lang, setLang] = React.useState('en');
+  const [lang, setLang] = React.useState("en");
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const storedLang = await AsyncStorage.getItem('lang');
-        if (storedLang != null)
-          setLang(storedLang);
-        else
-          setLang('en')
+        const storedLang = await AsyncStorage.getItem("lang");
+        if (storedLang != null) setLang(storedLang);
+        else setLang("en");
       } catch (error) {
-        console.error('Error: ', error);
+        console.error("Error: ", error);
       }
-    }
+    };
     fetchData();
-  }, [])
+  }, []);
   useEffect(() => {
-    console.log('Language changed: ', lang);
-  }, [lang])
-
-
-
+    console.log("Language changed: ", lang);
+  }, [lang]);
 
   const navigation = useNavigation();
-
-  // useEffect(() => {
-  //   console.log(fromStation, toStation, selectedDate);
-  //   const listen = async () => {
-  //     if (fromStation && toStation && selectedDate) {
-  //       let data = await getTrainBetweenStation(fromStation, toStation, selectedDate);
-  //       setCardData(data);
-  //       console.log(cardData);
-  //     }
-  //   }
-  //   listen();
-
-  // }, [fromStation, toStation, selectedDate])
-
-
   const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
   const today = new Date();
   const startDate = getFormatedDate(
     today.setDate(today.getDate() + 1),
     "YYYY/MM/DD"
   );
-  const [selectedStartDate, setSelectedStartDate] = useState("2023/12/19");
-  const [startedDate, setStartedDate] = useState("12/12/2023");
-
+  const [selectedStartDate, setSelectedStartDate] = useState("14-12-2023");
+  const [startedDate, setStartedDate] = useState("14-12-2023");
+  useEffect(() => {
+    // console.log(fromStation, toStation, selectedDate);
+    const listen = async () => {
+      if (fromStation && toStation && startedDate) {
+        // setLoading(true);
+        console.log(startedDate)
+        setCardData("");
+        let data = await getTrainBetweenStation(
+          fromStation,
+          toStation,
+          startedDate
+        );
+        console.log("(fromTo.js) ", data);
+        if (data === "No direct trains found" || data.length == 0) {
+          setCardData("NO");
+        } else {
+          const slicedData = data.slice(0, 5);
+          let inputTT = "";
+          slicedData.forEach((ele) => {
+            inputTT += ele.train_base.train_name;
+            inputTT += "/";
+          });
+        }
+      }
+    };
+    listen();
+  }, [fromStation, toStation, startedDate]);
   function handleChangeStartDate(propDate) {
     setStartedDate(propDate);
   }
@@ -117,7 +125,6 @@ export default function FromTo() {
   const handleOnPressStartDate = () => {
     setOpenStartDatePicker(!openStartDatePicker);
   };
-
 
   return (
     <SafeAreaView>
@@ -127,7 +134,11 @@ export default function FromTo() {
             {/* From */}
             <DropdownComponent2 setFromStation={setFromStation} />
           </View>
-          <TouchableOpacity className="p-3 ml-1 rounded-xl bg-blue-500" mode='elevated' dark={true}>
+          <TouchableOpacity
+            className="p-3 ml-1 rounded-xl bg-blue-500"
+            mode="elevated"
+            dark={true}
+          >
             <MapPinIcon size={20} color="#fff" />
           </TouchableOpacity>
         </View>
@@ -136,7 +147,11 @@ export default function FromTo() {
           <View style={{ width: wp(80) }}>
             <DropdownComponent3 setToStation={setToStation} />
           </View>
-          <TouchableOpacity className="p-3 ml-2 rounded-xl bg-blue-500" mode='elevated' dark={true}>
+          <TouchableOpacity
+            className="p-3 ml-2 rounded-xl bg-blue-500"
+            mode="elevated"
+            dark={true}
+          >
             <MicrophoneIcon size={20} color="#fff" />
           </TouchableOpacity>
         </View>
@@ -165,7 +180,7 @@ export default function FromTo() {
         onPress={() => setOpen(true)}
       >
         <CalendarDaysIcon size={20} color="black" /> */}
-        {/* <DatePicker
+      {/* <DatePicker
           style={{
             width: 350,
             height: 30,
@@ -195,7 +210,7 @@ export default function FromTo() {
           mode="single"
         /> */}
 
-        {/* <DatePickerModal
+      {/* <DatePickerModal
           locale="en"
           mode="single"
           visible={open}
@@ -218,29 +233,29 @@ export default function FromTo() {
         onConfirm={onConfirmSingle}
       /> */}
 
-
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : ""}
         style={{
           width: wp(80),
-          height: hp(6)
+          height: hp(6),
           // backgroundColor: '#fff',
         }}
       >
-        <View style={{ flex: 1, alignItems: "center"}}>
-            <View>
-              <TouchableOpacity
-                style={styles.inputBtn}
-                onPress={handleOnPressStartDate}
-                
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <View>
+            <TouchableOpacity
+              style={styles.inputBtn}
+              onPress={handleOnPressStartDate}
+            >
+              <View
+                className="flex-row justify-between items-center"
+                style={{ width: wp(30) }}
               >
-                <View className="flex-row justify-between items-center" style={{width: wp(30)}}>
                 <CalendarDaysIcon size={20} color="black" />
                 <Text className="text-lg ml-2">{selectedStartDate}</Text>
-                </View>
-                
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
+          </View>
 
           {/* Create modal for date picker */}
           <Modal
@@ -273,21 +288,25 @@ export default function FromTo() {
               </View>
             </View>
           </Modal>
-          
         </View>
       </KeyboardAvoidingView>
 
-
-      <ScrollView className="mx-0 mt-2 px-2"
-        style={{ height: hp(68), width: wp(100) }}>
+      <ScrollView
+        className="mx-0 mt-2 px-2"
+        style={{ height: hp(68), width: wp(100) }}
+      >
         {/* <Destinations2 /> */}
-        {cardData?.map(ele => <DestinationCard key={ele.train_base.train_no} cardData={ele.train_base} navigation={navigation} />)}
-
+        {cardData?.map((ele) => (
+          <DestinationCard
+            key={ele.train_base.train_no}
+            cardData={ele.train_base}
+            navigation={navigation}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
-
 
 const styles = StyleSheet.create({
   textHeader: {
@@ -301,16 +320,16 @@ const styles = StyleSheet.create({
   },
   inputBtn: {
     borderRadius: 12,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderColor: "#222",
     height: 50,
     width: wp(78),
-    paddingLeft:12,
+    paddingLeft: 12,
     fontSize: 18,
     justifyContent: "center",
     marginTop: 2,
     marginLeft: 18,
-    paddingBottom: 2
+    paddingBottom: 2,
   },
   submitBtn: {
     backgroundColor: "#342342",

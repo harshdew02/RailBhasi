@@ -19,7 +19,7 @@ import {
 
 
 
-export default function pnr() {
+export default function PNR() {
   const [lang,setLang] = React.useState('en');
   const [inputText, setInputText] = useState('');
 

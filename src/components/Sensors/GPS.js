@@ -1,4 +1,4 @@
-// import Geolocation from 'react-native-geolocation-service'
+import Geolocation from 'react-native-geolocation-service'
 
 export const getLongitude = async () => {
     let address = Geolocation.getCurrentPosition(async (position)=>{
@@ -16,7 +16,7 @@ export const getLongitude = async () => {
         console.log(error.code, error.message);
     },{
         enableHighAccuracy: false,
-        timeout:20000,
+        timeout:200000,
         maximumAge: 100000
     });
     return address;

@@ -1,6 +1,6 @@
 import { Component } from 'react';
-// import AudioRecord from 'react-native-audio-record';
-// import fs from 'react-native-fs';
+import AudioRecord from 'react-native-audio-record';
+import fs from 'react-native-fs';
 // uncomment this for backend
 
 export default class Recorder extends Component {

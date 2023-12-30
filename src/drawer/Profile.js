@@ -266,8 +266,9 @@ const Profile = ({ navigation }) => {
         <CustomButton
           label={PREDEFINED_LANGUAGE['save_changes'][lang]}
           onPress={
-            () => signup()
-            // navigation.navigate("Login");
+            () => {signup()
+            }
+            
           }
         />
       </ScrollView>

@@ -321,7 +321,7 @@ const RegisterScreen = ({ navigation }) => {
           }}
         >
           <Text>{PREDEFINED_LANGUAGE['aregistered'][lang]}</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <Text style={{ color: "#2776ff", fontWeight: "700" }}> {PREDEFINED_LANGUAGE['login'][lang]}</Text>
           </TouchableOpacity>
         </View>

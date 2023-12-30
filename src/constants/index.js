@@ -19,6 +19,23 @@ export const categoriesData = [
   },
 ];
 
+export const langSpeech = [
+  {label: 'Auto Detect', code: 'en', value: 1},
+  { label: "বাংলা (Bangla)", code: "bn", value: 2 },
+  { label: "English", code: "en", value: 3 },
+  { label: "ગુજરાતી (Gujarati)", code: "gu", value: 4 },
+  { label: "हिंदी (Hindi)", code: "hi", value: 5 },
+  { label: "ಕನ್ನಡ (Kannada)", code: "kn", value: 6 },
+  { label: "മലയാളം (Malayalam)", code: "ml", value: 7 },
+  { label: "मराठी (Marathi)", code: "mr", value: 8 },
+  { label: "ଓରିଆ (Oriya)", code: "or", value: 9 },
+  { label: "ਪੰਜਾਬੀ (Panjabi)", code: "pa", value: 10 },
+  { label: "संस्कृतं (Sanskrit)", code: "sa", value: 11 },
+  { label: "தமிழ் (Tamil)", code: "ta", value: 12 },
+  { label: "తెలుగు (Telugu)", code: "te", value: 13 },
+  { label: "اردو (Urdu)", code: "ur", value: 14 },
+];
+
 export let destinationData = [
   DG = [
     {
@@ -589,7 +606,7 @@ export const stationListEN = [
   },
   { code: "DLN", label: "DILDARNAGAR (DLN)", name: "DILDARNAGAR", value: 187 },
   { code: "DMV", label: "DIMAPUR (DMV)", name: "DIMAPUR", value: 188 },
-  { code: "DG", label: "DINDIGUL Jn. (DG)", name: "DINDIGUL Jn.", value: 189 },
+  { code: "DG", label: "DINDIGUL Jn. (DG)", name: "DINDIGUL", value: 189 },
   { code: "DGG", label: "DONGARGARH (DGG)", name: "DONGARGARH", value: 190 },
   { code: "DKJ", label: "DORNAKAL (DKJ)", name: "DORNAKAL", value: 191 },
   { code: "DNRP", label: "DUNGARPUR (DNRP)", name: "DUNGARPUR", value: 192 },
