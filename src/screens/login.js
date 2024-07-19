@@ -137,9 +137,6 @@ const LoginScreen = ({ navigation }) => {
               }}
             />
           </View>
-          <TouchableOpacity onPress={() => {}}>
-            <Text style={{ color: "#2776ff", fontWeight: "700" }}>{PREDEFINED_LANGUAGE['forgot'][lang]}</Text>
-          </TouchableOpacity>
         </View>
 
         <CustomButton
@@ -151,38 +148,7 @@ const LoginScreen = ({ navigation }) => {
         {PREDEFINED_LANGUAGE['orlogin'][lang]}
         </Text>
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            marginBottom: 30,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              borderColor: "#ddd",
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}
-          >
-            <GoogleSVG height={24} width={24} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              borderColor: "#ddd",
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}
-          >
-            <FacebookSVG height={24} width={24} />
-          </TouchableOpacity>
-        </View>
+        
 
         <View
           style={{

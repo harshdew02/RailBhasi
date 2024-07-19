@@ -86,7 +86,7 @@ const DropdownComponentLive = ({ setStation }) => {
       value={value}
       onChange={(item) => {
         setValue(item.value);
-        setStation(item.code);
+        // setStation(item.code);
       }}
       renderLeftIcon={() => (
         <MagnifyingGlassIcon style={styles.icon} size={20} color="black" />

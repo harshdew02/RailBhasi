@@ -64,7 +64,7 @@ export default function stations({ language, stationData }) {
     const listen = async () => {
       const inputDesc = `Description: Welcome to ${stationData.stationName} in ${stationData.stateName}! As part of the ${stationData.zones.zoneName} (${stationData.zones.zoneCode}) zone, this station offers ${stationData.numberOfPlatforms} platforms for your travel needs.`;
       let outputDesc = await getTranslation(inputDesc, 'en', selectedLanguage);
-      console.log(outputDesc);
+      console.log("currentl",selectedLanguage);
       setDesc(outputDesc);
     }
     listen();
@@ -173,11 +173,11 @@ export const DestinationCard = ({
           </Text>
           <Text style={{ fontSize: wp(4.8) }} className="text-white w-56">
             {/* Zone: SECR */}
-            {`Zone: ${stationData.zones.zoneName}`}
+            {`Zone: ${stationData.zone.zoneName}`}
           </Text>
           <Text style={{ fontSize: wp(4.8) }} className="text-white w-56">
             {/* Zone: SECR */}
-            {/* {`Description: Welcome to ${stationData.stationName} in ${stationData.stateName}! As part of the ${stationData.zones.zoneName} (${stationData.zones.zoneCode}) zone, this station offers ${stationData.numberOfPlatforms} platforms for your travel needs.`} */}
+            {`Description: Welcome to ${stationData.stationName} in ${stationData.stateName}! As part of the ${stationData.zone.zoneName} (${stationData.zone.zoneCode}) zone, this station offers ${stationData.numberOfPlatforms} platforms for your travel needs.`}
             {desc}
           </Text>
         </View>
