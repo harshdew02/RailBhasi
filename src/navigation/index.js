@@ -34,8 +34,8 @@ function AppNavigation() {
         <Stack.Screen name="Changelanguage" component={SelectLang} />
         <Stack.Screen name="Xtransaction" component={XTransaction} />
         <Stack.Screen name="Pnr" component={pnr} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
+        {/* <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

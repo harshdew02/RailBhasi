@@ -70,14 +70,18 @@ const Profile = ({ navigation }) => {
     // Fetch existing user data when the component mounts
     fetchUserData();
   }, []);
+
   const signup = async () => {
     await AsyncStorage.setItem("lang", lang);
-    await AsyncStorage.setItem("fname", name);
+    // await AsyncStorage.setItem("fname", name);
     // await AsyncStorage.setItem("sns", states);
-    await AsyncStorage.setItem("phone", phone);
+    // await AsyncStorage.setItem("phone", phone);
     // await saveData();
+    console.log("fkjsdkfs")
     alert("User updated successfully!");
   };
+
+
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
       <ScrollView
@@ -147,7 +151,7 @@ const Profile = ({ navigation }) => {
           )}
         />
 
-        <View style={styles.searchSection}>
+        {/* <View style={styles.searchSection}>
           <Ionicons
             name="person-outline"
             size={20}
@@ -162,8 +166,8 @@ const Profile = ({ navigation }) => {
               setName(text);
             }}
           />
-        </View>
-
+        </View> */}
+{/* 
         <Dropdown
           style={styles.dropdown}
           placeholderStyle={styles.placeholderStyle}
@@ -189,32 +193,6 @@ const Profile = ({ navigation }) => {
             />
           )}
         />
-
-        {/* <View style={styles.searchSection}>
-          <Ionicons
-            name="home-outline"
-            size={20}
-            color="#2776ff"
-            style={{marginRight: 5}}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="State"
-          />
-        </View> */}
-
-        {/* <View style={styles.searchSection}>
-          <Ionicons
-            name="language-outline"
-            size={20}
-            color="#2776ff"
-            style={{marginRight: 5}}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Preferred Language"
-          />
-        </View> */}
 
         <View style={styles.searchSection}>
           <Ionicons
@@ -261,14 +239,13 @@ const Profile = ({ navigation }) => {
             value={phone}
             onChangeText={(txt) => setPhone(txt)}
           />
-        </View>
+        </View> */}
 
         <CustomButton
-          label={PREDEFINED_LANGUAGE['save_changes'][lang]}
+          label={`${PREDEFINED_LANGUAGE['save_changes'][lang]} (Save)`}
           onPress={
             () => {signup()
             }
-            
           }
         />
       </ScrollView>

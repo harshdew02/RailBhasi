@@ -87,7 +87,7 @@ export default function RightDrawer() {
         />
 
         <Drawer.Screen
-          name={"Profile"}
+          name={"System Language"}
           component={Profile}
           options={{
             drawerLabel: `${PREDEFINED_LANGUAGE['profile'][lang]}`,

@@ -121,7 +121,9 @@ export default function Speech() {
               inputText = await ASROutputO(await stop(), slang, '8000')
             // setText(inputText);
             // setTrans(await getTranslation(inputText, 'en', 'ta'));
-            let inn = await getTranslation(inputText, 'en', 'ta')
+            console.log("Current language: " , currentLanguage);
+            let inn = await getTranslation(inputText, 'en', currentLanguage)
+
             setTrans(inn);
             // sendM(inn, '6207756328');
             // sendM(inputText, '9399435543');
@@ -136,13 +138,15 @@ export default function Speech() {
       </ScrollView>
 
 
-      <View className="flex-col items-center">
+      <View className="flex-col items-center" style={{height:hp(40)}}>
         <TextInput
           showSoftInputOnFocus={false}
           className="rounded-lg"
           style={styles.input}
           onChangeText={setTrans}
           value={trans}
+          numberOfLines={40}
+          multiline={true}
           placeholder="Output text is here"
         />
       </View>
@@ -158,9 +162,11 @@ export default function Speech() {
 
 const styles = StyleSheet.create({
   input: {
-    height: hp(40),
+    // height: hp(40),
     marginTop: wp(10),
     width: wp(95),
+    // backgroundColor:'red',
+    overflow:'scroll',
     borderWidth: 1,
     padding: 10,
   },

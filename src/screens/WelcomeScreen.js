@@ -42,9 +42,9 @@ const requestFilePermission = async (navigation) => {
       let result = await AsyncStorage.getItem("byPass", (data) => {
         console.log(data);
       });
-      if (result == null || result == undefined || result != "true") {
-        navigation.navigate("Login");
-      } else navigation.navigate("Main");
+      // if (result == null || result == undefined || result != "true") {
+      //   navigation.navigate("Login");
+       navigation.navigate("Main");
     } else {
       if (overall[0] == false) {
         Alert.alert(
